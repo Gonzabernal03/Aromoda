@@ -466,7 +466,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ==========================================
 
 // Reemplazá este enlace entre comillas por la URL que copiaste en el Paso 3
-const API_URL_SHEETS = "https://script.google.com/macros/s/AKfycbxNoG7paVD1rvBcznQdBZEq3A3VmN0YQMvxQDxxXzVH6UdJpDvhI-wrSL-ARCKL3fAMmQ/exec";
+const API_URL_SHEETS = "https://script.google.com/macros/s/AKfycbw2PJrI441akHW3JA3QjLSD1VfTx5328zxp95evrJWBXj8dlNFg9rY9bqwTAfH22BLC/exec";
 
 // Función para enviar registro de cliente a Google Sheets
 function enviarClienteAGoogle(nombre, apellido, email, telefono) {
