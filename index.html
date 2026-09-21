@@ -3,81 +3,331 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aromoda - Tienda de Ropa Femenina</title>
+  <title>AROMODA | Indumentaria Femenina</title>
+  <meta name="description" content="Aromoda - Colección exclusiva de ropa femenina: jeans, remeras, shorts, musculosas y pantalones. Elegancia, diseño y comodidad.">
+  
+  <!-- Tipografías de Google: Playfair Display (Serif elegante) y Montserrat (Sans limpia) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <header>
-    <h1>AROMODA</h1>
-    <p>Moda y Tendencia Femenina</p>
+  <!-- Barra Superior de Anuncios -->
+  <div class="announcement-bar">
+    <p>3 Y 6 CUOTAS SIN INTERÉS | ENVÍO GRATIS A PARTIR DE $80.000 | ENVÍOS A TODO EL PAÍS</p>
+  </div>
+
+  <!-- Header Principal -->
+  <header class="main-header">
+    <div class="header-container">
+      
+      <!-- Buscador Rápido -->
+      <div class="header-search">
+        <form id="search-form" onsubmit="event.preventDefault();">
+          <label for="search-input" class="sr-only">Buscar prendas</label>
+          <div class="search-box">
+            <svg class="icon icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="search" id="search-input" placeholder="Buscar jeans, remeras..." autocomplete="off">
+          </div>
+        </form>
+      </div>
+
+      <!-- Logotipo de la Marca -->
+      <div class="header-logo">
+        <a href="#inicio" class="brand-name">AROMODA</a>
+        <span class="brand-tagline">BUENOS AIRES</span>
+      </div>
+
+      <!-- Acciones de Usuario (Registro y Carrito) -->
+      <div class="header-actions">
+        <!-- Botón Registro de Cliente -->
+        <button id="btn-open-register" class="btn-user-action" aria-label="Registrarse con Email">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span class="action-text">Registrarse</span>
+        </button>
+
+        <!-- Botón Carrito de Compras con Contador en Beige -->
+        <button id="btn-open-cart" class="btn-cart-action" aria-label="Abrir carrito de compras">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span id="cart-counter" class="cart-counter-badge">0</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Barra de Navegación con Filtros de Categoría -->
+    <nav class="categories-nav" aria-label="Categorías de prendas">
+      <ul class="categories-list">
+        <li><button class="filter-btn active" data-category="todos">Todos</button></li>
+        <li><button class="filter-btn" data-category="jeans">Jeans</button></li>
+        <li><button class="filter-btn" data-category="remeras">Remeras</button></li>
+        <li><button class="filter-btn" data-category="shorts">Shorts</button></li>
+        <li><button class="filter-btn" data-category="musculosas">Musculosas</button></li>
+        <li><button class="filter-btn" data-category="pantalones">Pantalones</button></li>
+      </ul>
+    </nav>
   </header>
 
-  <main class="container">
-    <section class="catalog">
-      <h2>Colección Destacada</h2>
-      <div class="product-card">
-        <h3>Vestido Elegante Lino</h3>
-        <p>Talles: S, M, L</p>
+  <!-- Banner Principal Minimalista -->
+  <section id="inicio" class="hero-section">
+    <div class="hero-content">
+      <span class="hero-subtitle">NUEVA COLECCIÓN</span>
+      <h1 class="hero-title">Esencia, confort & sofisticación</h1>
+      <p class="hero-desc">Prendas versátiles pensadas para acompañar cada momento de tu día con distinción.</p>
+      <a href="#catalogo" class="btn-hero">Descubrir Colección</a>
+    </div>
+  </section>
+
+  <!-- Catálogo de Productos (#catalogo) -->
+  <main class="main-wrapper">
+    <section id="catalogo" class="catalog-section">
+      <div class="catalog-header">
+        <h2 class="section-title">Nuestra Colección</h2>
+        <p class="section-subtitle" id="filter-status-text">Mostrando todas las prendas</p>
       </div>
-      <div class="product-card">
-        <h3>Blusa de Seda Estampada</h3>
-        <p>Talles: M, L</p>
-      </div>
-    </section>
 
-    <section class="contact-form">
-      <h2>Consultas y Pedidos</h2>
-      <form id="orderForm">
-        <label>Nombre Completo:</label>
-        <input type="text" id="nombre" required>
-
-        <label>Correo Electrónico:</label>
-        <input type="email" id="email" required>
-
-        <label>Prenda de Interés:</label>
-        <input type="text" id="prenda" placeholder="Ej. Vestido Lino" required>
-
-        <label>Mensaje / Consulta:</label>
-        <textarea id="consulta" rows="4" required></textarea>
-
-        <button type="submit">Enviar Consulta</button>
-      </form>
-      <div id="statusMessage"></div>
+      <!-- Grid Responsivo para Tarjetas -->
+      <div class="products-grid" id="products-grid"></div>
     </section>
   </main>
 
-  <script>
-    const form = document.getElementById('orderForm');
-    const statusMsg = document.getElementById('statusMessage');
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxJ6lq0Tsze2gDowTPC6GhilC5tIaFEkCtSXplRkIPfEhuJbaIDTgVz5xOU37vVB8DoaQ/exec";
+  <!-- Drawer Lateral del Carrito de Compras -->
+  <div id="cart-drawer-overlay" class="drawer-overlay" aria-hidden="true"></div>
+  <aside id="cart-drawer" class="cart-drawer" aria-labelledby="cart-title" aria-hidden="true">
+    <div class="drawer-header">
+      <h2 id="cart-title" class="drawer-title">Tu Carrito de Compras</h2>
+      <button id="btn-close-cart" class="btn-close-drawer" aria-label="Cerrar carrito">&times;</button>
+    </div>
 
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      statusMsg.innerText = "Enviando datos...";
+    <!-- Lista de Prendas Agregadas -->
+    <div class="drawer-body" id="cart-items-container">
+      <div class="cart-empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="empty-cart-icon">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <p>Tu carrito está vacío</p>
+        <button id="btn-start-shopping" class="btn-secondary">Ver Catálogo</button>
+      </div>
+    </div>
 
-      const payload = {
-        nombre: document.getElementById('nombre').value,
-        email: document.getElementById('email').value,
-        prenda: document.getElementById('prenda').value,
-        consulta: document.getElementById('consulta').value
-      };
+    <!-- Subtotal y Finalizar Compra -->
+    <div class="drawer-footer" id="cart-footer">
+      <div class="subtotal-row">
+        <span>Subtotal</span>
+        <span id="cart-subtotal" class="subtotal-price">$0</span>
+      </div>
+      <p class="cart-shipping-notice">Los costos de envío e impuestos se calculan al finalizar la compra.</p>
+      <button id="btn-checkout" class="btn-checkout">Finalizar Compra</button>
+      <button id="btn-continue-shopping" class="btn-text-link">Continuar comprando</button>
+    </div>
+  </aside>
 
-      fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(() => {
-        statusMsg.innerText = "¡Consulta registrada exitosamente!";
-        form.reset();
-      })
-      .catch(error => {
-        statusMsg.innerText = "Hubo un error al enviar.";
-        console.error('Error:', error);
-      });
-    });
-  </script>
+  <!-- Modal de Registro de Cliente por Email -->
+  <div id="register-modal-overlay" class="modal-overlay" aria-hidden="true">
+    <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="register-modal-title">
+      <button id="btn-close-register" class="btn-close-modal" aria-label="Cerrar ventana">&times;</button>
+      <div class="modal-body">
+        <span class="modal-badge">BENEFICIO EXCLUSIVO</span>
+        <h3 id="register-modal-title" class="modal-title">Unite al Club Aromoda</h3>
+        <p class="modal-desc">Ingresá tu email para registrarte y obtener un <strong>15% OFF</strong> en tu primera compra, además de accesos a lanzamientos exclusivos.</p>
+        
+        <form id="register-form">
+          <div class="input-group">
+            <label for="register-name">Nombre completo</label>
+            <input type="text" id="register-name" placeholder="Ej: Valentina Morales" required>
+          </div>
+          <div class="input-group">
+            <label for="register-email">Correo Electrónico</label>
+            <input type="email" id="register-email" placeholder="tuemail@ejemplo.com" required>
+          </div>
+          <button type="submit" class="btn-primary btn-block">Crear Cuenta</button>
+        </form>
+        <p class="privacy-note">Respetamos tu privacidad. Podés desuscribirte en cualquier momento.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Completo -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      
+      <!-- Columna 1: Marca Aromoda -->
+      <div class="footer-col footer-brand-col">
+        <span class="footer-brand-name">AROMODA</span>
+        <p class="footer-brand-desc">
+          Diseñamos piezas contemporáneas con textiles nobles y acabados impecables. Prendas hechas para resaltar la feminidad y el estilo diario con absoluta sutileza.
+        </p>
+      </div>
+
+      <!-- Columna 2: Contacto y Redes Sociales -->
+      <div class="footer-col footer-contact-col">
+        <h4 class="footer-heading">Contacto</h4>
+        <ul class="contact-list">
+          <li>
+            <a href="tel:+5491155556789" class="contact-link">
+              <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <span>+54 9 11 5555-6789</span>
+            </a>
+          </li>
+          <li>
+            <a href="mailto:aromoda.contacto@gmail.com" class="contact-link">
+              <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              <span>aromoda.contacto@gmail.com</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="social-links-container">
+          <span class="social-title">Nuestras Redes</span>
+          <div class="social-icons">
+            <!-- Instagram @aromoda65 -->
+            <a href="https://instagram.com/aromoda65" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Instagram @aromoda65">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="social-svg">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+              <span class="social-username">@aromoda65</span>
+            </a>
+
+            <!-- Facebook aromoda.aromoda -->
+            <a href="https://facebook.com/aromoda.aromoda" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Facebook aromoda.aromoda">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="social-svg">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+              </svg>
+              <span class="social-username">aromoda.aromoda</span>
+            </a>
+
+            <!-- WhatsApp -->
+            <a href="https://wa.me/5491155556789?text=Hola%20Aromoda,%20quisiera%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer" class="social-btn whatsapp-btn" aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="social-svg">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              </svg>
+              <span class="social-username">Chat WhatsApp</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna 3: Medios de Pago -->
+      <div class="footer-col footer-payments-col">
+        <h4 class="footer-heading">Medios de Pago</h4>
+        <p class="payments-desc">Aceptamos todas las tarjetas de crédito, débito y transferencias inmediatas.</p>
+        
+        <div class="payment-badges-grid">
+          <!-- Visa -->
+          <div class="payment-badge" title="Visa Crédito y Débito">
+            <svg class="payment-svg" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="48" height="32" rx="4" fill="#F8F6F3" stroke="#E5DFD7"/>
+              <text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-style="italic" font-size="13" fill="#1A1F71">VISA</text>
+            </svg>
+            <span>Visa</span>
+          </div>
+
+          <!-- MasterCard -->
+          <div class="payment-badge" title="MasterCard">
+            <svg class="payment-svg" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="48" height="32" rx="4" fill="#F8F6F3" stroke="#E5DFD7"/>
+              <circle cx="19" cy="16" r="8" fill="#EB001B" fill-opacity="0.9"/>
+              <circle cx="29" cy="16" r="8" fill="#F79E1B" fill-opacity="0.9"/>
+              <path d="M24 10.3A7.95 7.95 0 0 1 27 16a7.95 7.95 0 0 1-3 5.7A7.95 7.95 0 0 1 21 16c0-2.3 1.2-4.4 3-5.7z" fill="#FF5F00"/>
+            </svg>
+            <span>MasterCard</span>
+          </div>
+
+          <!-- Bancos Locales y Transferencia -->
+          <div class="payment-badge" title="Bancos Locales y Transferencia">
+            <svg class="payment-svg" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="48" height="32" rx="4" fill="#F8F6F3" stroke="#E5DFD7"/>
+              <path d="M24 7L13 13V15H35V13L24 7Z" fill="#111111"/>
+              <rect x="15" y="16" width="3" height="7" fill="#111111"/>
+              <rect x="22.5" y="16" width="3" height="7" fill="#111111"/>
+              <rect x="30" y="16" width="3" height="7" fill="#111111"/>
+              <rect x="12" y="24" width="24" height="2" fill="#111111"/>
+            </svg>
+            <span>Bancos Locales</span>
+          </div>
+        </div>
+
+        <div class="installments-tag">
+          <span>Hasta 6 Cuotas Sin Interés</span>
+        </div>
+      </div>
+
+      <!-- Columna 4: Envíos y Seguimiento Correo Argentino -->
+      <div class="footer-col footer-shipping-col">
+        <h4 class="footer-heading">Seguimiento de Envíos</h4>
+        <p class="shipping-desc">Envíos seguros a todo el país a través de <strong>Correo Argentino</strong>.</p>
+        
+        <!-- Logotipo Oficial Correo Argentino -->
+        <div class="correo-argentino-brand">
+          <div class="ca-logo-card">
+            <svg class="ca-logo-svg" viewBox="0 0 180 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="180" height="50" rx="6" fill="#0C2340"/>
+              <path d="M20 17L32 25L20 33V27L26 25L20 23V17Z" fill="#FDB813"/>
+              <path d="M28 17L40 25L28 33V27L34 25L28 23V17Z" fill="#FFFFFF"/>
+              <text x="48" y="26" font-family="'Montserrat', sans-serif" font-weight="700" font-size="12" fill="#FFFFFF" letter-spacing="0.5">CORREO</text>
+              <text x="48" y="38" font-family="'Montserrat', sans-serif" font-weight="400" font-size="10.5" fill="#FDB813" letter-spacing="1">ARGENTINO</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Formulario para Rastrear Guía -->
+        <form id="tracking-form" class="tracking-form">
+          <label for="tracking-code" class="tracking-label">Consultá tu Número de Guía:</label>
+          <div class="tracking-input-wrapper">
+            <input 
+              type="text" 
+              id="tracking-code" 
+              name="tracking-code" 
+              placeholder="Ej: TN012345678AR" 
+              required
+              maxlength="24"
+              autocomplete="off"
+            >
+            <button type="submit" class="btn-track" aria-label="Rastrear en Correo Argentino">
+              <span>Rastrear</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-arrow">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
+          <small class="tracking-hint">Redirige a la plataforma oficial de seguimiento de Correo Argentino.</small>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- Copyright -->
+    <div class="footer-bottom">
+      <div class="footer-bottom-container">
+        <p>&copy; 2026 AROMODA. Todos los derechos reservados.</p>
+        <p class="footer-dev">Diseño y desarrollo web con estándares modernos.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
