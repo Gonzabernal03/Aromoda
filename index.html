@@ -1,1 +1,83 @@
-<h1>Bienvenido a Aromoda</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aromoda - Tienda de Ropa Femenina</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>AROMODA</h1>
+    <p>Moda y Tendencia Femenina</p>
+  </header>
+
+  <main class="container">
+    <section class="catalog">
+      <h2>Colección Destacada</h2>
+      <div class="product-card">
+        <h3>Vestido Elegante Lino</h3>
+        <p>Talles: S, M, L</p>
+      </div>
+      <div class="product-card">
+        <h3>Blusa de Seda Estampada</h3>
+        <p>Talles: M, L</p>
+      </div>
+    </section>
+
+    <section class="contact-form">
+      <h2>Consultas y Pedidos</h2>
+      <form id="orderForm">
+        <label>Nombre Completo:</label>
+        <input type="text" id="nombre" required>
+
+        <label>Correo Electrónico:</label>
+        <input type="email" id="email" required>
+
+        <label>Prenda de Interés:</label>
+        <input type="text" id="prenda" placeholder="Ej. Vestido Lino" required>
+
+        <label>Mensaje / Consulta:</label>
+        <textarea id="consulta" rows="4" required></textarea>
+
+        <button type="submit">Enviar Consulta</button>
+      </form>
+      <div id="statusMessage"></div>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById('orderForm');
+    const statusMsg = document.getElementById('statusMessage');
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxJ6lq0Tsze2gDowTPC6GhilC5tIaFEkCtSXplRkIPfEhuJbaIDTgVz5xOU37vVB8DoaQ/exec";
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      statusMsg.innerText = "Enviando datos...";
+
+      const payload = {
+        nombre: document.getElementById('nombre').value,
+        email: document.getElementById('email').value,
+        prenda: document.getElementById('prenda').value,
+        consulta: document.getElementById('consulta').value
+      };
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        statusMsg.innerText = "¡Consulta registrada exitosamente!";
+        form.reset();
+      })
+      .catch(error => {
+        statusMsg.innerText = "Hubo un error al enviar.";
+        console.error('Error:', error);
+      });
+    });
+  </script>
+</body>
+</html>
