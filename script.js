@@ -461,3 +461,41 @@ document.addEventListener('DOMContentLoaded', () => {
   updateCartUI();
   renderCatalog();
 });
+// ==========================================
+// CONEXIÓN CON GOOGLE SHEETS
+// ==========================================
+
+// Reemplazá este enlace entre comillas por la URL que copiaste en el Paso 3
+const API_URL_SHEETS = "https://script.google.com/macros/s/AKfycbx03zzROcMPlnQGCbsA7xhu3XNZxcu03_FQ1ca4ghaqXbgP_pIEWM8Ny4ngbBRwrBnMsQ/exec";
+
+// Función para enviar registro de cliente a Google Sheets
+function enviarClienteAGoogle(nombre, apellido, email, telefono) {
+  fetch(API_URL_SHEETS, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      tipo: "registro",
+      nombre: nombre,
+      apellido: apellido,
+      email: email,
+      telefono: telefono
+    })
+  });
+}
+
+// Función para enviar venta a Google Sheets
+function enviarVentaAGoogle(cliente, email, productos, total) {
+  fetch(API_URL_SHEETS, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      tipo: "venta",
+      cliente: cliente,
+      email: email,
+      productos: productos,
+      total: total
+    })
+  });
+}
