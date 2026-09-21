@@ -1,174 +1,288 @@
 /**
  * ==========================================================================
- * AROMODA - APP.JS (INTERACTIVIDAD COMPLETA PARA GITHUB PAGES)
- * - Arreglo `productos` con ítems de muestra (Jeans, Remeras, Shorts, Tops, Abrigos, Vestidos)
- * - URLs funcionales y directas de Unsplash (?auto=format&fit=crop&w=600&q=80)
- * - Renderizado dinámico de tarjetas de productos y cambio de imagen por swatches
- * - Carrito deslizante (Slide-out) sin recarga de pantalla
- * - Checkout Express por Email -> Integración Google Sheets + Pedido a WhatsApp
+ * AROMODA - APP.JS
+ * Catálogo editable de prendas, selección de talles y filtros dinámicos.
+ * ==========================================================================
+ * 
+ * 💡 GUÍA RÁPIDA DE EDICIÓN PARA EL USUARIO:
+ * --------------------------------------------------------------------------
+ * Para modificar cualquier prenda, solo edita las propiedades en el arreglo `productos`:
+ * 
+ * 1. PRECIO:
+ *    Cambia el número de `precio`. Ej: precio: 22000 (sin comas ni símbolos $).
+ * 
+ * 2. FOTO / IMAGEN:
+ *    Pega tu enlace de Unsplash o la ruta local de tu carpeta. 
+ *    Ej: imagen: "https://tudominio.com/foto.jpg" o imagen: "img/remera1.jpg".
+ * 
+ * 3. TALLES DISPONIBLES:
+ *    Modifica la lista de talles entre corchetes.
+ *    Ej: talles: ["S", "M", "L", "XL"] o para jeans talles: ["36", "38", "40", "42"].
+ * 
+ * 4. NOMBRE Y DESCRIPCIÓN:
+ *    Edita el texto entre comillas de `nombre` y `descripcion`.
  * ==========================================================================
  */
 
 document.addEventListener('DOMContentLoaded', () => {
 
   // ==========================================================================
-  // CONFIGURACIÓN DE PARÁMETROS
+  // CONFIGURACIÓN GENERAL (WHATSAPP, ENVIOS, API)
   // ==========================================================================
   const CONFIG = {
-    // Número oficial de WhatsApp de Aromoda (código de país + área + número)
+    // Tu número de WhatsApp de contacto (código de país + número sin '+' ni espacios)
     WHATSAPP_PHONE: '5491155556789',
-    
-    // URL de tu Web App de Google Apps Script (cuando crees tu script en Sheets)
-    GOOGLE_SHEETS_API_URL: 'https://script.google.com/macros/s/AKfycbz_AROMODA_DEMO_API/exec',
-    
-    // Umbral de compra para Envío Gratis
-    FREE_SHIPPING_THRESHOLD: 80000
+
+    // Monto mínimo para bonificar el envío gratuito
+    FREE_SHIPPING_THRESHOLD: 80000,
+
+    // Opcional: URL de tu Google Sheets (Apps Script Web App)
+    GOOGLE_SHEETS_API_URL: 'https://script.google.com/macros/s/AKfycbz_AROMODA_DEMO_API/exec'
   };
 
   // ==========================================================================
-  // ARREGLO `productos` CON MUESTRAS REALISTAS Y FOTOS FUNCIONALES DE UNSPLASH
+  // CATÁLOGO DE PRODUCTOS (INCLUYE 15 REMERAS + OTRAS CATEGORÍAS)
   // ==========================================================================
   const productos = [
+
+    // ------------------------------------------------------------------------
+    // SECCIÓN: REMERAS (15 MODELOS COMPLETOS)
+    // ------------------------------------------------------------------------
     {
       id: 1,
-      name: "Jean Wide Leg Vintage Blue",
-      category: "jeans",
-      categoryName: "Jeans",
-      price: 39500,
-      badge: "Nuevo",
-      installments: "6 cuotas sin interés",
-      variants: [
-        {
-          colorName: "Azul Vintage",
-          hex: "#293E58",
-          image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=600&q=80"
-        },
-        {
-          colorName: "Celeste Sky",
-          hex: "#7998B5",
-          image: "https://images.unsplash.com/photo-1582418702059-97ebafb35d09?auto=format&fit=crop&w=600&q=80"
-        },
-        {
-          colorName: "Denim Noir",
-          hex: "#111111",
-          image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=600&q=80"
-        }
-      ]
+      nombre: "Remera Oversize Lino Crudo",
+      categoria: "remeras",
+      precio: 19800,
+      talles: ["S", "M", "L", "XL"],
+      imagen: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Remera de corte oversize holgado confeccionada en mezcla de lino natural y algodón peinado."
     },
     {
       id: 2,
-      name: "Remera Oversize Lino Crudo",
-      category: "remeras",
-      categoryName: "Remeras",
-      price: 19800,
-      badge: "Básico",
-      installments: "3 cuotas sin interés",
-      variants: [
-        {
-          colorName: "Lino Arena",
-          hex: "#E8DFD8",
-          image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=600&q=80"
-        },
-        {
-          colorName: "Blanco Puro",
-          hex: "#FFFFFF",
-          image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=600&q=80"
-        },
-        {
-          colorName: "Negro Clásico",
-          hex: "#111111",
-          image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=600&q=80"
-        }
-      ]
+      nombre: "Remera Pima Cotton Blanca",
+      categoria: "remeras",
+      precio: 17500,
+      talles: ["XS", "S", "M", "L"],
+      imagen: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Básico esencial en 100% algodón pima de tacto sedoso y cuello redondo con refuerzo."
     },
     {
       id: 3,
-      name: "Short Sastrero Crepe Noir",
-      category: "shorts",
-      categoryName: "Shorts",
-      price: 26500,
-      badge: "Tendencia",
-      installments: "6 cuotas de $4.416",
-      variants: [
-        {
-          colorName: "Crudo Sastrería",
-          hex: "#F4EFEA",
-          image: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=600&q=80"
-        },
-        {
-          colorName: "Noir Profundo",
-          hex: "#111111",
-          image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80"
-        }
-      ]
+      nombre: "Remera Boxy Washed Black",
+      categoria: "remeras",
+      precio: 18900,
+      talles: ["S", "M", "L"],
+      imagen: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Corte boxy cuadrado contemporáneo con proceso de lavado mineral negro vintage."
     },
     {
       id: 4,
-      name: "Top Halter Ribb Minimal",
-      category: "tops",
-      categoryName: "Tops",
-      price: 15200,
-      badge: "Esencial",
-      installments: "3 cuotas sin interés",
-      variants: [
-        {
-          colorName: "Negro Noche",
-          hex: "#111111",
-          image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=600&q=80"
-        },
-        {
-          colorName: "Blanco Nieve",
-          hex: "#FFFFFF",
-          image: "https://images.unsplash.com/photo-1618244972963-dbee1a7edc95?auto=format&fit=crop&w=600&q=80"
-        },
-        {
-          colorName: "Warm Nude",
-          hex: "#D5C5B5",
-          image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&q=80"
-        }
-      ]
+      nombre: "Remera Ribb Escote Redondo Camel",
+      categoria: "remeras",
+      precio: 16400,
+      talles: ["S", "M", "L"],
+      imagen: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Tejido acanalado fino de gran elasticidad en tono cálido camel, ideal para combinar con sastrería."
     },
     {
       id: 5,
-      name: "Tapado Trench Camel Sastrería",
-      category: "abrigos",
-      categoryName: "Abrigos",
-      price: 68900,
-      badge: "Destacado",
-      installments: "6 cuotas de $11.483",
-      variants: [
-        {
-          colorName: "Camel Clásico",
-          hex: "#C4A482",
-          image: "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?auto=format&fit=crop&w=600&q=80"
-        },
-        {
-          colorName: "Noir Elegance",
-          hex: "#111111",
-          image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=600&q=80"
-        }
-      ]
+      nombre: "Remera Graphic Studio Aromoda",
+      categoria: "remeras",
+      precio: 21000,
+      talles: ["S", "M", "L", "XL"],
+      imagen: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Estampa tipográfica minimalista en serigrafía al agua sobre algodón 24/1 prémium."
     },
     {
       id: 6,
-      name: "Vestido Midi Lino Botellón",
-      category: "vestidos",
-      categoryName: "Vestidos",
-      price: 44200,
-      badge: "Edición Limitada",
-      installments: "6 cuotas sin interés",
-      variants: [
-        {
-          colorName: "Lino Floral",
-          hex: "#E8D8CC",
-          image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=600&q=80"
-        },
-        {
-          colorName: "Negro Noche",
-          hex: "#111111",
-          image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=600&q=80"
-        }
-      ]
+      nombre: "Remera Escote V Lino Beige",
+      categoria: "remeras",
+      precio: 18500,
+      talles: ["S", "M", "L"],
+      imagen: "https://images.unsplash.com/photo-1618244972963-dbee1a7edc95?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Diseño fresco con escote en V refinado y terminaciones al corte sutil."
+    },
+    {
+      id: 7,
+      nombre: "Remera Crop Manga Caída White",
+      categoria: "remeras",
+      precio: 16900,
+      talles: ["XS", "S", "M"],
+      imagen: "https://images.unsplash.com/photo-1554568218-0f1715e72254?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Largo crop a la cintura con hombros caídos de estética juvenil y relajada."
+    },
+    {
+      id: 8,
+      nombre: "Remera Rayada Marinera Breton",
+      categoria: "remeras",
+      precio: 20500,
+      talles: ["S", "M", "L", "XL"],
+      imagen: "https://images.unsplash.com/photo-1527719327859-c6ce80353573?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Inspiración náutica francesa con rayas azul marino sobre base blanco óptico."
+    },
+    {
+      id: 9,
+      nombre: "Remera Muscle Tee Hombreras Noir",
+      categoria: "remeras",
+      precio: 19200,
+      talles: ["S", "M", "L"],
+      imagen: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Muscle tee sin mangas con hombreras estructuradas que realzan la postura y el porte."
+    },
+    {
+      id: 10,
+      nombre: "Remera Oversize Terracota Warm",
+      categoria: "remeras",
+      precio: 18800,
+      talles: ["S", "M", "L", "XL"],
+      imagen: "https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Tono tierra cálido teñido en prenda, textura suave y caída ultra confortable."
+    },
+    {
+      id: 11,
+      nombre: "Remera Manga Larga Pima Blanca",
+      categoria: "remeras",
+      precio: 22000,
+      talles: ["S", "M", "L", "XL"],
+      imagen: "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Prenda de entretiempo en algodón pima puro con puños reforzados."
+    },
+    {
+      id: 12,
+      nombre: "Remera Slim Fit Gris Melange",
+      categoria: "remeras",
+      precio: 17200,
+      talles: ["XS", "S", "M", "L"],
+      imagen: "https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Calce al cuerpo confeccionada en jersey con elastano para máxima adaptabilidad."
+    },
+    {
+      id: 13,
+      nombre: "Remera Cuello Mock Neck Noir",
+      categoria: "remeras",
+      precio: 21500,
+      talles: ["S", "M", "L"],
+      imagen: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Medio cuello mock levantado para un estilo sobrio y elegante de pasarela."
+    },
+    {
+      id: 14,
+      nombre: "Remera Tie-Dye Soft Rose",
+      categoria: "remeras",
+      precio: 22800,
+      talles: ["S", "M", "L"],
+      imagen: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Teñido artesanal con degradado suave en tonos pastel y algodón orgánico."
+    },
+    {
+      id: 15,
+      nombre: "Remera Heavy Cotton Olive Green",
+      categoria: "remeras",
+      precio: 23500,
+      talles: ["S", "M", "L", "XL"],
+      imagen: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Algodón pesado de 240g con estructura firme, costuras dobles y tono verde oliva militar."
+    },
+
+    // ------------------------------------------------------------------------
+    // SECCIÓN: JEANS
+    // ------------------------------------------------------------------------
+    {
+      id: 16,
+      nombre: "Jean Wide Leg Vintage Blue",
+      categoria: "jeans",
+      precio: 39500,
+      talles: ["36", "38", "40", "42", "44"],
+      imagen: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Tiro alto con pierna ancha estilo años 90 en denim rígido 100% algodón."
+    },
+    {
+      id: 17,
+      nombre: "Jean Mom Fit Celeste Lavado",
+      categoria: "jeans",
+      precio: 36000,
+      talles: ["36", "38", "40", "42"],
+      imagen: "https://images.unsplash.com/photo-1582418702059-97ebafb35d09?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Corte clásico Mom fit que estiliza la cintura y caderas con lavado claro."
+    },
+    {
+      id: 18,
+      nombre: "Jean Straight Denim Noir",
+      categoria: "jeans",
+      precio: 38500,
+      talles: ["36", "38", "40", "42"],
+      imagen: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Corte recto en denim negro profundo que no destiñe con el uso diario."
+    },
+
+    // ------------------------------------------------------------------------
+    // SECCIÓN: SHORTS
+    // ------------------------------------------------------------------------
+    {
+      id: 19,
+      nombre: "Short Sastrero Crepe Noir",
+      categoria: "shorts",
+      precio: 26500,
+      talles: ["S", "M", "L"],
+      imagen: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Short tiro alto con pinzas delanteras y caída impecable en crepé sastrero."
+    },
+    {
+      id: 20,
+      nombre: "Short Denim Ripped Clásico",
+      categoria: "shorts",
+      precio: 24900,
+      talles: ["36", "38", "40", "42"],
+      imagen: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Short de jean clásico con roturas artesanales y dobladillo deshilachado."
+    },
+
+    // ------------------------------------------------------------------------
+    // SECCIÓN: TOPS
+    // ------------------------------------------------------------------------
+    {
+      id: 21,
+      nombre: "Top Halter Ribb Minimal",
+      categoria: "tops",
+      precio: 15200,
+      talles: ["XS", "S", "M", "L"],
+      imagen: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Escote halter favorecedor en tejido ribb elástico de algodón suave."
+    },
+    {
+      id: 22,
+      nombre: "Top Satén Nude Elegance",
+      categoria: "tops",
+      precio: 21000,
+      talles: ["S", "M", "L"],
+      imagen: "https://images.unsplash.com/photo-1618244972963-dbee1a7edc95?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Top lencero con breteles finos regulables en satén con brillo sutil."
+    },
+
+    // ------------------------------------------------------------------------
+    // SECCIÓN: ABRIGOS
+    // ------------------------------------------------------------------------
+    {
+      id: 23,
+      nombre: "Tapado Trench Camel Sastrería",
+      categoria: "abrigos",
+      precio: 68900,
+      talles: ["S", "M", "L"],
+      imagen: "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Trench clásico cruzado con cinto ajustable y forrería completa en seda."
+    },
+
+    // ------------------------------------------------------------------------
+    // SECCIÓN: VESTIDOS
+    // ------------------------------------------------------------------------
+    {
+      id: 24,
+      nombre: "Vestido Midi Lino Botellón",
+      categoria: "vestidos",
+      precio: 44200,
+      talles: ["S", "M", "L"],
+      imagen: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=600&q=80",
+      descripcion: "Vestido midi confeccionado en lino puro con botones delanteros de carey."
     }
   ];
 
@@ -180,19 +294,19 @@ document.addEventListener('DOMContentLoaded', () => {
   let searchQuery = '';
   let isCheckoutStep = false;
 
-  // Registro de variantes seleccionadas en tarjeta { productId: variantIndex }
-  const selectedVariants = {};
+  // Guarda el talle seleccionado por cada tarjeta { [productoId]: "M" }
+  const selectedSizes = {};
   productos.forEach(p => {
-    selectedVariants[p.id] = 0;
+    selectedSizes[p.id] = p.talles[0]; // Por defecto se preselecciona el primer talle disponible
   });
 
   // ==========================================================================
-  // ELEMENTOS DOM
+  // ELEMENTOS DEL DOM
   // ==========================================================================
   const productsGrid = document.getElementById('products-grid');
   const filterStatusText = document.getElementById('filter-status-text');
 
-  // Header y Búsqueda
+  // Header & Búsqueda
   const searchInput = document.getElementById('search-input');
   const searchDropdownBar = document.getElementById('search-dropdown-bar');
   const btnToggleSearch = document.getElementById('btn-toggle-search');
@@ -200,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnMobileMenu = document.getElementById('btn-mobile-menu');
   const headerNavLeft = document.getElementById('header-nav-left');
 
-  // Carrito Slide-out
+  // Drawer Carrito
   const btnOpenCart = document.getElementById('btn-open-cart');
   const btnCloseCart = document.getElementById('btn-close-cart');
   const cartDrawer = document.getElementById('cart-drawer');
@@ -220,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const registerModalOverlay = document.getElementById('register-modal-overlay');
   const registerForm = document.getElementById('register-form');
 
-  // Formularios Extras
+  // Newsletter y Correo Argentino
   const newsletterForm = document.getElementById('newsletter-form');
   const trackingForm = document.getElementById('tracking-form');
   const trackingCodeInput = document.getElementById('tracking-code');
@@ -235,18 +349,21 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ==========================================================================
-  // 1. RENDERIZADO DINÁMICO DE PRODUCTOS Y SWATCHES DE VARIANTE
+  // 1. RENDERIZADO DEL CATÁLOGO CON TALLES INTERACTIVOS Y FILTRO DINÁMICO
   // ==========================================================================
   const renderCatalog = () => {
     if (!productsGrid) return;
 
+    // Filtro por categoría y por búsqueda en tiempo real
     const filtered = productos.filter(product => {
-      const matchesCategory = currentCategory === 'todos' || product.category === currentCategory;
-      const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            product.categoryName.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory = currentCategory === 'todos' || product.categoria.toLowerCase() === currentCategory.toLowerCase();
+      const matchesSearch = product.nombre.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            product.categoria.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            product.descripcion.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     });
 
+    // Actualización de texto de estado
     if (filterStatusText) {
       if (searchQuery.trim() !== '') {
         filterStatusText.textContent = `Resultados para "${searchQuery}" (${filtered.length} prendas)`;
@@ -261,9 +378,9 @@ document.addEventListener('DOMContentLoaded', () => {
       productsGrid.innerHTML = `
         <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
           <p style="font-size: 0.85rem; color: #888; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px;">
-            No se encontraron prendas en esta categoría o búsqueda.
+            No se encontraron prendas en esta categoría.
           </p>
-          <button id="btn-reset-filters" class="btn-secondary">Ver todo el catálogo</button>
+          <button id="btn-reset-filters" class="btn-secondary">Ver todas las prendas</button>
         </div>
       `;
       document.getElementById('btn-reset-filters')?.addEventListener('click', () => {
@@ -275,96 +392,77 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     productsGrid.innerHTML = filtered.map(product => {
-      const activeVariantIndex = selectedVariants[product.id] || 0;
-      const currentVariant = product.variants[activeVariantIndex] || product.variants[0];
+      const currentSelectedSize = selectedSizes[product.id] || product.talles[0];
 
       return `
         <article class="product-card" data-id="${product.id}">
           <div class="product-img-wrapper">
-            ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
             <img 
-              src="${currentVariant.image}" 
-              alt="${product.name} - ${currentVariant.colorName}" 
+              src="${product.imagen}" 
+              alt="${product.nombre}" 
               class="product-img" 
-              id="product-img-${product.id}"
               loading="lazy"
             >
-            <button class="btn-add-to-cart" data-id="${product.id}" aria-label="Agregar al carrito">
+            <button class="btn-add-to-cart" data-id="${product.id}" aria-label="Agregar ${product.nombre} al carrito">
               + Agregar al Carrito
             </button>
           </div>
+          
           <div class="product-info">
-            <!-- Swatches de colores que cambian la imagen -->
-            <div class="color-swatches" aria-label="Colores disponibles para ${product.name}">
-              ${product.variants.map((v, idx) => `
-                <span 
-                  class="swatch-circle ${idx === activeVariantIndex ? 'active' : ''}" 
-                  style="background-color: ${v.hex};" 
-                  title="${v.colorName}"
-                  data-product-id="${product.id}"
-                  data-variant-index="${idx}"
-                  tabindex="0"
-                  role="button"
-                  aria-label="Color ${v.colorName}"
-                ></span>
-              `).join('')}
-            </div>
-            <span class="product-category">${product.categoryName} &bull; <strong id="color-label-${product.id}">${currentVariant.colorName}</strong></span>
-            <h3 class="product-title">${product.name}</h3>
+            <span class="product-category">${product.categoria}</span>
+            <h3 class="product-title">${product.nombre}</h3>
+            
             <div class="product-price-box">
-              <span class="product-price">${formatPrice(product.price)}</span>
-              <span class="product-installments">${product.installments}</span>
+              <span class="product-price">${formatPrice(product.precio)}</span>
+              <span class="product-installments">3 cuotas sin interés</span>
+            </div>
+
+            <!-- Selector de Talles en la Tarjeta -->
+            <div class="product-sizes-wrap">
+              <span class="sizes-label">Talle: <strong id="selected-size-label-${product.id}">${currentSelectedSize}</strong></span>
+              <div class="sizes-list" role="group" aria-label="Talles disponibles">
+                ${product.talles.map(talle => `
+                  <button 
+                    type="button"
+                    class="talle-btn ${talle === currentSelectedSize ? 'active' : ''}" 
+                    data-product-id="${product.id}" 
+                    data-talle="${talle}"
+                    aria-label="Seleccionar talle ${talle}"
+                  >
+                    ${talle}
+                  </button>
+                `).join('')}
+              </div>
             </div>
           </div>
         </article>
       `;
     }).join('');
 
-    // Cambio suave de imagen al interactuar con los swatches
-    productsGrid.querySelectorAll('.swatch-circle').forEach(swatch => {
-      const handleSwatchChange = (e) => {
+    // Listener para cambiar el talle seleccionado en la tarjeta
+    productsGrid.querySelectorAll('.talle-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
         e.stopPropagation();
-        const pId = parseInt(swatch.dataset.productId, 10);
-        const vIdx = parseInt(swatch.dataset.variantIndex, 10);
-        const product = productos.find(p => p.id === pId);
+        const pId = parseInt(btn.dataset.productId, 10);
+        const talle = btn.dataset.talle;
 
-        if (!product || !product.variants[vIdx]) return;
+        selectedSizes[pId] = talle;
 
-        selectedVariants[pId] = vIdx;
-        const newVariant = product.variants[vIdx];
+        // Actualizar visualmente la etiqueta del talle
+        const label = document.getElementById(`selected-size-label-${pId}`);
+        if (label) label.textContent = talle;
 
-        const imgElement = document.getElementById(`product-img-${pId}`);
-        if (imgElement) {
-          imgElement.style.opacity = '0.35';
-          setTimeout(() => {
-            imgElement.src = newVariant.image;
-            imgElement.alt = `${product.name} - ${newVariant.colorName}`;
-            imgElement.style.opacity = '1';
-          }, 140);
-        }
-
-        const colorLabel = document.getElementById(`color-label-${pId}`);
-        if (colorLabel) {
-          colorLabel.textContent = newVariant.colorName;
-        }
-
-        const parentSwatches = swatch.parentElement;
-        if (parentSwatches) {
-          parentSwatches.querySelectorAll('.swatch-circle').forEach(s => s.classList.remove('active'));
-          swatch.classList.add('active');
-        }
-      };
-
-      swatch.addEventListener('click', handleSwatchChange);
-      swatch.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          handleSwatchChange(e);
+        // Cambiar la clase activa entre los botones de talle de esta tarjeta
+        const parentList = btn.parentElement;
+        if (parentList) {
+          parentList.querySelectorAll('.talle-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
         }
       });
     });
 
-    // Botón "+ Agregar al Carrito"
+    // Listener para agregar producto con el talle seleccionado al carrito
     productsGrid.querySelectorAll('.btn-add-to-cart').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -376,7 +474,63 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ==========================================================================
-  // 2. CARRITO DESLIZANTE (SLIDE-OUT) SIN RECARGA DE PÁGINA
+  // 2. FILTRO POR CATEGORÍAS
+  // ==========================================================================
+  const setCategory = (category) => {
+    currentCategory = category.toLowerCase();
+
+    // Sincronizar todos los botones de categoría (tanto en navbar como en la barra del catálogo)
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.category.toLowerCase() === currentCategory);
+    });
+
+    renderCatalog();
+  };
+
+  // Botones de filtro del catálogo
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const cat = btn.dataset.category;
+      setCategory(cat);
+
+      // Si el menú móvil estaba abierto, lo cerramos
+      if (headerNavLeft && headerNavLeft.classList.contains('mobile-open')) {
+        headerNavLeft.classList.remove('mobile-open');
+      }
+
+      // Scroll suave hacia el catálogo
+      const dest = document.getElementById('catalogo');
+      if (dest) {
+        dest.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Tarjetas visuales de "SHOP BY CATEGORY"
+  document.querySelectorAll('.category-card').forEach(card => {
+    const handleCategoryClick = () => {
+      const cat = card.dataset.category;
+      if (cat) {
+        setCategory(cat);
+        const dest = document.getElementById('catalogo');
+        if (dest) {
+          dest.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+
+    card.addEventListener('click', handleCategoryClick);
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleCategoryClick();
+      }
+    });
+  });
+
+  // ==========================================================================
+  // 3. CARRITO LATERAL (SLIDE-OUT DRAWER)
   // ==========================================================================
   const openCart = () => {
     cartDrawer?.classList.add('active');
@@ -407,28 +561,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const product = productos.find(p => p.id === productId);
     if (!product) return;
 
-    const variantIndex = selectedVariants[productId] || 0;
-    const variant = product.variants[variantIndex] || product.variants[0];
+    // Talle seleccionado por el cliente en la tarjeta
+    const talleSeleccionado = selectedSizes[productId] || product.talles[0];
 
-    const existing = cart.find(item => item.id === productId && item.variantColor === variant.colorName);
+    // Buscar si ya existe el producto con ese mismo talle en el carrito
+    const existing = cart.find(item => item.id === productId && item.talle === talleSeleccionado);
 
     if (existing) {
       existing.quantity += 1;
     } else {
       cart.push({
         id: product.id,
-        name: product.name,
-        price: product.price,
-        image: variant.image,
-        categoryName: product.categoryName,
-        variantColor: variant.colorName,
-        variantHex: variant.hex,
+        nombre: product.nombre,
+        precio: product.precio,
+        imagen: product.imagen,
+        categoria: product.categoria,
+        talle: talleSeleccionado,
         quantity: 1
       });
     }
 
     saveCart();
-    openCart(); // Despliega el panel suavemente desde la derecha
+    openCart(); // Despliega el panel lateral suavemente
   };
 
   const changeQuantity = (index, delta) => {
@@ -448,7 +602,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const updateCartUI = () => {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const subtotal = cart.reduce((sum, item) => sum + (item.precio * item.quantity), 0);
 
     if (cartCounter) {
       cartCounter.textContent = `(${totalItems})`;
@@ -458,7 +612,7 @@ document.addEventListener('DOMContentLoaded', () => {
       cartSubtotal.textContent = formatPrice(subtotal);
     }
 
-    // Actualización de la Barra de Progreso de Envío Gratis
+    // Actualización de la barra de envío gratis
     if (freeShippingText && shippingProgressFill) {
       if (subtotal >= CONFIG.FREE_SHIPPING_THRESHOLD) {
         freeShippingText.innerHTML = '¡Felicitaciones! Tenés <strong>ENVÍO GRATIS</strong>';
@@ -471,6 +625,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    // Carrito vacío
     if (cart.length === 0) {
       isCheckoutStep = false;
       if (cartItemsContainer) {
@@ -478,7 +633,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="cart-empty-state">
             <i class="fa-solid fa-bag-shopping empty-cart-icon"></i>
             <p>Tu carrito está vacío</p>
-            <button id="btn-start-shopping" class="btn-secondary">Explorar Catálogo</button>
+            <button id="btn-start-shopping" class="btn-secondary">Explorar Colección</button>
           </div>
         `;
         document.getElementById('btn-start-shopping')?.addEventListener('click', closeCart);
@@ -487,24 +642,24 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Paso de Checkout Express por Email
+    // Vista de Checkout Express por Email
     if (isCheckoutStep) {
       renderExpressCheckoutForm(subtotal);
       if (cartFooter) cartFooter.style.display = 'none';
       return;
     }
 
-    // Vista Regular de Items en Carrito
+    // Vista de ítems en carrito
     if (cartFooter) cartFooter.style.display = 'flex';
 
     if (cartItemsContainer) {
       cartItemsContainer.innerHTML = cart.map((item, idx) => `
         <div class="cart-item" data-index="${idx}">
-          <img src="${item.image}" alt="${item.name}" class="cart-item-thumb">
+          <img src="${item.imagen}" alt="${item.nombre}" class="cart-item-thumb">
           <div class="cart-item-details">
-            <span class="cart-item-category">${item.categoryName} &bull; <strong>${item.variantColor}</strong></span>
-            <h4 class="cart-item-title">${item.name}</h4>
-            <span class="cart-item-price">${formatPrice(item.price * item.quantity)}</span>
+            <span class="cart-item-category">${item.categoria} &bull; <strong>Talle: ${item.talle}</strong></span>
+            <h4 class="cart-item-title">${item.nombre}</h4>
+            <span class="cart-item-price">${formatPrice(item.precio * item.quantity)}</span>
             <div class="cart-qty-control">
               <button class="qty-btn btn-qty-minus" data-index="${idx}" aria-label="Disminuir">-</button>
               <span class="qty-number">${item.quantity}</span>
@@ -530,7 +685,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ==========================================================================
-  // 3. FORMULARIO DE REGISTRO EXPRESS EN CHECKOUT + GOOGLE SHEETS + WHATSAPP
+  // 4. CHECKOUT EXPRESS -> GOOGLE SHEETS + PEDIDO DIRECTO POR WHATSAPP
   // ==========================================================================
   const renderExpressCheckoutForm = (subtotal) => {
     if (!cartItemsContainer) return;
@@ -586,7 +741,7 @@ document.addEventListener('DOMContentLoaded', () => {
               type="text" 
               id="checkout-address" 
               class="checkout-input" 
-              placeholder="Ej: Palermo, CABA / Córdoba"
+              placeholder="Ej: Palermo, CABA / Córdoba Capital"
               autocomplete="address-level2"
             >
           </div>
@@ -632,8 +787,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       submitBtn.disabled = true;
       submitBtn.style.opacity = '0.7';
-      submitBtn.innerHTML = '<span>Procesando pedido y registrando...</span>';
-      if (statusMsg) statusMsg.textContent = 'Enviando a Google Sheets y conectando con WhatsApp...';
+      submitBtn.innerHTML = '<span>Procesando pedido...</span>';
+      if (statusMsg) statusMsg.textContent = 'Guardando en base de datos y abriendo WhatsApp...';
 
       const orderPayload = {
         fecha: new Date().toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' }),
@@ -641,15 +796,15 @@ document.addEventListener('DOMContentLoaded', () => {
         email: email,
         telefono: phone,
         direccion: address || 'No especificada',
-        items: cart.map(i => `${i.quantity}x ${i.name} [Color: ${i.variantColor}]`).join(' | '),
+        items: cart.map(i => `${i.quantity}x ${i.nombre} (Talle: ${i.talle})`).join(' | '),
         total: subtotal,
         envioGratis: subtotal >= CONFIG.FREE_SHIPPING_THRESHOLD ? 'SÍ' : 'NO'
       };
 
-      // Guardar local y enviar a Google Sheets
+      // Guardar en respaldo local y enviar a Google Sheets
       await sendOrderToGoogleSheets(orderPayload);
 
-      // Enlace de WhatsApp
+      // Generar mensaje de WhatsApp
       const whatsappUrl = buildWhatsAppOrderLink({
         name,
         email,
@@ -659,11 +814,13 @@ document.addEventListener('DOMContentLoaded', () => {
         subtotal
       });
 
+      // Vaciar carrito
       cart = [];
       saveCart();
       isCheckoutStep = false;
       closeCart();
 
+      // Abrir WhatsApp con el pedido desglosado
       window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
     });
   };
@@ -683,13 +840,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
     } catch (err) {
-      console.warn('Aviso: Pedido resguardado localmente. Detalle Google Sheets:', err);
+      console.warn('Aviso: Pedido guardado localmente en historial:', err);
     }
   };
 
   const buildWhatsAppOrderLink = ({ name, email, phone, address, cartItems, subtotal }) => {
     const itemsList = cartItems.map(item => 
-      `• *${item.quantity}x* ${item.name}\n   └ Color: _${item.variantColor}_ | ${formatPrice(item.price * item.quantity)}`
+      `• *${item.quantity}x* ${item.nombre}\n   └ *Talle:* _${item.talle}_ | ${formatPrice(item.precio * item.quantity)}`
     ).join('\n');
 
     const shippingNotice = subtotal >= CONFIG.FREE_SHIPPING_THRESHOLD 
@@ -709,14 +866,14 @@ ${itemsList}
 
 💰 *TOTAL DEL PEDIDO:* ${formatPrice(subtotal)}
 ${shippingNotice}
-💳 *Opciones:* 3 o 6 Cuotas Sin Interés / Transferencia
+💳 *Forma de Pago:* 3 o 6 Cuotas Sin Interés / Transferencia
 ━━━━━━━━━━━━━━━━━━━━━━━━
-¡Hola Aromoda! Acabo de registrar mi orden en la tienda web y quisiera coordinar el pago y despacho.`;
+¡Hola Aromoda! Acabo de armar mi pedido en la web con mis talles y quisiera coordinar el pago y envío.`;
 
     return `https://wa.me/${CONFIG.WHATSAPP_PHONE}?text=${encodeURIComponent(rawMessage)}`;
   };
 
-  // Eventos de Carrito
+  // Eventos de apertura y cierre del carrito
   btnCheckout?.addEventListener('click', () => {
     if (cart.length === 0) return;
     isCheckoutStep = true;
@@ -729,58 +886,7 @@ ${shippingNotice}
   btnContinueShopping?.addEventListener('click', closeCart);
 
   // ==========================================================================
-  // 4. FILTRADO POR CATEGORÍAS & NAVEGACIÓN
-  // ==========================================================================
-  const setCategory = (cat) => {
-    currentCategory = cat;
-
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.category === cat);
-    });
-
-    renderCatalog();
-  };
-
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const cat = btn.dataset.category;
-      setCategory(cat);
-
-      if (headerNavLeft && headerNavLeft.classList.contains('mobile-open')) {
-        headerNavLeft.classList.remove('mobile-open');
-      }
-
-      const destSection = document.getElementById('catalogo');
-      if (destSection) {
-        destSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
-
-  document.querySelectorAll('.category-card').forEach(card => {
-    const handleCategoryClick = () => {
-      const cat = card.dataset.category;
-      if (cat) {
-        setCategory(cat);
-        const destSection = document.getElementById('catalogo');
-        if (destSection) {
-          destSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    };
-
-    card.addEventListener('click', handleCategoryClick);
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        handleCategoryClick();
-      }
-    });
-  });
-
-  // ==========================================================================
-  // 5. BÚSQUEDA INTERACTIVA SLIDE-DOWN & MENÚ MOBILE
+  // 5. BÚSQUEDA EN TIEMPO REAL & MENÚ MOBILE
   // ==========================================================================
   btnToggleSearch?.addEventListener('click', () => {
     if (searchDropdownBar) {
@@ -883,7 +989,7 @@ ${shippingNotice}
     }
   });
 
-  // Inicialización de Interfaz
+  // Carga inicial
   updateCartUI();
   renderCatalog();
 });
