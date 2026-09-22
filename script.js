@@ -517,484 +517,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dest) {
           dest.scrollIntoView({ behavior: 'smooth' });
         }
-      }
-    };
-
-    card.addEventListener('click', handleCategoryClick);
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        handleCategoryClick();
-      }
-    });
-  });
-
-  // ==========================================================================
-  // 3. CARRITO LATERAL (SLIDE-OUT DRAWER)
-  // ==========================================================================
-  const openCart = () => {
-    cartDrawer?.classList.add('active');
-    cartDrawerOverlay?.classList.add('active');
-    cartDrawer?.setAttribute('aria-hidden', 'false');
-    cartDrawerOverlay?.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeCart = () => {
-    cartDrawer?.classList.remove('active');
-    cartDrawerOverlay?.classList.remove('active');
-    cartDrawer?.setAttribute('aria-hidden', 'true');
-    cartDrawerOverlay?.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    setTimeout(() => {
-      isCheckoutStep = false;
-      updateCartUI();
-    }, 300);
-  };
-
-  const saveCart = () => {
-    localStorage.setItem('aromoda_cart', JSON.stringify(cart));
-    updateCartUI();
-  };
-
-  const addToCart = (productId) => {
-    const product = productos.find(p => p.id === productId);
-    if (!product) return;
-
-    // Talle seleccionado por el cliente en la tarjeta
-    const talleSeleccionado = selectedSizes[productId] || product.talles[0];
-
-    // Buscar si ya existe el producto con ese mismo talle en el carrito
-    const existing = cart.find(item => item.id === productId && item.talle === talleSeleccionado);
-
-    if (existing) {
-      existing.quantity += 1;
-    } else {
-      cart.push({
-        id: product.id,
-        nombre: product.nombre,
-        precio: product.precio,
-        imagen: product.imagen,
-        categoria: product.categoria,
-        talle: talleSeleccionado,
-        quantity: 1
-      });
-    }
-
-    saveCart();
-    openCart(); // Despliega el panel lateral suavemente
-  };
-
-  const changeQuantity = (index, delta) => {
-    if (!cart[index]) return;
-    cart[index].quantity += delta;
-    if (cart[index].quantity <= 0) {
-      cart.splice(index, 1);
-    }
-    saveCart();
-  };
-
-  const removeFromCart = (index) => {
-    if (!cart[index]) return;
-    cart.splice(index, 1);
-    saveCart();
-  };
-
-  const updateCartUI = () => {
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const subtotal = cart.reduce((sum, item) => sum + (item.precio * item.quantity), 0);
-
-    if (cartCounter) {
-      cartCounter.textContent = `(${totalItems})`;
-    }
-
-    if (cartSubtotal) {
-      cartSubtotal.textContent = formatPrice(subtotal);
-    }
-
-    // Actualización de la barra de envío gratis
-    if (freeShippingText && shippingProgressFill) {
-      if (subtotal >= CONFIG.FREE_SHIPPING_THRESHOLD) {
-        freeShippingText.innerHTML = '¡Felicitaciones! Tenés <strong>ENVÍO GRATIS</strong>';
-        shippingProgressFill.style.width = '100%';
-      } else {
-        const remaining = CONFIG.FREE_SHIPPING_THRESHOLD - subtotal;
-        const progressPercent = Math.min(100, Math.round((subtotal / CONFIG.FREE_SHIPPING_THRESHOLD) * 100));
-        freeShippingText.innerHTML = `Te faltan <strong>${formatPrice(remaining)}</strong> para el <strong>ENVÍO GRATIS</strong>`;
-        shippingProgressFill.style.width = `${progressPercent}%`;
-      }
-    }
-
-    // Carrito vacío
-    if (cart.length === 0) {
-      isCheckoutStep = false;
-      if (cartItemsContainer) {
-        cartItemsContainer.innerHTML = `
-          <div class="cart-empty-state">
-            <i class="fa-solid fa-bag-shopping empty-cart-icon"></i>
-            <p>Tu carrito está vacío</p>
-            <button id="btn-start-shopping" class="btn-secondary">Explorar Colección</button>
-          </div>
-        `;
-        document.getElementById('btn-start-shopping')?.addEventListener('click', closeCart);
-      }
-      if (cartFooter) cartFooter.style.display = 'none';
-      return;
-    }
-
-    // Vista de Checkout Express por Email
-    if (isCheckoutStep) {
-      renderExpressCheckoutForm(subtotal);
-      if (cartFooter) cartFooter.style.display = 'none';
-      return;
-    }
-
-    // Vista de ítems en carrito
-    if (cartFooter) cartFooter.style.display = 'flex';
-
-    if (cartItemsContainer) {
-      cartItemsContainer.innerHTML = cart.map((item, idx) => `
-        <div class="cart-item" data-index="${idx}">
-          <img src="${item.imagen}" alt="${item.nombre}" class="cart-item-thumb">
-          <div class="cart-item-details">
-            <span class="cart-item-category">${item.categoria} &bull; <strong>Talle: ${item.talle}</strong></span>
-            <h4 class="cart-item-title">${item.nombre}</h4>
-            <span class="cart-item-price">${formatPrice(item.precio * item.quantity)}</span>
-            <div class="cart-qty-control">
-              <button class="qty-btn btn-qty-minus" data-index="${idx}" aria-label="Disminuir">-</button>
-              <span class="qty-number">${item.quantity}</span>
-              <button class="qty-btn btn-qty-plus" data-index="${idx}" aria-label="Aumentar">+</button>
-            </div>
-          </div>
-          <button class="btn-remove-item" data-index="${idx}" aria-label="Eliminar prenda">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>
-      `).join('');
-
-      cartItemsContainer.querySelectorAll('.btn-qty-minus').forEach(b => {
-        b.addEventListener('click', () => changeQuantity(parseInt(b.dataset.index, 10), -1));
-      });
-      cartItemsContainer.querySelectorAll('.btn-qty-plus').forEach(b => {
-        b.addEventListener('click', () => changeQuantity(parseInt(b.dataset.index, 10), 1));
-      });
-      cartItemsContainer.querySelectorAll('.btn-remove-item').forEach(b => {
-        b.addEventListener('click', () => removeFromCart(parseInt(b.dataset.index, 10)));
-      });
-    }
-  };
-
-  // ==========================================================================
-  // 4. CHECKOUT EXPRESS -> GOOGLE SHEETS + PEDIDO DIRECTO POR WHATSAPP
-  // ==========================================================================
-  const renderExpressCheckoutForm = (subtotal) => {
-    if (!cartItemsContainer) return;
-
-    cartItemsContainer.innerHTML = `
-      <div class="checkout-express-box">
-        <div class="checkout-express-header">
-          <span class="checkout-express-badge">PASO FINAL &bull; CHECKOUT</span>
-          <h3 class="checkout-express-title">Registro Express</h3>
-          <p class="checkout-express-desc">Ingresá tus datos para registrar tu orden y coordinar el pago por WhatsApp.</p>
-        </div>
-
-        <form id="express-checkout-form" class="checkout-express-form">
-          <div class="checkout-field">
-            <label for="checkout-name" class="checkout-label">Nombre y Apellido *</label>
-            <input 
-              type="text" 
-              id="checkout-name" 
-              class="checkout-input" 
-              placeholder="Ej: Valentina Morales" 
-              required
-              autocomplete="name"
-            >
-          </div>
-
-          <div class="checkout-field">
-            <label for="checkout-email" class="checkout-label">Correo Electrónico (15% OFF) *</label>
-            <input 
-              type="email" 
-              id="checkout-email" 
-              class="checkout-input" 
-              placeholder="tuemail@ejemplo.com" 
-              required
-              autocomplete="email"
-            >
-          </div>
-
-          <div class="checkout-field">
-            <label for="checkout-phone" class="checkout-label">WhatsApp de Contacto *</label>
-            <input 
-              type="tel" 
-              id="checkout-phone" 
-              class="checkout-input" 
-              placeholder="Ej: 11 5555-6789" 
-              required
-              autocomplete="tel"
-            >
-          </div>
-
-          <div class="checkout-field">
-            <label for="checkout-address" class="checkout-label">Localidad / Provincia de Envío</label>
-            <input 
-              type="text" 
-              id="checkout-address" 
-              class="checkout-input" 
-              placeholder="Ej: Palermo, CABA / Córdoba Capital"
-              autocomplete="address-level2"
-            >
-          </div>
-
-          <div class="checkout-summary-mini">
-            <span>Total a abonar:</span>
-            <strong>${formatPrice(subtotal)}</strong>
-          </div>
-
-          <button type="submit" id="btn-submit-order" class="btn-whatsapp-checkout">
-            <i class="fa-brands fa-whatsapp"></i>
-            <span>Confirmar Pedido vía WhatsApp</span>
-          </button>
-
-          <p id="checkout-status-msg" class="checkout-status-msg"></p>
-
-          <button type="button" id="btn-back-to-cart" class="btn-back-to-cart">
-            &larr; Volver a revisar prendas en carrito
-          </button>
-        </form>
-      </div>
-    `;
-
-    document.getElementById('btn-back-to-cart')?.addEventListener('click', () => {
-      isCheckoutStep = false;
-      updateCartUI();
-    });
-
-    document.getElementById('express-checkout-form')?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const name = document.getElementById('checkout-name').value.trim();
-      const email = document.getElementById('checkout-email').value.trim();
-      const phone = document.getElementById('checkout-phone').value.trim();
-      const address = document.getElementById('checkout-address').value.trim();
-      const submitBtn = document.getElementById('btn-submit-order');
-      const statusMsg = document.getElementById('checkout-status-msg');
-
-      if (!name || !email || !phone) {
-        alert('Por favor completá tu nombre, correo y WhatsApp.');
-        return;
-      }
-
-      submitBtn.disabled = true;
-      submitBtn.style.opacity = '0.7';
-      submitBtn.innerHTML = '<span>Procesando pedido...</span>';
-      if (statusMsg) statusMsg.textContent = 'Guardando en base de datos y abriendo WhatsApp...';
-
-      const orderPayload = {
-        fecha: new Date().toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' }),
-        cliente: name,
-        email: email,
-        telefono: phone,
-        direccion: address || 'No especificada',
-        items: cart.map(i => `${i.quantity}x ${i.nombre} (Talle: ${i.talle})`).join(' | '),
-        total: subtotal,
-        envioGratis: subtotal >= CONFIG.FREE_SHIPPING_THRESHOLD ? 'SÍ' : 'NO'
-      };
-
-      // Guardar en respaldo local y enviar a Google Sheets
-      await sendOrderToGoogleSheets(orderPayload);
-
-      // Generar mensaje de WhatsApp
-      const whatsappUrl = buildWhatsAppOrderLink({
-        name,
-        email,
-        phone,
-        address,
-        cartItems: cart,
-        subtotal
-      });
-
-      // Vaciar carrito
-      cart = [];
-      saveCart();
-      isCheckoutStep = false;
-      closeCart();
-
-      // Abrir WhatsApp con el pedido desglosado
-      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-    });
-  };
-
-  const sendOrderToGoogleSheets = async (orderData) => {
-    try {
-      const ordersHistory = JSON.parse(localStorage.getItem('aromoda_orders_history') || '[]');
-      ordersHistory.push(orderData);
-      localStorage.setItem('aromoda_orders_history', JSON.stringify(ordersHistory));
-
-      if (CONFIG.GOOGLE_SHEETS_API_URL && !CONFIG.GOOGLE_SHEETS_API_URL.includes('DEMO')) {
-        await fetch(CONFIG.GOOGLE_SHEETS_API_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(orderData)
-        });
-      }
-    } catch (err) {
-      console.warn('Aviso: Pedido guardado localmente en historial:', err);
-    }
-  };
-
-  const buildWhatsAppOrderLink = ({ name, email, phone, address, cartItems, subtotal }) => {
-    const itemsList = cartItems.map(item => 
-      `• *${item.quantity}x* ${item.nombre}\n   └ *Talle:* _${item.talle}_ | ${formatPrice(item.precio * item.quantity)}`
-    ).join('\n');
-
-    const shippingNotice = subtotal >= CONFIG.FREE_SHIPPING_THRESHOLD 
-      ? '✅ *¡ENVÍO BONIFICADO (GRATIS)!*' 
-      : '🚚 *Envío a coordinar por Correo Argentino*';
-
-    const rawMessage = 
-`✨ *NUEVO PEDIDO - AROMODA* ✨
-━━━━━━━━━━━━━━━━━━━━━━━━
-👤 *Cliente:* ${name}
-📧 *Email:* ${email}
-📱 *WhatsApp:* ${phone}
-📍 *Entrega:* ${address || 'A coordinar'}
-━━━━━━━━━━━━━━━━━━━━━━━━
-🛍️ *PRENDAS SOLICITADAS:*
-${itemsList}
-
-💰 *TOTAL DEL PEDIDO:* ${formatPrice(subtotal)}
-${shippingNotice}
-💳 *Forma de Pago:* 3 o 6 Cuotas Sin Interés / Transferencia
-━━━━━━━━━━━━━━━━━━━━━━━━
-¡Hola Aromoda! Acabo de armar mi pedido en la web con mis talles y quisiera coordinar el pago y envío.`;
-
-    return `https://wa.me/${CONFIG.WHATSAPP_PHONE}?text=${encodeURIComponent(rawMessage)}`;
-  };
-
-  // Eventos de apertura y cierre del carrito
-  btnCheckout?.addEventListener('click', () => {
-    if (cart.length === 0) return;
-    isCheckoutStep = true;
-    updateCartUI();
-  });
-
-  btnOpenCart?.addEventListener('click', openCart);
-  btnCloseCart?.addEventListener('click', closeCart);
-  cartDrawerOverlay?.addEventListener('click', closeCart);
-  btnContinueShopping?.addEventListener('click', closeCart);
-
-  // ==========================================================================
-  // 5. BÚSQUEDA EN TIEMPO REAL & MENÚ MOBILE
-  // ==========================================================================
-  btnToggleSearch?.addEventListener('click', () => {
-    if (searchDropdownBar) {
-      searchDropdownBar.classList.toggle('active');
-      if (searchDropdownBar.classList.contains('active')) {
-        searchInput?.focus();
-      }
-    }
-  });
-
-  btnCloseSearch?.addEventListener('click', () => {
-    if (searchDropdownBar) {
-      searchDropdownBar.classList.remove('active');
-    }
-  });
-
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-      searchQuery = e.target.value.trim();
-      renderCatalog();
-    });
-  }
-
-  btnMobileMenu?.addEventListener('click', () => {
-    if (headerNavLeft) {
-      headerNavLeft.classList.toggle('mobile-open');
-    }
-  });
-
-  // ==========================================================================
-  // 6. MODAL DE REGISTRO CLUB AROMODA (15% OFF)
-  // ==========================================================================
-  const openRegisterModal = () => {
-    registerModalOverlay?.classList.add('active');
-    registerModalOverlay?.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    document.getElementById('register-name')?.focus();
-  };
-
-  const closeRegisterModal = () => {
-    registerModalOverlay?.classList.remove('active');
-    registerModalOverlay?.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  };
-
-  btnOpenRegister?.addEventListener('click', openRegisterModal);
-  btnCloseRegister?.addEventListener('click', closeRegisterModal);
-  registerModalOverlay?.addEventListener('click', (e) => {
-    if (e.target === registerModalOverlay) closeRegisterModal();
-  });
-
-  registerForm?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('register-name').value;
-    const email = document.getElementById('register-email').value;
-
-    alert(`¡Bienvenida al Club Aromoda, ${name}!\nTu cupón exclusivo del 15% OFF ha sido enviado a: ${email}`);
-    registerForm.reset();
-    closeRegisterModal();
-  });
-
-  // Newsletter Footer
-  newsletterForm?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const emailInput = document.getElementById('newsletter-email');
-    if (emailInput && emailInput.value) {
-      alert(`¡Gracias por unirte a Aromoda!\nTe enviamos tu código con 15% OFF a: ${emailInput.value}`);
-      newsletterForm.reset();
-    }
-  });
-
-  // Seguimiento Oficial Correo Argentino
-  if (trackingForm) {
-    trackingForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const rawCode = trackingCodeInput?.value.trim().toUpperCase();
-
-      if (!rawCode) {
-        alert('Por favor ingresá tu código de guía de Correo Argentino.');
-        return;
-      }
-
-      const officialUrl = 'https://www.correoargentino.com.ar/formularios/ondnc';
-      const confirmRedirect = confirm(
-        `Vas a consultar el envío con guía "${rawCode}".\n\n¿Deseás ingresar a la plataforma de seguimiento de Correo Argentino?`
-      );
-
-      if (confirmRedirect) {
-        window.open(officialUrl, '_blank', 'noopener,noreferrer');
-      }
-    });
-  }
-
-  // Tecla Escape para cerrar drawers y modales
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closeCart();
-      closeRegisterModal();
-      if (searchDropdownBar) searchDropdownBar.classList.remove('active');
-    }
-  });
-
-  // Carga inicial
-  updateCartUI();
-  renderCatalog();
-});
-// ==========================================================================
-// LÓGICA DE LA VISTA DE DETALLE DE PRODUCTO (PDP) - AROMODA
+    // ==========================================================================
+// LÓGICA DE LA VISTA DE DETALLE DE PRODUCTO (PDP) - AROMODA (ADAPTADA)
 // ==========================================================================
 
 // Variable global para almacenar el talle seleccionado en la PDP
@@ -1002,92 +526,114 @@ let selectedSizePDP = null;
 
 /**
  * Muestra la vista de detalle para un producto específico.
- * @param {Object} product - Objeto con id, title, category, price, description, images, sizes, etc.
+ * @param {Object} product - Objeto de la lista "productos"
  */
 function openProductDetail(product) {
-  // 1. Ocultar la sección principal del catálogo
+  // 1. Ocultar el catálogo y secciones secundarias
   const catalogSection = document.getElementById('catalogo');
+  const heroSection = document.getElementById('inicio');
+  const shopCategory = document.getElementById('shop-by-category');
+  const pressSection = document.querySelector('.brand-press-section');
+
   if (catalogSection) catalogSection.classList.add('hidden');
+  if (heroSection) heroSection.classList.add('hidden');
+  if (shopCategory) shopCategory.classList.add('hidden');
+  if (pressSection) pressSection.classList.add('hidden');
 
-  // 2. Cargar datos básicos de la prenda
-  document.getElementById('pdp-category').innerText = product.category || 'COLECCIÓN';
-  document.getElementById('pdp-title').innerText = product.title || product.name;
-  document.getElementById('pdp-price').innerText = `$${product.price.toLocaleString('es-AR')}`;
-  document.getElementById('pdp-description').innerText = product.description || 'Prenda exclusiva confeccionada con textiles nobles y calce perfecto.';
+  // 2. Cargar datos básicos adaptados a las propiedades de tu array 'productos'
+  const categoryEl = document.getElementById('pdp-category');
+  const titleEl = document.getElementById('pdp-title');
+  const priceEl = document.getElementById('pdp-price');
+  const descEl = document.getElementById('pdp-description');
 
-  // 3. Cargar imagen principal
+  if (categoryEl) categoryEl.innerText = (product.categoria || 'COLECCIÓN').toUpperCase();
+  if (titleEl) titleEl.innerText = product.nombre || product.title;
+  if (priceEl) priceEl.innerText = `$${product.precio ? product.precio.toLocaleString('es-AR') : '0'}`;
+  if (descEl) descEl.innerText = product.descripcion || 'Prenda exclusiva confeccionada con textiles nobles y calce perfecto.';
+
+  // 3. Cargar imagen principal y galería
   const mainImg = document.getElementById('pdp-main-image');
-  const imageUrls = product.images && product.images.length > 0 
-    ? product.images 
-    : [product.image || 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=600&q=80'];
+  const imageUrls = product.imagenes && product.imagenes.length > 0 
+    ? product.imagenes 
+    : [product.imagen];
   
-  mainImg.src = imageUrls[0];
+  if (mainImg) mainImg.src = imageUrls[0];
 
   // 4. Cargar miniaturas de la galería
   const thumbnailsContainer = document.getElementById('pdp-thumbnails');
-  thumbnailsContainer.innerHTML = '';
-  
-  if (imageUrls.length > 1) {
-    imageUrls.forEach((imgUrl, index) => {
-      const thumb = document.createElement('img');
-      thumb.src = imgUrl;
-      thumb.alt = `${product.title} - vista ${index + 1}`;
-      thumb.className = `pdp-thumb ${index === 0 ? 'active' : ''}`;
-      
-      thumb.addEventListener('click', () => {
-        mainImg.src = imgUrl;
-        document.querySelectorAll('.pdp-thumb').forEach(t => t.classList.remove('active'));
-        thumb.classList.add('active');
+  if (thumbnailsContainer) {
+    thumbnailsContainer.innerHTML = '';
+    
+    if (imageUrls.length > 1) {
+      imageUrls.forEach((imgUrl, index) => {
+        const thumb = document.createElement('img');
+        thumb.src = imgUrl;
+        thumb.alt = `${product.nombre} - vista ${index + 1}`;
+        thumb.className = `pdp-thumb ${index === 0 ? 'active' : ''}`;
+        
+        thumb.addEventListener('click', () => {
+          if (mainImg) mainImg.src = imgUrl;
+          document.querySelectorAll('.pdp-thumb').forEach(t => t.classList.remove('active'));
+          thumb.classList.add('active');
+        });
+        
+        thumbnailsContainer.appendChild(thumb);
       });
-      
-      thumbnailsContainer.appendChild(thumb);
-    });
+    }
   }
 
   // 5. Cargar botones de talles
   const sizesContainer = document.getElementById('pdp-sizes-options');
-  sizesContainer.innerHTML = '';
-  selectedSizePDP = null; // Reiniciar selección
-  document.getElementById('size-error').classList.add('hidden');
+  const sizeError = document.getElementById('size-error');
+  
+  if (sizesContainer) {
+    sizesContainer.innerHTML = '';
+    selectedSizePDP = null; // Reiniciar selección
+    if (sizeError) sizeError.classList.add('hidden');
 
-  const availableSizes = product.sizes || ['XS', 'S', 'M', 'L', 'XL'];
-  availableSizes.forEach(size => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'size-btn';
-    btn.innerText = size;
+    const availableSizes = product.talles || product.sizes || ['S', 'M', 'L'];
+    availableSizes.forEach(size => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'size-btn';
+      btn.innerText = size;
 
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      selectedSizePDP = size;
-      document.getElementById('size-error').classList.add('hidden');
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedSizePDP = size;
+        if (sizeError) sizeError.classList.add('hidden');
+      });
+
+      sizesContainer.appendChild(btn);
     });
+  }
 
-    sizesContainer.appendChild(btn);
-  });
-
-  // 6. Configurar el botón "Agregar al Carrito" de la vista de detalle
+  // 6. Configurar el botón "Agregar al Carrito" de la PDP
   const btnAddToCartPDP = document.getElementById('btn-add-to-cart-detail');
-  btnAddToCartPDP.onclick = () => {
-    if (!selectedSizePDP) {
-      document.getElementById('size-error').classList.remove('hidden');
-      return;
-    }
-    
-    // Llamada a la función del carrito existente (puedes adaptarla según el nombre de tu función)
-    if (typeof addToCart === 'function') {
-      addToCart(product, selectedSizePDP);
-    } else {
-      console.log(`Producto agregado: ${product.title} - Talle: ${selectedSizePDP}`);
-      alert(`¡${product.title} (Talle: ${selectedSizePDP}) agregado al carrito!`);
-    }
-  };
+  if (btnAddToCartPDP) {
+    btnAddToCartPDP.onclick = () => {
+      if (!selectedSizePDP) {
+        if (sizeError) sizeError.classList.remove('hidden');
+        return;
+      }
+      
+      // Conectar con la lista global de talles seleccionados de tu app.js
+      if (typeof selectedSizes !== 'undefined') {
+        selectedSizes[product.id] = selectedSizePDP;
+      }
+      
+      // Llamar a tu función addToCart enviando el ID del producto
+      if (typeof addToCart === 'function') {
+        addToCart(product.id);
+      }
+    };
+  }
 
   // 7. Cargar prendas similares
   renderSimilarProducts(product);
 
-  // 8. Mostrar el contenedor PDP y hacer scroll hacia arriba
+  // 8. Mostrar la sección de detalle
   const pdpSection = document.getElementById('view-product-detail');
   if (pdpSection) {
     pdpSection.classList.remove('hidden');
@@ -1096,14 +642,20 @@ function openProductDetail(product) {
 }
 
 /**
- * Cierra la vista de detalle y vuelve a mostrar el catálogo.
+ * Cierra la vista de detalle y vuelve a mostrar el catálogo completo.
  */
 function closeProductDetail() {
   const pdpSection = document.getElementById('view-product-detail');
   const catalogSection = document.getElementById('catalogo');
+  const heroSection = document.getElementById('inicio');
+  const shopCategory = document.getElementById('shop-by-category');
+  const pressSection = document.querySelector('.brand-press-section');
 
   if (pdpSection) pdpSection.classList.add('hidden');
   if (catalogSection) catalogSection.classList.remove('hidden');
+  if (heroSection) heroSection.classList.remove('hidden');
+  if (shopCategory) shopCategory.classList.remove('hidden');
+  if (pressSection) pressSection.classList.remove('hidden');
 }
 
 /**
@@ -1116,21 +668,23 @@ function renderSimilarProducts(currentProduct) {
 
   similarGrid.innerHTML = '';
 
-  // Si tienes un array global de productos (ej: "productsList" o "productsData")
-  if (typeof productsData !== 'undefined' && Array.isArray(productsData)) {
-    const similar = productsData.filter(p => p.category === currentProduct.category && p.id !== currentProduct.id).slice(0, 3);
+  // Usar la lista "productos" definida al principio de tu script
+  if (typeof productos !== 'undefined' && Array.isArray(productos)) {
+    const similar = productos
+      .filter(p => p.categoria === currentProduct.categoria && p.id !== currentProduct.id)
+      .slice(0, 3);
 
     similar.forEach(item => {
       const card = document.createElement('div');
       card.className = 'category-card';
       card.style.cursor = 'pointer';
       card.innerHTML = `
-        <div class="category-img-container" style="height: 250px;">
-          <img src="${item.image || item.images[0]}" alt="${item.title}">
+        <div class="category-img-container" style="height: 220px; overflow: hidden;">
+          <img src="${item.imagen}" alt="${item.nombre}" style="width:100%; height:100%; object-fit:cover;">
         </div>
         <div class="category-card-info" style="padding: 10px;">
-          <h4 style="margin: 0; font-size: 0.9rem;">${item.title}</h4>
-          <span style="font-weight: 700; font-size: 0.85rem;">$${item.price.toLocaleString('es-AR')}</span>
+          <h4 style="margin: 0; font-size: 0.85rem;">${item.nombre}</h4>
+          <span style="font-weight: 700; font-size: 0.85rem;">$${item.precio.toLocaleString('es-AR')}</span>
         </div>
       `;
       card.addEventListener('click', () => openProductDetail(item));
@@ -1150,7 +704,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnBack.addEventListener('click', closeProductDetail);
   }
 
-  // Evento para la Calculadora de Envío
+  // Evento para la Calculadora de Envío CP 6720
   const btnCalcShipping = document.getElementById('btn-calc-shipping');
   const cpInput = document.getElementById('cp-input');
   const shippingResult = document.getElementById('shipping-result');
@@ -1166,12 +720,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Cálculo estimado (Ejemplo San Andrés de Giles CP 6720 / Nacional)
       if (cp === '6720') {
-        shippingResult.innerHTML = '✨ <strong>Envío Local (Giles):</strong> Llega hoy o mañana. Gratis a partir de $80.000.';
+        shippingResult.innerHTML = '📍 <strong>Envío Local (San Andrés de Giles):</strong> Entrega en el día o retiro sin cargo. ¡Gratis en compras superiores a $80.000!';
         shippingResult.style.color = '#2e7d32';
       } else {
-        shippingResult.innerHTML = '🚚 <strong>Envío a Domicilio (Correo Argentino):</strong> 2 a 4 días hábiles ($4.500).';
+        shippingResult.innerHTML = '🚚 <strong>Envío Nacional (Correo Argentino):</strong> 2 a 4 días hábiles ($4.500).';
         shippingResult.style.color = '#333';
       }
 
