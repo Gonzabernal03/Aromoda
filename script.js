@@ -704,7 +704,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnBack.addEventListener('click', closeProductDetail);
   }
 
-  // Evento para la Calculadora de Envío CP 6720
+  // Evento para la Calculadora de Envío
   const btnCalcShipping = document.getElementById('btn-calc-shipping');
   const cpInput = document.getElementById('cp-input');
   const shippingResult = document.getElementById('shipping-result');
@@ -721,7 +721,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (cp === '6720') {
-        shippingResult.innerHTML = '📍 <strong>Envío Local (San Andrés de Giles):</strong> Entrega en el día o retiro sin cargo. ¡Gratis en compras superiores a $80.000!';
+        shippingResult.innerHTML = '📍 <strong>Envío Local:</strong> Entrega en el día o retiro sin cargo. ¡Gratis en compras superiores a $80.000!';
         shippingResult.style.color = '#2e7d32';
       } else {
         shippingResult.innerHTML = '🚚 <strong>Envío Nacional (Correo Argentino):</strong> 2 a 4 días hábiles ($4.500).';
