@@ -220,10 +220,74 @@
       </div>
     </section>
   </main>
+<!-- ==========================================================================
+       5.1 VISTA DE DETALLE DE PRODUCTO (PDP) - AROMODA (AGREGADO)
+       ========================================================================== -->
+  <section id="view-product-detail" class="product-detail-section hidden">
+    <div class="detail-container">
+      <button class="btn-back-catalog" id="btn-back-catalog">
+        <i class="fa-solid fa-arrow-left"></i> Volver al catálogo
+      </button>
+      
+      <div class="pdp-layout">
+        <!-- Galería de fotos -->
+        <div class="pdp-gallery">
+          <div class="gallery-main-container">
+            <img id="pdp-main-image" src="" alt="Prenda Aromoda">
+          </div>
+          <div class="gallery-thumbnails" id="pdp-thumbnails">
+            <!-- Miniaturas inyectadas vía script.js -->
+          </div>
+        </div>
 
+        <!-- Información del producto -->
+        <div class="pdp-info">
+          <span class="pdp-category" id="pdp-category">CATEGORÍA</span>
+          <h1 class="pdp-title" id="pdp-title">Nombre de la Prenda</h1>
+          <p class="pdp-price" id="pdp-price">$0</p>
+          <p class="pdp-description" id="pdp-description">Descripción de la prenda...</p>
+
+          <!-- Selector de Talle -->
+          <div class="pdp-size-selector">
+            <label>SELECCIONÁ TU TALLE:</label>
+            <div class="sizes-options" id="pdp-sizes-options">
+              <!-- Talles inyectados vía script.js -->
+            </div>
+            <span class="size-error-msg hidden" id="size-error">Por favor, seleccioná un talle antes de agregar.</span>
+          </div>
+
+          <!-- Calculadora de Envío por Código Postal -->
+          <div class="pdp-shipping-calculator">
+            <label for="cp-input"><i class="fa-solid fa-truck-fast"></i> CALCULAR COSTO Y TIEMPO DE ENVÍO:</label>
+            <div class="cp-input-group">
+              <input type="number" id="cp-input" placeholder="Ingresá tu CP (Ej: 6720)">
+              <button type="button" id="btn-calc-shipping" class="btn-shipping-calc">Calcular</button>
+            </div>
+            <div class="shipping-result hidden" id="shipping-result"></div>
+          </div>
+
+          <!-- Botón de Acción -->
+          <div class="pdp-actions">
+            <button class="btn-primary btn-add-cart-detail" id="btn-add-to-cart-detail">
+              <i class="fa-solid fa-bag-shopping"></i> Agregar al Carrito
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección de Prendas Similares -->
+      <div class="similar-products-section">
+        <h3 class="similar-title">PRENDAS SIMILARES QUE TE PUEDEN GUSTAR</h3>
+        <div class="similar-grid" id="similar-products-grid">
+          <!-- Tarjetas similares inyectadas vía script.js -->
+        </div>
+      </div>
+    </div>
+  </section>
   <!-- ==========================================================================
        6. SECCIÓN DE PRENSA / FRASE DE MARCA
        ========================================================================== -->
+       
   <section class="brand-press-section">
     <div class="press-container">
       <span class="press-tag">MANIFIESTO AROMODA</span>
@@ -322,7 +386,7 @@
       <div class="footer-col footer-social-payments-col">
         <h4 class="footer-heading">Contacto & Redes</h4>
         <div class="social-links-minimal">
-          <a href="https://wa.me/5491155556789?text=Hola%20Aromoda,%20quisiera%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer" class="social-minimal-link" aria-label="WhatsApp">
+          <a href="https://wa.me/2325590916?text=Hola%20Aromoda,%20quisiera%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer" class="social-minimal-link" aria-label="WhatsApp">
             <i class="fa-brands fa-whatsapp"></i>
             <span>WhatsApp Directo</span>
           </a>

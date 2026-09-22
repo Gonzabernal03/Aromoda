@@ -2008,3 +2008,275 @@ input, button, select, textarea {
     grid-template-columns: 1fr;
   }
 }
+/* ==========================================================================
+   VISTA DE DETALLE DE PRODUCTO (PDP) - AROMODA
+   ========================================================================== */
+
+.hidden {
+  display: none !important;
+}
+
+.product-detail-section {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.btn-back-catalog {
+  background: transparent;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 25px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #111;
+  transition: opacity 0.2s ease;
+}
+
+.btn-back-catalog:hover {
+  opacity: 0.7;
+}
+
+.pdp-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+/* Galería de fotos */
+.pdp-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.gallery-main-container {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background-color: #f5f5f5;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.gallery-main-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery-thumbnails {
+  display: flex;
+  gap: 10px;
+}
+
+.pdp-thumb {
+  width: 70px;
+  height: 90px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 3px;
+  transition: border-color 0.2s ease;
+}
+
+.pdp-thumb.active,
+.pdp-thumb:hover {
+  border-color: #111;
+}
+
+/* Panel de Información */
+.pdp-info {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.pdp-category {
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #777;
+  font-weight: 600;
+}
+
+.pdp-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #111;
+  margin: 0;
+}
+
+.pdp-price {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111;
+  margin: 0;
+}
+
+.pdp-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #444;
+}
+
+/* Selector de Talles */
+.pdp-size-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.pdp-size-selector label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.sizes-options {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.size-btn {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+}
+
+.size-btn:hover {
+  border-color: #111;
+}
+
+.size-btn.selected {
+  background-color: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+.size-error-msg {
+  color: #d9534f;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Calculadora de Envíos */
+.pdp-shipping-calculator {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 4px;
+  border: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.pdp-shipping-calculator label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cp-input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.cp-input-group input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.btn-shipping-calc {
+  padding: 8px 16px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.shipping-result {
+  font-size: 0.85rem;
+  color: #2e7d32;
+  font-weight: 600;
+  padding-top: 5px;
+}
+
+/* Botón Agregar al Carrito */
+.btn-add-cart-detail {
+  width: 100%;
+  padding: 14px;
+  background-color: #111;
+  color: #fff;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-add-cart-detail:hover {
+  background-color: #333;
+}
+
+/* Prendas Similares */
+.similar-products-section {
+  border-top: 1px solid #eee;
+  padding-top: 40px;
+}
+
+.similar-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.similar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* Adaptación Mobile */
+@media (max-width: 768px) {
+  .pdp-layout {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+}

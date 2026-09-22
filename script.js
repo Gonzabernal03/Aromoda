@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   const CONFIG = {
     // Tu número de WhatsApp de contacto (código de país + número sin '+' ni espacios)
-    WHATSAPP_PHONE: '5491155556789',
+    WHATSAPP_PHONE: '+542325590916',
 
     // Monto mínimo para bonificar el envío gratuito
     FREE_SHIPPING_THRESHOLD: 80000,
@@ -992,4 +992,190 @@ ${shippingNotice}
   // Carga inicial
   updateCartUI();
   renderCatalog();
+});
+// ==========================================================================
+// LÓGICA DE LA VISTA DE DETALLE DE PRODUCTO (PDP) - AROMODA
+// ==========================================================================
+
+// Variable global para almacenar el talle seleccionado en la PDP
+let selectedSizePDP = null;
+
+/**
+ * Muestra la vista de detalle para un producto específico.
+ * @param {Object} product - Objeto con id, title, category, price, description, images, sizes, etc.
+ */
+function openProductDetail(product) {
+  // 1. Ocultar la sección principal del catálogo
+  const catalogSection = document.getElementById('catalogo');
+  if (catalogSection) catalogSection.classList.add('hidden');
+
+  // 2. Cargar datos básicos de la prenda
+  document.getElementById('pdp-category').innerText = product.category || 'COLECCIÓN';
+  document.getElementById('pdp-title').innerText = product.title || product.name;
+  document.getElementById('pdp-price').innerText = `$${product.price.toLocaleString('es-AR')}`;
+  document.getElementById('pdp-description').innerText = product.description || 'Prenda exclusiva confeccionada con textiles nobles y calce perfecto.';
+
+  // 3. Cargar imagen principal
+  const mainImg = document.getElementById('pdp-main-image');
+  const imageUrls = product.images && product.images.length > 0 
+    ? product.images 
+    : [product.image || 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=600&q=80'];
+  
+  mainImg.src = imageUrls[0];
+
+  // 4. Cargar miniaturas de la galería
+  const thumbnailsContainer = document.getElementById('pdp-thumbnails');
+  thumbnailsContainer.innerHTML = '';
+  
+  if (imageUrls.length > 1) {
+    imageUrls.forEach((imgUrl, index) => {
+      const thumb = document.createElement('img');
+      thumb.src = imgUrl;
+      thumb.alt = `${product.title} - vista ${index + 1}`;
+      thumb.className = `pdp-thumb ${index === 0 ? 'active' : ''}`;
+      
+      thumb.addEventListener('click', () => {
+        mainImg.src = imgUrl;
+        document.querySelectorAll('.pdp-thumb').forEach(t => t.classList.remove('active'));
+        thumb.classList.add('active');
+      });
+      
+      thumbnailsContainer.appendChild(thumb);
+    });
+  }
+
+  // 5. Cargar botones de talles
+  const sizesContainer = document.getElementById('pdp-sizes-options');
+  sizesContainer.innerHTML = '';
+  selectedSizePDP = null; // Reiniciar selección
+  document.getElementById('size-error').classList.add('hidden');
+
+  const availableSizes = product.sizes || ['XS', 'S', 'M', 'L', 'XL'];
+  availableSizes.forEach(size => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'size-btn';
+    btn.innerText = size;
+
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedSizePDP = size;
+      document.getElementById('size-error').classList.add('hidden');
+    });
+
+    sizesContainer.appendChild(btn);
+  });
+
+  // 6. Configurar el botón "Agregar al Carrito" de la vista de detalle
+  const btnAddToCartPDP = document.getElementById('btn-add-to-cart-detail');
+  btnAddToCartPDP.onclick = () => {
+    if (!selectedSizePDP) {
+      document.getElementById('size-error').classList.remove('hidden');
+      return;
+    }
+    
+    // Llamada a la función del carrito existente (puedes adaptarla según el nombre de tu función)
+    if (typeof addToCart === 'function') {
+      addToCart(product, selectedSizePDP);
+    } else {
+      console.log(`Producto agregado: ${product.title} - Talle: ${selectedSizePDP}`);
+      alert(`¡${product.title} (Talle: ${selectedSizePDP}) agregado al carrito!`);
+    }
+  };
+
+  // 7. Cargar prendas similares
+  renderSimilarProducts(product);
+
+  // 8. Mostrar el contenedor PDP y hacer scroll hacia arriba
+  const pdpSection = document.getElementById('view-product-detail');
+  if (pdpSection) {
+    pdpSection.classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+/**
+ * Cierra la vista de detalle y vuelve a mostrar el catálogo.
+ */
+function closeProductDetail() {
+  const pdpSection = document.getElementById('view-product-detail');
+  const catalogSection = document.getElementById('catalogo');
+
+  if (pdpSection) pdpSection.classList.add('hidden');
+  if (catalogSection) catalogSection.classList.remove('hidden');
+}
+
+/**
+ * Renderiza prendas de la misma categoría en la parte inferior de la PDP.
+ * @param {Object} currentProduct 
+ */
+function renderSimilarProducts(currentProduct) {
+  const similarGrid = document.getElementById('similar-products-grid');
+  if (!similarGrid) return;
+
+  similarGrid.innerHTML = '';
+
+  // Si tienes un array global de productos (ej: "productsList" o "productsData")
+  if (typeof productsData !== 'undefined' && Array.isArray(productsData)) {
+    const similar = productsData.filter(p => p.category === currentProduct.category && p.id !== currentProduct.id).slice(0, 3);
+
+    similar.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'category-card';
+      card.style.cursor = 'pointer';
+      card.innerHTML = `
+        <div class="category-img-container" style="height: 250px;">
+          <img src="${item.image || item.images[0]}" alt="${item.title}">
+        </div>
+        <div class="category-card-info" style="padding: 10px;">
+          <h4 style="margin: 0; font-size: 0.9rem;">${item.title}</h4>
+          <span style="font-weight: 700; font-size: 0.85rem;">$${item.price.toLocaleString('es-AR')}</span>
+        </div>
+      `;
+      card.addEventListener('click', () => openProductDetail(item));
+      similarGrid.appendChild(card);
+    });
+  }
+}
+
+// ==========================================================================
+// INICIALIZACIÓN DE EVENTOS EN LA PDP
+// ==========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+
+  // Evento para el botón "Volver al catálogo"
+  const btnBack = document.getElementById('btn-back-catalog');
+  if (btnBack) {
+    btnBack.addEventListener('click', closeProductDetail);
+  }
+
+  // Evento para la Calculadora de Envío
+  const btnCalcShipping = document.getElementById('btn-calc-shipping');
+  const cpInput = document.getElementById('cp-input');
+  const shippingResult = document.getElementById('shipping-result');
+
+  if (btnCalcShipping && cpInput && shippingResult) {
+    btnCalcShipping.addEventListener('click', () => {
+      const cp = cpInput.value.trim();
+
+      if (!cp) {
+        shippingResult.innerText = 'Por favor, ingresá un código postal válido.';
+        shippingResult.style.color = '#d9534f';
+        shippingResult.classList.remove('hidden');
+        return;
+      }
+
+      // Cálculo estimado (Ejemplo San Andrés de Giles CP 6720 / Nacional)
+      if (cp === '6720') {
+        shippingResult.innerHTML = '✨ <strong>Envío Local (Giles):</strong> Llega hoy o mañana. Gratis a partir de $80.000.';
+        shippingResult.style.color = '#2e7d32';
+      } else {
+        shippingResult.innerHTML = '🚚 <strong>Envío a Domicilio (Correo Argentino):</strong> 2 a 4 días hábiles ($4.500).';
+        shippingResult.style.color = '#333';
+      }
+
+      shippingResult.classList.remove('hidden');
+    });
+  }
 });
