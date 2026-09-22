@@ -1,815 +1,238 @@
-/* ═══════════════════════════════════════
-   VARIABLES & RESET
-═══════════════════════════════════════ */
-:root {
-  --clr-bg:        #0f0f0f;
-  --clr-surface:   #1a1a1a;
-  --clr-card:      #222222;
-  --clr-border:    #2e2e2e;
-  --clr-accent:    #e8c068;
-  --clr-accent2:   #c49a3a;
-  --clr-text:      #f0f0f0;
-  --clr-muted:     #888888;
-  --clr-danger:    #e05252;
-  --clr-success:   #52c87e;
-  --radius:        12px;
-  --shadow:        0 4px 24px rgba(0,0,0,.5);
-  --transition:    .25s cubic-bezier(.4,0,.2,1);
-  --font:          'Segoe UI', system-ui, sans-serif;
-}
-
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: var(--font);
-  background: var(--clr-bg);
-  color: var(--clr-text);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-a { color: inherit; text-decoration: none; }
-button { cursor: pointer; border: none; background: none; font-family: inherit; }
-img { display: block; max-width: 100%; }
-ul { list-style: none; }
-
-/* SCROLLBAR */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--clr-bg); }
-::-webkit-scrollbar-thumb { background: var(--clr-border); border-radius: 3px; }
-
-/* ═══════════════════════════════════════
-   BANNER PROMO
-═══════════════════════════════════════ */
-.promo-banner {
-  background: linear-gradient(90deg, var(--clr-accent2), var(--clr-accent), var(--clr-accent2));
-  color: var(--clr-bg);
-  text-align: center;
-  padding: .65rem 1rem;
-  font-size: .8rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-/* ═══════════════════════════════════════
-   HEADER / NAV
-═══════════════════════════════════════ */
-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2rem;
-  height: 64px;
-  background: rgba(15,15,15,.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--clr-border);
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: 800;
-  letter-spacing: 3px;
-  color: var(--clr-accent);
-  text-transform: uppercase;
-}
-
-.logo span { color: var(--clr-text); }
-
-nav ul { display: flex; gap: 2rem; }
-
-nav a {
-  font-size: .875rem;
-  font-weight: 500;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--clr-muted);
-  transition: color var(--transition);
-  position: relative;
-}
-
-nav a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px; left: 0;
-  width: 0; height: 2px;
-  background: var(--clr-accent);
-  transition: width var(--transition);
-}
-
-nav a:hover { color: var(--clr-text); }
-nav a:hover::after { width: 100%; }
-
-.header-actions { display: flex; gap: 1rem; align-items: center; }
-
-.icon-btn {
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--clr-surface);
-  border: 1px solid var(--clr-border);
-  color: var(--clr-text);
-  font-size: 1.1rem;
-  transition: all var(--transition);
-  position: relative;
-}
-
-.icon-btn:hover { border-color: var(--clr-accent); color: var(--clr-accent); }
-
-.cart-badge {
-  position: absolute;
-  top: -4px; right: -4px;
-  background: var(--clr-accent);
-  color: var(--clr-bg);
-  font-size: .65rem;
-  font-weight: 800;
-  width: 18px; height: 18px;
-  border-radius: 50%;
-  display: none;
-  align-items: center;
-  justify-content: center;
-}
-
-.hamburger { display: none; flex-direction: column; gap: 5px; }
-.hamburger span {
-  display: block; width: 22px; height: 2px;
-  background: var(--clr-text); border-radius: 2px;
-  transition: all var(--transition);
-}
-
-/* ═══════════════════════════════════════
-   HERO
-═══════════════════════════════════════ */
-.hero {
-  position: relative;
-  min-height: 90vh;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 50%, #1a1008 100%);
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 60% 60% at 70% 40%, rgba(232,192,104,.12) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(232,192,104,.06) 0%, transparent 70%);
-}
-
-.hero-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(232,192,104,.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(232,192,104,.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  max-width: 700px;
-  padding: 3rem 4rem;
-}
-
-.hero-label {
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  font-size: .75rem;
-  font-weight: 600;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--clr-accent);
-  margin-bottom: 1.5rem;
-}
-
-.hero-label::before {
-  content: '';
-  display: block;
-  width: 30px; height: 1px;
-  background: var(--clr-accent);
-}
-
-.hero h1 {
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: -1px;
-  margin-bottom: 1.5rem;
-}
-
-.hero h1 em { font-style: normal; color: var(--clr-accent); }
-
-.hero p {
-  font-size: 1.1rem;
-  color: var(--clr-muted);
-  line-height: 1.7;
-  max-width: 480px;
-  margin-bottom: 2.5rem;
-}
-
-.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  padding: .85rem 2rem;
-  border-radius: 50px;
-  font-size: .875rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: all var(--transition);
-}
-
-.btn-primary { background: var(--clr-accent); color: var(--clr-bg); }
-.btn-primary:hover {
-  background: var(--clr-accent2);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(232,192,104,.3);
-}
-
-.btn-outline { background: transparent; color: var(--clr-text); border: 1px solid var(--clr-border); }
-.btn-outline:hover {
-  border-color: var(--clr-accent);
-  color: var(--clr-accent);
-  transform: translateY(-2px);
-}
-
-.hero-stats {
-  position: absolute;
-  right: 4rem; bottom: 4rem;
-  display: flex;
-  gap: 3rem;
-}
-
-.stat { text-align: center; }
-.stat strong { display: block; font-size: 2rem; font-weight: 800; color: var(--clr-accent); }
-.stat span { font-size: .75rem; color: var(--clr-muted); text-transform: uppercase; letter-spacing: 1px; }
-
-/* ═══════════════════════════════════════
-   CATEGORÍAS
-═══════════════════════════════════════ */
-.categories {
-  padding: 4rem 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.section-title {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  margin-bottom: 2.5rem;
-}
-
-.section-title h2 { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.5px; }
-.section-title .accent { color: var(--clr-accent); }
-.section-title a {
-  margin-left: auto;
-  font-size: .8rem;
-  color: var(--clr-muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: color var(--transition);
-}
-.section-title a:hover { color: var(--clr-accent); }
-
-.cat-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 1rem;
-}
-
-.cat-card {
-  background: var(--clr-card);
-  border: 1px solid var(--clr-border);
-  border-radius: var(--radius);
-  padding: 1.5rem 1rem;
-  text-align: center;
-  cursor: pointer;
-  transition: all var(--transition);
-}
-
-.cat-card:hover,
-.cat-card.active {
-  border-color: var(--clr-accent);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(232,192,104,.12);
-}
-
-.cat-card.active .cat-icon { color: var(--clr-accent); }
-.cat-icon { font-size: 2rem; margin-bottom: .75rem; transition: color var(--transition); }
-.cat-card h3 { font-size: .875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: .25rem; }
-.cat-card small { font-size: .75rem; color: var(--clr-muted); }
-
-/* ═══════════════════════════════════════
-   CATÁLOGO Y CONTROLES
-═══════════════════════════════════════ */
-#catalog {
-  padding: 2rem 2rem 5rem;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.catalog-controls {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-bottom: 2rem;
-}
-
-.search-box {
-  flex: 1;
-  min-width: 200px;
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  background: var(--clr-surface);
-  border: 1px solid var(--clr-border);
-  border-radius: 50px;
-  padding: .6rem 1.25rem;
-  transition: border-color var(--transition);
-}
-
-.search-box:focus-within { border-color: var(--clr-accent); }
-
-.search-box input {
-  background: none;
-  border: none;
-  outline: none;
-  color: var(--clr-text);
-  font-size: .9rem;
-  font-family: inherit;
-  width: 100%;
-}
-
-.search-box input::placeholder { color: var(--clr-muted); }
-
-.sort-select {
-  background: var(--clr-surface);
-  border: 1px solid var(--clr-border);
-  color: var(--clr-text);
-  padding: .6rem 1.25rem;
-  border-radius: 50px;
-  font-family: inherit;
-  font-size: .875rem;
-  outline: none;
-  cursor: pointer;
-  transition: border-color var(--transition);
-}
-
-.sort-select:focus { border-color: var(--clr-accent); }
-.results-count { font-size: .8rem; color: var(--clr-muted); margin-left: auto; }
-
-/* ═══════════════════════════════════════
-   TARJETAS DE PRODUCTO
-═══════════════════════════════════════ */
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.5rem;
-}
-
-.product-card {
-  background: var(--clr-card);
-  border: 1px solid var(--clr-border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition: all var(--transition);
-  display: flex;
-  flex-direction: column;
-}
-
-.product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow);
-}
-
-.product-img-wrap {
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 3/4;
-  background: var(--clr-surface);
-}
-
-.product-img-wrap img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  transition: transform .5s ease;
-}
-
-.product-card:hover .product-img-wrap img { transform: scale(1.05); }
-
-.product-badge {
-  position: absolute;
-  top: .75rem; left: .75rem;
-  padding: .3rem .7rem;
-  border-radius: 50px;
-  font-size: .7rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-.badge-new  { background: var(--clr-accent); color: var(--clr-bg); }
-.badge-sale { background: var(--clr-danger); color: #fff; }
-.badge-hot  { background: #e07852; color: #fff; }
-
-.product-actions {
-  position: absolute;
-  bottom: .75rem; right: .75rem;
-  display: flex;
-  flex-direction: column;
-  gap: .5rem;
-  opacity: 0;
-  transform: translateX(10px);
-  transition: all var(--transition);
-}
-
-.product-card:hover .product-actions { opacity: 1; transform: translateX(0); }
-
-.action-btn {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(15,15,15,.85);
-  backdrop-filter: blur(6px);
-  border: 1px solid var(--clr-border);
-  color: var(--clr-text);
-  font-size: .9rem;
-  transition: all var(--transition);
-}
-
-.action-btn:hover { background: var(--clr-accent); color: var(--clr-bg); border-color: var(--clr-accent); }
-.action-btn.liked { color: var(--clr-danger); }
-
-.product-info {
-  padding: 1rem 1.25rem 1.25rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.product-category {
-  font-size: .7rem;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--clr-accent);
-  margin-bottom: .35rem;
-}
-
-.product-name  { font-size: 1rem; font-weight: 700; margin-bottom: .35rem; line-height: 1.3; }
-.product-desc  { font-size: .8rem; color: var(--clr-muted); line-height: 1.5; flex: 1; margin-bottom: 1rem; }
-
-.product-colors { display: flex; gap: .4rem; margin-bottom: 1rem; }
-
-.color-dot {
-  width: 16px; height: 16px;
-  border-radius: 50%;
-  border: 2px solid transparent;
-  cursor: pointer;
-  transition: border-color var(--transition);
-}
-
-.color-dot:hover,
-.color-dot.active { border-color: var(--clr-text); }
-
-.product-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: .5rem;
-}
-
-.product-price { display: flex; flex-direction: column; }
-.price-current { font-size: 1.2rem; font-weight: 800; color: var(--clr-accent); }
-.price-old     { font-size: .8rem; color: var(--clr-muted); text-decoration: line-through; }
-
-.add-to-cart {
-  display: flex;
-  align-items: center;
-  gap: .4rem;
-  background: var(--clr-accent);
-  color: var(--clr-bg);
-  padding: .6rem 1rem;
-  border-radius: 50px;
-  font-size: .8rem;
-  font-weight: 700;
-  letter-spacing: .5px;
-  text-transform: uppercase;
-  transition: all var(--transition);
-  white-space: nowrap;
-}
-
-.add-to-cart:hover { background: var(--clr-accent2); transform: scale(1.03); }
-.add-to-cart:active { transform: scale(.97); }
-
-.no-results { display: none; grid-column: 1/-1; text-align: center; padding: 4rem 2rem; }
-.no-results .emoji { font-size: 3rem; margin-bottom: 1rem; }
-.no-results p { color: var(--clr-muted); }
-
-/* ═══════════════════════════════════════
-   CARRITO (DRAWER)
-═══════════════════════════════════════ */
-.cart-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.6);
-  z-index: 200;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--transition);
-}
-
-.cart-overlay.open { opacity: 1; pointer-events: all; }
-
-.cart-drawer {
-  position: fixed;
-  top: 0; right: 0;
-  width: min(420px, 100vw);
-  height: 100vh;
-  background: var(--clr-surface);
-  border-left: 1px solid var(--clr-border);
-  z-index: 201;
-  display: flex;
-  flex-direction: column;
-  transform: translateX(100%);
-  transition: transform var(--transition);
-}
-
-.cart-drawer.open { transform: translateX(0); }
-
-.cart-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem;
-  border-bottom: 1px solid var(--clr-border);
-}
-
-.cart-header h2 { font-size: 1.1rem; font-weight: 700; }
-
-.close-btn {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--clr-card);
-  border: 1px solid var(--clr-border);
-  color: var(--clr-text);
-  font-size: 1.1rem;
-  transition: all var(--transition);
-}
-
-.close-btn:hover { border-color: var(--clr-danger); color: var(--clr-danger); }
-
-.cart-items { flex: 1; overflow-y: auto; padding: 1rem; }
-
-.cart-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  color: var(--clr-muted);
-  gap: 1rem;
-  text-align: center;
-}
-
-.cart-empty .emoji { font-size: 3rem; }
-
-.cart-item {
-  display: flex;
-  gap: 1rem;
-  padding: 1rem;
-  border-radius: var(--radius);
-  background: var(--clr-card);
-  border: 1px solid var(--clr-border);
-  margin-bottom: .75rem;
-  transition: all var(--transition);
-}
-
-.cart-item:hover { border-color: var(--clr-accent); }
-
-.cart-item-img {
-  width: 70px; height: 90px;
-  border-radius: 8px;
-  background: var(--clr-surface);
-  flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 2.5rem;
-}
-
-.cart-item-info { flex: 1; min-width: 0; }
-
-.cart-item-name {
-  font-weight: 600;
-  font-size: .9rem;
-  margin-bottom: .25rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.cart-item-price { font-size: .85rem; color: var(--clr-accent); font-weight: 700; margin-bottom: .5rem; }
-
-.cart-item-qty { display: flex; align-items: center; gap: .5rem; }
-
-.qty-btn {
-  width: 26px; height: 26px;
-  border-radius: 50%;
-  border: 1px solid var(--clr-border);
-  background: var(--clr-surface);
-  color: var(--clr-text);
-  font-size: 1rem;
-  display: flex; align-items: center; justify-content: center;
-  transition: all var(--transition);
-}
-
-.qty-btn:hover { border-color: var(--clr-accent); color: var(--clr-accent); }
-.qty-display { font-size: .85rem; font-weight: 700; min-width: 20px; text-align: center; }
-
-.cart-item-remove {
-  color: var(--clr-muted);
-  font-size: 1rem;
-  display: flex; align-items: flex-start;
-  padding: .25rem;
-  border-radius: 4px;
-  transition: color var(--transition);
-  align-self: flex-start;
-}
-
-.cart-item-remove:hover { color: var(--clr-danger); }
-
-.cart-footer { border-top: 1px solid var(--clr-border); padding: 1.5rem; }
-.cart-totals { margin-bottom: 1.25rem; }
-
-.cart-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: .875rem;
-  margin-bottom: .5rem;
-  color: var(--clr-muted);
-}
-
-.cart-row.total {
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: var(--clr-text);
-  padding-top: .75rem;
-  border-top: 1px solid var(--clr-border);
-  margin-top: .5rem;
-}
-
-.cart-row.total .price { color: var(--clr-accent); }
-
-.checkout-btn {
-  width: 100%;
-  background: var(--clr-accent);
-  color: var(--clr-bg);
-  padding: 1rem;
-  border-radius: 50px;
-  font-size: .9rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: all var(--transition);
-  display: flex; align-items: center; justify-content: center; gap: .5rem;
-}
-
-.checkout-btn:hover {
-  background: var(--clr-accent2);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(232,192,104,.3);
-}
-
-/* ═══════════════════════════════════════
-   TOAST NOTIFICATIONS
-═══════════════════════════════════════ */
-.toast-container {
-  position: fixed;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 300;
-  display: flex;
-  flex-direction: column;
-  gap: .5rem;
-  pointer-events: none;
-}
-
-.toast {
-  background: var(--clr-surface);
-  border: 1px solid var(--clr-border);
-  color: var(--clr-text);
-  padding: .75rem 1.5rem;
-  border-radius: 50px;
-  font-size: .875rem;
-  font-weight: 500;
-  display: flex; align-items: center; gap: .5rem;
-  box-shadow: var(--shadow);
-  animation: toastIn .3s ease forwards;
-  white-space: nowrap;
-}
-
-.toast.success { border-color: var(--clr-success); }
-.toast.out     { animation: toastOut .3s ease forwards; }
-
-@keyframes toastIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes toastOut {
-  from { opacity: 1; transform: translateY(0); }
-  to   { opacity: 0; transform: translateY(20px); }
-}
-
-/* ═══════════════════════════════════════
-   FOOTER
-═══════════════════════════════════════ */
-footer {
-  background: var(--clr-surface);
-  border-top: 1px solid var(--clr-border);
-  padding: 4rem 2rem 2rem;
-}
-
-.footer-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 3rem;
-  max-width: 1400px;
-  margin: 0 auto 3rem;
-}
-
-.footer-brand .logo { margin-bottom: 1rem; }
-.footer-brand p { font-size: .875rem; color: var(--clr-muted); line-height: 1.7; }
-
-.footer-col h4 {
-  font-size: .75rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--clr-text);
-  margin-bottom: 1.25rem;
-}
-
-.footer-col ul { display: flex; flex-direction: column; gap: .75rem; }
-.footer-col a  { font-size: .875rem; color: var(--clr-muted); transition: color var(--transition); }
-.footer-col a:hover { color: var(--clr-accent); }
-
-.footer-bottom {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding-top: 2rem;
-  border-top: 1px solid var(--clr-border);
-  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
-  gap: 1rem;
-  font-size: .8rem;
-  color: var(--clr-muted);
-}
-
-.payment-icons { display: flex; gap: .5rem; }
-
-.pay-icon {
-  background: var(--clr-card);
-  border: 1px solid var(--clr-border);
-  border-radius: 4px;
-  padding: .25rem .6rem;
-  font-size: .7rem;
-  font-weight: 700;
-}
-
-/* ═══════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════ */
-@media (max-width: 900px) {
-  nav { display: none; }
-  .hamburger { display: flex; }
-  .hero-content { padding: 2rem; }
-  .hero-stats { right: 2rem; bottom: 2rem; gap: 1.5rem; }
-  .footer-grid { grid-template-columns: 1fr 1fr; }
-}
-
-@media (max-width: 600px) {
-  header { padding: 0 1rem; }
-  .hero h1 { font-size: 2.2rem; }
-  .hero-stats { position: static; padding: 1rem 2rem; background: rgba(0,0,0,.3); }
-  .hero { flex-direction: column; }
-  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .footer-bottom { flex-direction: column; text-align: center; }
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aromoda | Ropa — San Andrés de Giles</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- BANNER -->
+  <div class="promo-bar">
+    <span>📦 Envíos por Correo Argentino a todo el país</span>
+    <span class="sep">·</span>
+    <span>📍 San Andrés de Giles, Bs As</span>
+    <span class="sep">·</span>
+    <span>📲 Pedidos por WhatsApp e Instagram</span>
+  </div>
+
+  <!-- HEADER -->
+  <header id="header">
+    <div class="header-inner">
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+      <a href="#" class="logo"><span class="logo-aro">ARO</span><span class="logo-moda">MODA</span></a>
+      <nav id="nav">
+        <ul>
+          <li><a href="#inicio" onclick="closeNav()">Inicio</a></li>
+          <li><a href="#catalogo" onclick="closeNav()">Catálogo</a></li>
+          <li><a href="#envios" onclick="closeNav()">Envíos</a></li>
+          <li><a href="#contacto" onclick="closeNav()">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="header-right">
+        <a href="https://www.instagram.com/aromoda65" target="_blank" class="social-btn ig" title="Instagram">📸</a>
+        <a href="https://www.facebook.com/aromodaaromoda" target="_blank" class="social-btn fb" title="Facebook">👍</a>
+        <button class="cart-icon-btn" id="cartToggle">
+          🛒 <span class="cart-badge" id="cartBadge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">✦ Nueva Colección Primavera–Verano 2026</p>
+      <h1>Tu moda,<br><em>tu estilo.</em></h1>
+      <p class="hero-sub">Ropa de calidad desde San Andrés de Giles.<br>Envíos a todo el país por Correo Argentino.</p>
+      <div class="hero-btns">
+        <a href="#catalogo" class="btn btn-primary">Ver Catálogo</a>
+        <a href="https://wa.me/549TUNUMERO?text=Hola!%20Vi%20Aromoda%20y%20quiero%20consultar." target="_blank" class="btn btn-wa">💬 WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORÍAS -->
+  <section class="cats-section">
+    <div class="container">
+      <div class="section-header"><h2>Categorías</h2><p>Encontrá lo que buscás</p></div>
+      <div class="cats-grid">
+        <div class="cat-pill active" data-cat="todos" onclick="filterCat(this)">✨ Todos</div>
+        <div class="cat-pill" data-cat="remeras" onclick="filterCat(this)">👕 Remeras</div>
+        <div class="cat-pill" data-cat="pantalones" onclick="filterCat(this)">👖 Pantalones</div>
+        <div class="cat-pill" data-cat="vestidos" onclick="filterCat(this)">👗 Vestidos</div>
+        <div class="cat-pill" data-cat="camperas" onclick="filterCat(this)">🧥 Camperas</div>
+        <div class="cat-pill" data-cat="buzos" onclick="filterCat(this)">🧶 Buzos</div>
+        <div class="cat-pill" data-cat="conjuntos" onclick="filterCat(this)">👚 Conjuntos</div>
+        <div class="cat-pill" data-cat="accesorios" onclick="filterCat(this)">👜 Accesorios</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO -->
+  <section class="catalog-section" id="catalogo">
+    <div class="container">
+      <div class="catalog-toolbar">
+        <div class="search-wrap">
+          🔍 <input type="text" id="searchInput" placeholder="Buscar..." oninput="applyFilters()" />
+        </div>
+        <select class="sort-sel" id="sortSelect" onchange="applyFilters()">
+          <option value="default">Ordenar</option>
+          <option value="price-asc">Menor precio</option>
+          <option value="price-desc">Mayor precio</option>
+          <option value="name-asc">A – Z</option>
+          <option value="new">Más nuevos</option>
+        </select>
+        <span class="count-label" id="resultsCount"></span>
+      </div>
+      <div class="product-grid" id="productGrid">
+        <div class="no-results" id="noResults" style="display:none"><p>🔍 Sin resultados.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENVÍOS -->
+  <section class="shipping-section" id="envios">
+    <div class="container">
+      <div class="section-header light"><h2>📦 Calculá tu Envío</h2><p>Correo Argentino a todo el país</p></div>
+      <div class="shipping-grid">
+
+        <div class="shipping-calc">
+          <h3>Calculadora de envío</h3>
+          <div class="form-group">
+            <label>Código postal destino</label>
+            <input type="text" id="cpDestino" placeholder="Ej: 1000" maxlength="8" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Peso (gramos)</label>
+              <input type="number" id="pesoEnvio" placeholder="Ej: 500" min="1" />
+            </div>
+            <div class="form-group">
+              <label>Tipo de envío</label>
+              <select id="tipoEnvio">
+                <option value="clasica">Encomienda Clásica</option>
+                <option value="prioritaria">Prioritaria</option>
+                <option value="sucursal">A sucursal</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-primary full" onclick="calcularEnvio()">Calcular</button>
+          <div class="shipping-result" id="shippingResult" style="display:none"></div>
+          <p class="shipping-note">⚠️ Estimación orientativa. Confirmá en <a href="https://www.correoargentino.com.ar" target="_blank">Correo Argentino</a>.</p>
+        </div>
+
+        <div class="shipping-info">
+          <div class="info-card"><span class="info-icon">🏠</span><div><h4>A domicilio</h4><p>3–7 días hábiles.</p></div></div>
+          <div class="info-card"><span class="info-icon">🏢</span><div><h4>A sucursal</h4><p>Opción más económica.</p></div></div>
+          <div class="info-card"><span class="info-icon">📍</span><div><h4>Retiro en local</h4><p>San Andrés de Giles. Coordinás por WhatsApp.</p></div></div>
+          <div class="info-card"><span class="info-icon">💳</span><div><h4>Formas de pago</h4><p>Transferencia · MercadoPago · Efectivo.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="contact-section" id="contacto">
+    <div class="container">
+      <div class="section-header"><h2>Contacto</h2><p>¡Hablemos! Respondemos rápido 💬</p></div>
+      <div class="contact-grid">
+        <a href="https://wa.me/549TUNUMERO?text=Hola!%20Quiero%20consultar%20sobre%20Aromoda." target="_blank" class="contact-card wa">
+          <div class="cc-icon">💬</div><div><h4>WhatsApp</h4><p>Consultas y pedidos</p></div>
+        </a>
+        <a href="https://www.instagram.com/aromoda65" target="_blank" class="contact-card ig">
+          <div class="cc-icon">📸</div><div><h4>Instagram</h4><p>@aromoda65</p></div>
+        </a>
+        <a href="https://www.facebook.com/aromodaaromoda" target="_blank" class="contact-card fb">
+          <div class="cc-icon">👍</div><div><h4>Facebook</h4><p>aromodaaromoda</p></div>
+        </a>
+        <div class="contact-card loc">
+          <div class="cc-icon">📍</div><div><h4>Ubicación</h4><p>San Andrés de Giles, Bs As</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="logo"><span class="logo-aro">ARO</span><span class="logo-moda">MODA</span></div>
+        <p>Tienda de ropa en San Andrés de Giles. Envíos a todo el país.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/aromoda65" target="_blank">📸 @aromoda65</a>
+          <a href="https://www.facebook.com/aromodaaromoda" target="_blank">👍 aromodaaromoda</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Tienda</h4>
+        <ul>
+          <li><a href="#catalogo">Catálogo</a></li>
+          <li><a href="#envios">Envíos</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Ayuda</h4>
+        <ul>
+          <li><a href="#envios">Guía de talles</a></li>
+          <li><a href="#envios">Cambios y devoluciones</a></li>
+          <li><a href="https://www.correoargentino.com.ar" target="_blank">Seguir mi envío</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Aromoda · San Andrés de Giles</span>
+      <span>Hecho con ❤️ en Argentina 🇦🇷</span>
+    </div>
+  </footer>
+
+  <!-- CARRITO -->
+  <div class="overlay" id="cartOverlay" onclick="toggleCart()"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="drawer-header">
+      <h2>🛒 Tu Carrito</h2>
+      <button class="close-drawer" onclick="toggleCart()">✕</button>
+    </div>
+    <div class="cart-body" id="cartBody">
+      <div class="cart-empty" id="cartEmpty">
+        <p style="font-size:3rem">🛍️</p>
+        <p>Tu carrito está vacío.</p>
+      </div>
+    </div>
+    <div class="cart-foot" id="cartFoot" style="display:none">
+      <div class="cart-rows">
+        <div class="cart-row-line"><span>Subtotal</span><span id="subTotal">$0</span></div>
+        <div class="cart-row-line"><span>Envío</span><span id="shipLabel">A calcular</span></div>
+        <div class="cart-row-line total"><span>Total</span><span id="grandTotal">$0</span></div>
+      </div>
+      <a href="#envios" class="btn btn-outline full" onclick="toggleCart()">📦 Calcular envío</a>
+      <button class="btn btn-wa full" onclick="sendWhatsApp()">💬 Pedir por WhatsApp</button>
+    </div>
+  </aside>
+
+  <!-- MODAL TALLE -->
+  <div class="overlay" id="modalOverlay" onclick="closeModal()"></div>
+  <div class="size-modal" id="sizeModal">
+    <div class="modal-head">
+      <h3 id="modalTitle">Elegir talle</h3>
+      <button onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="size-picker" id="sizePicker"></div>
+      <div class="modal-product-info" id="modalInfo"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-primary full" onclick="confirmAddToCart()">🛒 Agregar al carrito</button>
+    </div>
+  </div>
+
+  <!-- TOASTS -->
+  <div class="toasts" id="toasts"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
