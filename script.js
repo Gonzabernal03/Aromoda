@@ -1,362 +1,1421 @@
-/* ══════════════════════════════════
-   PRODUCTOS DE AROMODA
-   → Editá nombre, precio, talles, etc.
-══════════════════════════════════ */
+/* =========================================================
+   AROMODA - JAVASCRIPT
+   ========================================================= */
+
+
+/* =========================================================
+   CONFIGURACIÓN
+   ========================================================= */
+
+const WHATSAPP_NUMBER = "5492325590916";
+
+
+/* =========================================================
+   PRODUCTOS
+   ========================================================= */
+
 const PRODUCTS = [
-  { id:1,  name:"Remera Básica Algodón",     cat:"remeras",    badge:"nuevo",  price:8500,  old:null,   desc:"100% algodón peinado. Corte recto unisex. Lavado a máquina.", sizes:["XS","S","M","L","XL","XXL"], emoji:"👕", isNew:true,  pesoG:250 },
-  { id:2,  name:"Remera Oversize Estampada", cat:"remeras",    badge:"hot",    price:11500, old:null,   desc:"Estampa exclusiva Aromoda. Tela 180g. Corte amplio.",           sizes:["S","M","L","XL"],           emoji:"👕", isNew:false, pesoG:280 },
-  { id:3,  name:"Remera Manga Larga",        cat:"remeras",    badge:null,     price:9800,  old:null,   desc:"Térmica suave. Ideal para entretiempo. Escote redondo.",        sizes:["XS","S","M","L","XL"],      emoji:"👕", isNew:false, pesoG:300 },
-  { id:4,  name:"Jean Skinny Azul",          cat:"pantalones", badge:"nuevo",  price:28500, old:34000,  desc:"Denim elástico 98% algodón. Corte skinny. Lavado stone.",       sizes:["38","40","42","44","46","48"], emoji:"👖", isNew:true,  pesoG:700 },
-  { id:5,  name:"Jean Mom Fit",              cat:"pantalones", badge:"hot",    price:31000, old:null,   desc:"Tiro alto. Corte mom. Elastizado para mayor comodidad.",        sizes:["38","40","42","44","46"],    emoji:"👖", isNew:false, pesoG:720 },
-  { id:6,  name:"Pantalón Cargo Beige",      cat:"pantalones", badge:null,     price:24500, old:29000,  desc:"Gabardina liviana. Múltiples bolsillos. Corte recto.",          sizes:["S","M","L","XL","XXL"],     emoji:"👖", isNew:false, pesoG:600 },
-  { id:7,  name:"Jogger Deportivo",          cat:"pantalones", badge:"oferta", price:18000, old:24000,  desc:"Frisa liviana. Puños ajustados. Cordón en cintura.",            sizes:["XS","S","M","L","XL","XXL"], emoji:"👖", isNew:false, pesoG:450 },
-  { id:8,  name:"Vestido Midi Floral",       cat:"vestidos",   badge:"nuevo",  price:34000, old:null,   desc:"Tela fluida estampada. Manga corta. Ideal para el calor.",      sizes:["XS","S","M","L","XL"],      emoji:"👗", isNew:true,  pesoG:350 },
-  { id:9,  name:"Vestido Camisero",          cat:"vestidos",   badge:null,     price:29500, old:null,   desc:"Lino–viscosa. Botonera delantera. Cinturón incluido.",          sizes:["S","M","L","XL"],           emoji:"👗", isNew:false, pesoG:380 },
-  { id:10, name:"Vestido Mini Lencero",      cat:"vestidos",   badge:"hot",    price:27000, old:32000,  desc:"Satén brillante. Tirantes finos. Diseño elegante.",             sizes:["XS","S","M","L"],           emoji:"👗", isNew:false, pesoG:200 },
-  { id:11, name:"Campera Bomber Negra",      cat:"camperas",   badge:"oferta", price:52000, old:69000,  desc:"Exterior impermeable. Interior polar suave. Bolsillos con cierre.", sizes:["S","M","L","XL","XXL"], emoji:"🧥", isNew:false, pesoG:900 },
-  { id:12, name:"Campera de Jean",           cat:"camperas",   badge:null,     price:47000, old:null,   desc:"Denim clásico. Cuello botón. Bolsillos delanteros.",            sizes:["S","M","L","XL"],           emoji:"🧥", isNew:false, pesoG:850 },
-  { id:13, name:"Campera Rompeviento",       cat:"camperas",   badge:"nuevo",  price:38500, old:null,   desc:"Impermeable liviana. Capucha desmontable. Ideal trekking.",     sizes:["S","M","L","XL","XXL"],     emoji:"🧥", isNew:true,  pesoG:500 },
-  { id:14, name:"Buzo Canguro Unisex",       cat:"buzos",      badge:"nuevo",  price:21000, old:null,   desc:"Frisa interior. Bolsillo canguro. Capucha con cordón.",         sizes:["XS","S","M","L","XL","XXL"], emoji:"🧶", isNew:true,  pesoG:600 },
-  { id:15, name:"Buzo Crop con Capucha",     cat:"buzos",      badge:"hot",    price:19500, old:null,   desc:"Corte crop. Frisa suave. Combiná con jogger o jean.",           sizes:["XS","S","M","L"],           emoji:"🧶", isNew:false, pesoG:420 },
-  { id:16, name:"Sweater Tejido Oversize",   cat:"buzos",      badge:null,     price:23000, old:27000,  desc:"Lana acrílica. Punto grueso. Múltiples colores disponibles.",   sizes:["Único (S–L)","XL–XXL"],    emoji:"🧶", isNew:false, pesoG:500 },
-  { id:17, name:"Conjunto Deportivo Licra",  cat:"conjuntos",  badge:"nuevo",  price:36000, old:null,   desc:"Top + calza. Tela compresiva. Ideal gym y running.",            sizes:["XS","S","M","L","XL"],      emoji:"👚", isNew:true,  pesoG:400 },
-  { id:18, name:"Conjunto Buzo + Jogger",    cat:"conjuntos",  badge:"oferta", price:42000, old:55000,  desc:"Set coordinado frisa. Comodidad máxima para el día a día.",    sizes:["S","M","L","XL","XXL"],     emoji:"👚", isNew:false, pesoG:900 },
-  { id:19, name:"Conjunto Lino Verano",      cat:"conjuntos",  badge:"nuevo",  price:45000, old:null,   desc:"Camisa + pantalón lino. Fresco y elegante. Envío express.",     sizes:["S","M","L","XL"],           emoji:"👚", isNew:true,  pesoG:550 },
-  { id:20, name:"Cinturón Cuero Trenzado",   cat:"accesorios", badge:null,     price:9500,  old:null,   desc:"Cuero ecológico. Varios colores. Talla ajustable.",             sizes:["Único"],                    emoji:"👜", isNew:false, pesoG:150 },
-  { id:21, name:"Bolso Tote Grande",         cat:"accesorios", badge:"nuevo",  price:22000, old:null,   desc:"Lona resistente. Doble asa. Ideal playa y compras.",            sizes:["Único"],                    emoji:"👜", isNew:true,  pesoG:400 },
-  { id:22, name:"Gorro Beanie Tejido",       cat:"accesorios", badge:null,     price:7500,  old:null,   desc:"Lana acrílica. Talla única. Varios colores.",                   sizes:["Único"],                    emoji:"🧢", isNew:false, pesoG:120 },
-  { id:23, name:"Medias Pack x3",            cat:"accesorios", badge:"oferta", price:5500,  old:7500,   desc:"Algodón suave. Pack 3 pares. Talles del 35 al 42.",             sizes:["35–38","39–42"],            emoji:"🧦", isNew:false, pesoG:100 },
+
+  {
+    id: 1,
+    name: "Remera Básica Algodón",
+    cat: "remeras",
+    price: 8500,
+    oldPrice: null,
+    badge: "nuevo",
+    description: "Remera básica cómoda para todos los días.",
+    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
+    emoji: "👕",
+    isNew: true,
+    pesoG: 200
+  },
+
+  {
+    id: 2,
+    name: "Remera Oversize Estampada",
+    cat: "remeras",
+    price: 11500,
+    oldPrice: null,
+    badge: "hot",
+    description: "Modelo oversize con estilo urbano.",
+    sizes: ["S", "M", "L", "XL"],
+    emoji: "👕",
+    isNew: true,
+    pesoG: 250
+  },
+
+  {
+    id: 3,
+    name: "Remera Manga Larga",
+    cat: "remeras",
+    price: 9800,
+    oldPrice: null,
+    badge: null,
+    description: "Remera manga larga para combinar todos los días.",
+    sizes: ["S", "M", "L", "XL"],
+    emoji: "👕",
+    isNew: false,
+    pesoG: 250
+  },
+
+  {
+    id: 4,
+    name: "Jean Skinny Azul",
+    cat: "pantalones",
+    price: 28500,
+    oldPrice: 34000,
+    badge: "nuevo",
+    description: "Jean clásico de calce skinny.",
+    sizes: ["36", "38", "40", "42", "44", "46"],
+    emoji: "👖",
+    isNew: true,
+    pesoG: 650
+  },
+
+  {
+    id: 5,
+    name: "Jean Mom Fit",
+    cat: "pantalones",
+    price: 31000,
+    oldPrice: null,
+    badge: "hot",
+    description: "Jean mom fit de estilo urbano.",
+    sizes: ["36", "38", "40", "42", "44"],
+    emoji: "👖",
+    isNew: false,
+    pesoG: 700
+  },
+
+  {
+    id: 6,
+    name: "Pantalón Cargo Beige",
+    cat: "pantalones",
+    price: 24500,
+    oldPrice: 29000,
+    badge: "oferta",
+    description: "Cargo cómodo y versátil.",
+    sizes: ["36", "38", "40", "42", "44"],
+    emoji: "👖",
+    isNew: false,
+    pesoG: 550
+  },
+
+  {
+    id: 7,
+    name: "Jogger Deportivo",
+    cat: "pantalones",
+    price: 18000,
+    oldPrice: 24000,
+    badge: "oferta",
+    description: "Jogger cómodo para un look relajado.",
+    sizes: ["S", "M", "L", "XL"],
+    emoji: "👖",
+    isNew: false,
+    pesoG: 500
+  },
+
+  {
+    id: 8,
+    name: "Vestido Midi Floral",
+    cat: "vestidos",
+    price: 34000,
+    oldPrice: null,
+    badge: "nuevo",
+    description: "Vestido midi con estampado floral.",
+    sizes: ["S", "M", "L", "XL"],
+    emoji: "👗",
+    isNew: true,
+    pesoG: 400
+  },
+
+  {
+    id: 9,
+    name: "Vestido Camisero",
+    cat: "vestidos",
+    price: 29500,
+    oldPrice: null,
+    badge: null,
+    description: "Vestido camisero cómodo y versátil.",
+    sizes: ["S", "M", "L", "XL"],
+    emoji: "👗",
+    isNew: false,
+    pesoG: 400
+  },
+
+  {
+    id: 10,
+    name: "Vestido Mini Lencero",
+    cat: "vestidos",
+    price: 27000,
+    oldPrice: 32000,
+    badge: "hot",
+    description: "Vestido mini de estilo femenino.",
+    sizes: ["S", "M", "L"],
+    emoji: "👗",
+    isNew: false,
+    pesoG: 300
+  },
+
+  {
+    id: 11,
+    name: "Campera Bomber Negra",
+    cat: "camperas",
+    price: 52000,
+    oldPrice: 69000,
+    badge: "oferta",
+    description: "Campera bomber negra de estilo urbano.",
+    sizes: ["S", "M", "L", "XL"],
+    emoji: "🧥",
+    isNew: false,
+    pesoG: 900
+  },
+
+  {
+    id: 12,
+    name: "Campera de Jean",
+    cat: "camperas",
+    price: 47000,
+    oldPrice: null,
+    badge: null,
+    description: "Campera de jean clásica.",
+    sizes: ["S", "M", "L", "XL"],
+    emoji: "🧥",
+    isNew: false,
+    pesoG: 850
+  },
+
+  {
+    id: 13,
+    name: "Campera Rompeviento",
+    cat: "camperas",
+    price: 38500,
+    oldPrice: null,
+    badge: "nuevo",
+    description: "Campera liviana para días de viento.",
+    sizes: ["S", "M", "L", "XL"],
+    emoji: "🧥",
+    isNew: true,
+    pesoG: 550
+  },
+
+  {
+    id: 14,
+    name: "Buzo Canguro Unisex",
+    cat: "buzos",
+    price: 21000,
+    oldPrice: null,
+    badge: "nuevo",
+    description: "Buzo canguro cómodo y amplio.",
+    sizes: ["S", "M", "L", "XL"],
+    emoji: "🧶",
+    isNew: true,
+    pesoG: 650
+  },
+
+  {
+    id: 15,
+    name: "Buzo Crop con Capucha",
+    cat: "buzos",
+    price: 19500,
+    oldPrice: null,
+    badge: "hot",
+    description: "Buzo crop con capucha.",
+    sizes: ["S", "M", "L"],
+    emoji: "🧶",
+    isNew: false,
+    pesoG: 500
+  },
+
+  {
+    id: 16,
+    name: "Sweater Tejido Oversize",
+    cat: "buzos",
+    price: 23000,
+    oldPrice: 27000,
+    badge: null,
+    description: "Sweater tejido de calce oversize.",
+    sizes: ["S", "M", "L", "XL"],
+    emoji: "🧶",
+    isNew: false,
+    pesoG: 550
+  },
+
+  {
+    id: 17,
+    name: "Conjunto Deportivo Licra",
+    cat: "conjuntos",
+    price: 36000,
+    oldPrice: null,
+    badge: "nuevo",
+    description: "Conjunto deportivo cómodo.",
+    sizes: ["S", "M", "L", "XL"],
+    emoji: "👚",
+    isNew: true,
+    pesoG: 500
+  },
+
+  {
+    id: 18,
+    name: "Conjunto Buzo + Jogger",
+    cat: "conjuntos",
+    price: 42000,
+    oldPrice: 55000,
+    badge: "oferta",
+    description: "Conjunto cómodo de buzo y jogger.",
+    sizes: ["S", "M", "L", "XL"],
+    emoji: "👚",
+    isNew: false,
+    pesoG: 850
+  },
+
+  {
+    id: 19,
+    name: "Conjunto Lino Verano",
+    cat: "conjuntos",
+    price: 45000,
+    oldPrice: null,
+    badge: "nuevo",
+    description: "Conjunto fresco para verano.",
+    sizes: ["S", "M", "L"],
+    emoji: "👚",
+    isNew: true,
+    pesoG: 450
+  },
+
+  {
+    id: 20,
+    name: "Cinturón Cuero Trenzado",
+    cat: "accesorios",
+    price: 9500,
+    oldPrice: null,
+    badge: null,
+    description: "Cinturón trenzado para completar tu look.",
+    sizes: ["Único"],
+    emoji: "👜",
+    isNew: false,
+    pesoG: 150
+  },
+
+  {
+    id: 21,
+    name: "Bolso Tote Grande",
+    cat: "accesorios",
+    price: 22000,
+    oldPrice: null,
+    badge: "nuevo",
+    description: "Bolso tote amplio y práctico.",
+    sizes: ["Único"],
+    emoji: "👜",
+    isNew: true,
+    pesoG: 500
+  },
+
+  {
+    id: 22,
+    name: "Gorro Beanie Tejido",
+    cat: "accesorios",
+    price: 7500,
+    oldPrice: null,
+    badge: null,
+    description: "Gorro tejido para completar tu look.",
+    sizes: ["Único"],
+    emoji: "🧢",
+    isNew: false,
+    pesoG: 100
+  },
+
+  {
+    id: 23,
+    name: "Medias Pack x3",
+    cat: "accesorios",
+    price: 5500,
+    oldPrice: 7500,
+    badge: "oferta",
+    description: "Pack de tres pares de medias.",
+    sizes: ["Único"],
+    emoji: "🧦",
+    isNew: false,
+    pesoG: 150
+  }
+
 ];
 
-/* ══════════════════════════════════
+
+/* =========================================================
    ESTADO
-══════════════════════════════════ */
-let cart = JSON.parse(localStorage.getItem('aromoda_cart') || '[]');
-let currentCat = 'todos';
+   ========================================================= */
+
+let currentCat = "todos";
 let pendingProduct = null;
 let selectedSize = null;
 
-/* ══════════════════════════════════
-   FORMATO PRECIO
-══════════════════════════════════ */
-const fmt = n => '$' + Number(n).toLocaleString('es-AR');
+let cart = loadCart();
 
-/* ══════════════════════════════════
-   HEADER SCROLL
-══════════════════════════════════ */
-window.addEventListener('scroll', () => {
-  document.getElementById('header').classList.toggle('scrolled', window.scrollY > 20);
-});
 
-/* ══════════════════════════════════
-   HAMBURGER MENÚ
-══════════════════════════════════ */
-document.getElementById('hamburger').addEventListener('click', () => {
-  document.getElementById('nav').classList.toggle('open');
-});
-function closeNav() { document.getElementById('nav').classList.remove('open'); }
+/* =========================================================
+   UTILIDADES
+   ========================================================= */
 
-/* ══════════════════════════════════
-   FILTRO CATEGORÍA
-══════════════════════════════════ */
-function filterCat(el) {
-  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
-  currentCat = el.dataset.cat;
-  applyFilters();
-  document.getElementById('catalogo').scrollIntoView({ behavior:'smooth', block:'start' });
+function formatPrice(value) {
+
+  return "$" + Number(value).toLocaleString("es-AR");
+
 }
 
-/* ══════════════════════════════════
-   FILTROS + ORDEN
-══════════════════════════════════ */
-function applyFilters() {
-  const q    = document.getElementById('searchInput').value.toLowerCase();
-  const sort = document.getElementById('sortSelect').value;
 
-  let list = PRODUCTS.filter(p => {
-    const okCat  = currentCat === 'todos' || p.cat === currentCat;
-    const okQ    = p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || p.cat.toLowerCase().includes(q);
-    return okCat && okQ;
+function escapeHTML(value) {
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+function saveCart() {
+
+  try {
+    localStorage.setItem(
+      "aromoda_cart",
+      JSON.stringify(cart)
+    );
+  } catch (error) {
+    console.warn("No se pudo guardar el carrito.", error);
+  }
+
+}
+
+
+function loadCart() {
+
+  try {
+
+    const saved = localStorage.getItem("aromoda_cart");
+
+    if (!saved) {
+      return [];
+    }
+
+    const parsed = JSON.parse(saved);
+
+    return Array.isArray(parsed) ? parsed : [];
+
+  } catch (error) {
+
+    console.warn("Carrito anterior inválido. Se inicia uno nuevo.");
+
+    return [];
+
+  }
+
+}
+
+
+/* =========================================================
+   NAVEGACIÓN
+   ========================================================= */
+
+const hamburger = document.getElementById("hamburger");
+const nav = document.getElementById("nav");
+
+if (hamburger) {
+
+  hamburger.addEventListener("click", () => {
+
+    nav.classList.toggle("open");
+
   });
 
-  if (sort === 'price-asc')  list.sort((a,b) => a.price - b.price);
-  if (sort === 'price-desc') list.sort((a,b) => b.price - a.price);
-  if (sort === 'name-asc')   list.sort((a,b) => a.name.localeCompare(b.name));
-  if (sort === 'new')        list.sort((a,b) => b.isNew - a.isNew);
-
-  renderProducts(list);
 }
 
-/* ══════════════════════════════════
-   RENDERIZAR CARDS
-══════════════════════════════════ */
-function renderProducts(list) {
-  const grid = document.getElementById('productGrid');
-  const none = document.getElementById('noResults');
-  const cnt  = document.getElementById('resultsCount');
 
-  Array.from(grid.children).forEach(c => { if (!c.classList.contains('no-results')) c.remove(); });
+function closeNav() {
 
-  if (!list.length) {
-    none.style.display = 'block'; cnt.textContent = '0 resultados'; return;
+  if (nav) {
+    nav.classList.remove("open");
   }
-  none.style.display = 'none';
-  cnt.textContent = `${list.length} producto${list.length !== 1 ? 's' : ''}`;
 
-  list.forEach(p => {
-    const card = document.createElement('div');
-    card.className = 'product-card';
+}
 
-    const badge = p.badge
-      ? `<span class="card-badge badge-${p.badge}">${p.badge === 'nuevo' ? '✨ Nuevo' : p.badge === 'oferta' ? '🔥 Oferta' : '⚡ Hot'}</span>`
-      : '';
-    const oldP = p.old ? `<span class="price-old">${fmt(p.old)}</span>` : '';
-    const tags = p.sizes.slice(0,5).map(s => `<span class="size-tag">${s}</span>`).join('');
+
+window.addEventListener("scroll", () => {
+
+  const header = document.getElementById("header");
+
+  if (!header) return;
+
+  if (window.scrollY > 20) {
+    header.classList.add("scrolled");
+  } else {
+    header.classList.remove("scrolled");
+  }
+
+});
+
+
+/* =========================================================
+   FILTROS
+   ========================================================= */
+
+function filterCat(button) {
+
+  document
+    .querySelectorAll(".category-btn")
+    .forEach(btn => btn.classList.remove("active"));
+
+  button.classList.add("active");
+
+  currentCat = button.dataset.cat || "todos";
+
+  applyFilters();
+
+  document
+    .getElementById("catalogo")
+    ?.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+}
+
+
+function applyFilters() {
+
+  const searchInput =
+    document.getElementById("searchInput");
+
+  const sortSelect =
+    document.getElementById("sortSelect");
+
+  const search =
+    searchInput
+      ? searchInput.value.trim().toLowerCase()
+      : "";
+
+  const sort =
+    sortSelect
+      ? sortSelect.value
+      : "default";
+
+
+  let filtered = PRODUCTS.filter(product => {
+
+    const categoryMatch =
+      currentCat === "todos" ||
+      product.cat === currentCat;
+
+    const searchMatch =
+      !search ||
+      product.name.toLowerCase().includes(search) ||
+      product.description.toLowerCase().includes(search) ||
+      product.cat.toLowerCase().includes(search);
+
+    return categoryMatch && searchMatch;
+
+  });
+
+
+  switch (sort) {
+
+    case "price-asc":
+      filtered.sort((a, b) => a.price - b.price);
+      break;
+
+    case "price-desc":
+      filtered.sort((a, b) => b.price - a.price);
+      break;
+
+    case "name-asc":
+      filtered.sort((a, b) =>
+        a.name.localeCompare(b.name, "es")
+      );
+      break;
+
+    case "new":
+      filtered.sort((a, b) =>
+        Number(b.isNew) - Number(a.isNew)
+      );
+      break;
+
+  }
+
+
+  renderProducts(filtered);
+
+}
+
+
+/* =========================================================
+   RENDER PRODUCTOS
+   ========================================================= */
+
+function renderProducts(products) {
+
+  const grid =
+    document.getElementById("productGrid");
+
+  const noResults =
+    document.getElementById("noResults");
+
+  const count =
+    document.getElementById("resultsCount");
+
+
+  if (!grid) return;
+
+
+  grid.innerHTML = "";
+
+
+  if (count) {
+
+    count.textContent =
+      products.length +
+      (products.length === 1
+        ? " producto"
+        : " productos");
+
+  }
+
+
+  if (products.length === 0) {
+
+    if (noResults) {
+      noResults.hidden = false;
+    }
+
+    return;
+
+  }
+
+
+  if (noResults) {
+    noResults.hidden = true;
+  }
+
+
+  products.forEach(product => {
+
+    const card =
+      document.createElement("article");
+
+    card.className = "product-card";
+
+
+    const badgeHTML =
+      product.badge
+        ? `
+          <span class="card-badge badge-${product.badge}">
+            ${product.badge}
+          </span>
+        `
+        : "";
+
+
+    const oldPriceHTML =
+      product.oldPrice
+        ? `
+          <span class="old-price">
+            ${formatPrice(product.oldPrice)}
+          </span>
+        `
+        : "";
+
+
+    const sizesHTML =
+      product.sizes
+        .map(size =>
+          `<span class="size-tag">${escapeHTML(size)}</span>`
+        )
+        .join("");
+
 
     card.innerHTML = `
+
       <div class="card-img">
-        <span style="user-select:none">${p.emoji}</span>
-        ${badge}
-        <div class="card-actions">
-          <button class="act-btn" onclick="toggleWish(this)" title="Favorito">♡</button>
+
+        ${badgeHTML}
+
+        <button
+          class="card-favorite"
+          onclick="toggleWish(this)"
+          aria-label="Favorito"
+        >
+          ♡
+        </button>
+
+        <div class="card-emoji">
+          ${product.emoji}
         </div>
+
       </div>
+
+
       <div class="card-info">
-        <div class="card-cat">${p.cat}</div>
-        <h3 class="card-name">${p.name}</h3>
-        <p class="card-desc">${p.desc}</p>
-        <div class="card-sizes">${tags}${p.sizes.length > 5 ? `<span class="size-tag">+${p.sizes.length-5}</span>` : ''}</div>
-        <div class="card-foot">
-          <div class="card-price">
-            <span class="price-now">${fmt(p.price)}</span>
-            ${oldP}
-          </div>
-          <button class="add-btn" onclick="openSizeModal(${p.id})">🛒 Agregar</button>
+
+        <div class="card-category">
+          ${escapeHTML(product.cat)}
         </div>
-      </div>`;
+
+        <h3 class="card-name">
+          ${escapeHTML(product.name)}
+        </h3>
+
+        <p class="card-description">
+          ${escapeHTML(product.description)}
+        </p>
+
+        <div class="card-sizes">
+          ${sizesHTML}
+        </div>
+
+        <div class="card-bottom">
+
+          <div class="price-line">
+
+            <span class="price">
+              ${formatPrice(product.price)}
+            </span>
+
+            ${oldPriceHTML}
+
+          </div>
+
+          <button
+            class="add-btn"
+            onclick="openSizeModal(${product.id})"
+          >
+            🛒 Elegir talle y agregar
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+
     grid.appendChild(card);
+
   });
+
 }
 
-/* ══════════════════════════════════
+
+/* =========================================================
    FAVORITOS
-══════════════════════════════════ */
-function toggleWish(btn) {
-  const on = btn.textContent.trim() === '♡';
-  btn.textContent = on ? '♥' : '♡';
-  btn.style.color = on ? '#e05252' : '';
-  toast(on ? '♥ Guardado en favoritos' : '♡ Quitado de favoritos');
+   ========================================================= */
+
+function toggleWish(button) {
+
+  button.classList.toggle("active");
+
+  button.textContent =
+    button.classList.contains("active")
+      ? "♥"
+      : "♡";
+
 }
 
-/* ══════════════════════════════════
-   MODAL ELEGIR TALLE
-══════════════════════════════════ */
-function openSizeModal(id) {
-  const p = PRODUCTS.find(x => x.id === id);
-  if (!p) return;
-  pendingProduct = p;
+
+/* =========================================================
+   MODAL TALLE
+   ========================================================= */
+
+function openSizeModal(productId) {
+
+  const product =
+    PRODUCTS.find(p => p.id === productId);
+
+  if (!product) return;
+
+
+  pendingProduct = product;
   selectedSize = null;
 
-  document.getElementById('modalTitle').textContent = p.name;
-  document.getElementById('modalInfo').innerHTML =
-    `<strong>${fmt(p.price)}</strong> — ${p.desc}`;
 
-  const picker = document.getElementById('sizePicker');
-  picker.innerHTML = p.sizes.map(s =>
-    `<div class="s-opt" onclick="selectSize(this,'${s}')">${s}</div>`
-  ).join('');
+  const modal =
+    document.getElementById("sizeModal");
 
-  document.getElementById('modalOverlay').classList.add('open');
-  document.getElementById('sizeModal').classList.add('open');
+  const overlay =
+    document.getElementById("modalOverlay");
+
+  const title =
+    document.getElementById("modalTitle");
+
+  const picker =
+    document.getElementById("sizePicker");
+
+  const info =
+    document.getElementById("modalInfo");
+
+
+  title.textContent =
+    "Elegí el talle";
+
+
+  picker.innerHTML =
+    product.sizes
+      .map(size => `
+        <button
+          class="size-option"
+          onclick="selectSize(this, '${escapeHTML(size)}')"
+        >
+          ${escapeHTML(size)}
+        </button>
+      `)
+      .join("");
+
+
+  info.innerHTML = `
+    <strong>${escapeHTML(product.name)}</strong><br>
+    Precio: ${formatPrice(product.price)}<br>
+    Elegí un talle antes de agregar el producto al carrito.
+  `;
+
+
+  modal.classList.add("open");
+  overlay.classList.add("open");
+
 }
 
-function selectSize(el, s) {
-  document.querySelectorAll('.s-opt').forEach(x => x.classList.remove('selected'));
-  el.classList.add('selected');
-  selectedSize = s;
+
+function selectSize(button, size) {
+
+  document
+    .querySelectorAll(".size-option")
+    .forEach(option =>
+      option.classList.remove("selected")
+    );
+
+  button.classList.add("selected");
+
+  selectedSize = size;
+
 }
+
 
 function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
-  document.getElementById('sizeModal').classList.remove('open');
-  pendingProduct = null; selectedSize = null;
+
+  const modal =
+    document.getElementById("sizeModal");
+
+  const overlay =
+    document.getElementById("modalOverlay");
+
+
+  modal.classList.remove("open");
+  overlay.classList.remove("open");
+
+  pendingProduct = null;
+  selectedSize = null;
+
 }
+
 
 function confirmAddToCart() {
+
   if (!pendingProduct) return;
-  if (!selectedSize) { toast('⚠️ Elegí un talle primero'); return; }
-  addToCart(pendingProduct, selectedSize);
+
+
+  if (!selectedSize) {
+
+    showToast("Elegí un talle antes de continuar.");
+
+    return;
+
+  }
+
+
+  addToCart(
+    pendingProduct,
+    selectedSize
+  );
+
   closeModal();
+
 }
 
-/* ══════════════════════════════════
-   CARRITO — LÓGICA
-══════════════════════════════════ */
-function addToCart(p, size) {
-  const key  = `${p.id}-${size}`;
-  const item = cart.find(i => i.key === key);
-  if (item) { item.qty++; }
-  else { cart.push({ key, id:p.id, name:p.name, price:p.price, emoji:p.emoji, size, qty:1, pesoG:p.pesoG }); }
-  saveCart(); renderCart();
-  toast(`✅ ${p.name} (${size}) agregado`);
+
+/* =========================================================
+   CARRITO
+   ========================================================= */
+
+function addToCart(product, size) {
+
+  const key =
+    `${product.id}-${size}`;
+
+
+  const existing =
+    cart.find(item => item.key === key);
+
+
+  if (existing) {
+
+    existing.qty += 1;
+
+  } else {
+
+    cart.push({
+
+      key,
+
+      id: product.id,
+
+      name: product.name,
+
+      price: product.price,
+
+      emoji: product.emoji,
+
+      size,
+
+      qty: 1,
+
+      pesoG: product.pesoG
+
+    });
+
+  }
+
+
+  saveCart();
+
+  renderCart();
+
+  showToast(
+    `${product.name} agregado al carrito.`
+  );
+
 }
+
+
+function changeQty(key, amount) {
+
+  const item =
+    cart.find(product => product.key === key);
+
+  if (!item) return;
+
+
+  item.qty += amount;
+
+
+  if (item.qty <= 0) {
+
+    cart =
+      cart.filter(product =>
+        product.key !== key
+      );
+
+  }
+
+
+  saveCart();
+
+  renderCart();
+
+}
+
 
 function removeFromCart(key) {
-  cart = cart.filter(i => i.key !== key);
-  saveCart(); renderCart();
+
+  cart =
+    cart.filter(item =>
+      item.key !== key
+    );
+
+  saveCart();
+
+  renderCart();
+
 }
 
-function changeQty(key, d) {
-  const item = cart.find(i => i.key === key);
-  if (!item) return;
-  item.qty = Math.max(1, item.qty + d);
-  saveCart(); renderCart();
-}
 
-function saveCart() { localStorage.setItem('aromoda_cart', JSON.stringify(cart)); }
+/* =========================================================
+   RENDER CARRITO
+   ========================================================= */
 
-/* ══════════════════════════════════
-   CARRITO — RENDER
-══════════════════════════════════ */
 function renderCart() {
-  const total  = cart.reduce((s,i) => s + i.qty, 0);
-  const badge  = document.getElementById('cartBadge');
-  badge.style.display = total > 0 ? 'flex' : 'none';
-  badge.textContent   = total;
 
-  const body  = document.getElementById('cartBody');
-  const empty = document.getElementById('cartEmpty');
-  const foot  = document.getElementById('cartFoot');
+  const body =
+    document.getElementById("cartBody");
 
-  Array.from(body.children).forEach(c => { if (!c.classList.contains('cart-empty')) c.remove(); });
+  const empty =
+    document.getElementById("cartEmpty");
 
-  if (!cart.length) {
-    empty.style.display = 'flex'; foot.style.display = 'none'; return;
+  const footer =
+    document.getElementById("cartFoot");
+
+  const badge =
+    document.getElementById("cartBadge");
+
+  const subtotalElement =
+    document.getElementById("subTotal");
+
+  const totalElement =
+    document.getElementById("grandTotal");
+
+
+  if (!body) return;
+
+
+  const totalItems =
+    cart.reduce(
+      (sum, item) =>
+        sum + item.qty,
+      0
+    );
+
+
+  const subtotal =
+    cart.reduce(
+      (sum, item) =>
+        sum + item.price * item.qty,
+      0
+    );
+
+
+  if (badge) {
+    badge.textContent = totalItems;
   }
-  empty.style.display = 'none'; foot.style.display = 'flex';
+
+
+  if (cart.length === 0) {
+
+    body.innerHTML = `
+      <div class="cart-empty">
+        <div>🛍️</div>
+        <p>Tu carrito está vacío.</p>
+        <button
+          class="btn btn-outline"
+          onclick="toggleCart()"
+        >
+          Seguir comprando
+        </button>
+      </div>
+    `;
+
+
+    if (footer) {
+      footer.style.display = "none";
+    }
+
+    return;
+
+  }
+
+
+  if (footer) {
+    footer.style.display = "block";
+  }
+
+
+  body.innerHTML =
+    cart
+      .map(item => `
+
+        <div class="cart-item">
+
+          <div class="cart-item-img">
+            ${item.emoji}
+          </div>
+
+          <div class="cart-item-info">
+
+            <div class="cart-item-name">
+              ${escapeHTML(item.name)}
+            </div>
+
+            <div class="cart-item-size">
+              Talle: ${escapeHTML(item.size)}
+            </div>
+
+            <div class="cart-item-price">
+              ${formatPrice(item.price)}
+            </div>
+
+            <div class="qty-controls">
+
+              <button
+                class="qty-btn"
+                onclick="changeQty('${item.key}', -1)"
+              >
+                −
+              </button>
+
+              <span class="qty-value">
+                ${item.qty}
+              </span>
+
+              <button
+                class="qty-btn"
+                onclick="changeQty('${item.key}', 1)"
+              >
+                +
+              </button>
+
+            </div>
+
+          </div>
+
+          <button
+            class="delete-btn"
+            onclick="removeFromCart('${item.key}')"
+            title="Eliminar"
+          >
+            🗑️
+          </button>
+
+        </div>
+
+      `)
+      .join("");
+
+
+  if (subtotalElement) {
+    subtotalElement.textContent =
+      formatPrice(subtotal);
+  }
+
+
+  if (totalElement) {
+    totalElement.textContent =
+      formatPrice(subtotal);
+  }
+
+}
+
+
+/* =========================================================
+   ABRIR / CERRAR CARRITO
+   ========================================================= */
+
+const cartToggle =
+  document.getElementById("cartToggle");
+
+if (cartToggle) {
+
+  cartToggle.addEventListener(
+    "click",
+    toggleCart
+  );
+
+}
+
+
+function toggleCart() {
+
+  const drawer =
+    document.getElementById("cartDrawer");
+
+  const overlay =
+    document.getElementById("cartOverlay");
+
+
+  drawer.classList.toggle("open");
+  overlay.classList.toggle("open");
+
+}
+
+
+/* =========================================================
+   WHATSAPP
+   ========================================================= */
+
+function sendWhatsApp() {
+
+  if (cart.length === 0) {
+
+    showToast("El carrito está vacío.");
+
+    return;
+
+  }
+
+
+  let message =
+    "Hola! Quiero hacer un pedido en AROMODA:%0A%0A";
+
 
   cart.forEach(item => {
-    const el = document.createElement('div');
-    el.className = 'cart-item';
-    el.innerHTML = `
-      <div class="ci-img">${item.emoji}</div>
-      <div class="ci-info">
-        <div class="ci-name">${item.name}</div>
-        <div class="ci-talle">Talle: ${item.size}</div>
-        <div class="ci-price">${fmt(item.price)}</div>
-        <div class="ci-qty">
-          <button class="qbtn" onclick="changeQty('${item.key}',-1)">−</button>
-          <span class="qdis">${item.qty}</span>
-          <button class="qbtn" onclick="changeQty('${item.key}',1)">+</button>
-        </div>
-      </div>
-      <button class="ci-del" onclick="removeFromCart('${item.key}')">✕</button>`;
-    body.appendChild(el);
+
+    message +=
+      `• ${item.name}%0A` +
+      `  Talle: ${item.size}%0A` +
+      `  Cantidad: ${item.qty}%0A` +
+      `  Precio: ${formatPrice(item.price)}%0A%0A`;
+
   });
 
-  const sub = cart.reduce((s,i) => s + i.price * i.qty, 0);
-  document.getElementById('subTotal').textContent  = fmt(sub);
-  document.getElementById('grandTotal').textContent = fmt(sub);
-  document.getElementById('shipLabel').textContent = 'A calcular';
+
+  const subtotal =
+    cart.reduce(
+      (sum, item) =>
+        sum + item.price * item.qty,
+      0
+    );
+
+
+  message +=
+    `Subtotal: ${formatPrice(subtotal)}%0A%0A`;
+
+  message +=
+    "Quiero consultar disponibilidad y envío.";
+
+
+  const url =
+    `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+
+
+  window.open(url, "_blank");
+
 }
 
-/* ══════════════════════════════════
-   CARRITO — TOGGLE
-══════════════════════════════════ */
-function toggleCart() {
-  document.getElementById('cartOverlay').classList.toggle('open');
-  document.getElementById('cartDrawer').classList.toggle('open');
-}
-document.getElementById('cartToggle').addEventListener('click', toggleCart);
 
-/* ══════════════════════════════════
-   PEDIR POR WHATSAPP
-══════════════════════════════════ */
-function sendWhatsApp() {
-  if (!cart.length) return;
-  let msg = '¡Hola Aromoda! Quiero hacer el siguiente pedido:%0A%0A';
-  cart.forEach(i => {
-    msg += `▪ ${i.name} — Talle ${i.size} x${i.qty} = ${fmt(i.price * i.qty)}%0A`;
-  });
-  const sub = cart.reduce((s,i) => s + i.price * i.qty, 0);
-  msg += `%0A*Total: ${fmt(sub)}*%0A%0A¿Podés confirmarme disponibilidad y el costo de envío?`;
-  window.open(`https://wa.me/2325590916?text=${msg}`, '_blank');
-}
-
-/* ══════════════════════════════════
+/* =========================================================
    CALCULADORA DE ENVÍO
-   (estimación basada en rangos de peso
-    y zona, orientativo)
-══════════════════════════════════ */
+   ========================================================= */
+
 function calcularEnvio() {
-  const cp    = document.getElementById('cpDestino').value.trim();
-  const peso  = parseFloat(document.getElementById('pesoEnvio').value) || 0;
-  const tipo  = document.getElementById('tipoEnvio').value;
-  const res   = document.getElementById('shippingResult');
 
-  if (!cp || cp.length < 4) { toast('⚠️ Ingresá un código postal válido'); return; }
-  if (peso <= 0)             { toast('⚠️ Ingresá el peso aproximado'); return; }
+  const cpInput =
+    document.getElementById("cpDestino");
 
-  // CP de San Andrés de Giles: 6720
-  const cpOrigen = 6720;
-  const cpNum    = parseInt(cp);
+  const pesoInput =
+    document.getElementById("pesoEnvio");
 
-  // Zona estimada por CP
-  let zona = 'nacional';
-  if (cpNum >= 6000 && cpNum <= 6999) zona = 'provincial'; // GBA/Provincia Bs As
-  if (cpNum >= 1000 && cpNum <= 1999) zona = 'caba';       // CABA
+  const tipoInput =
+    document.getElementById("tipoEnvio");
 
-  // Base por peso (gramos → kg)
-  const kg = peso / 1000;
-  let base = 0;
-  if (kg <= 0.5)       base = 3200;
-  else if (kg <= 1)    base = 4500;
-  else if (kg <= 2)    base = 6000;
-  else if (kg <= 3)    base = 7500;
-  else if (kg <= 5)    base = 9500;
-  else                 base = 12000;
+  const result =
+    document.getElementById("shippingResult");
 
-  // Multiplicador por zona
-  const mult = zona === 'caba' ? 1 : zona === 'provincial' ? 1.15 : 1.45;
 
-  // Multiplicador por tipo
-  const tipoMult = tipo === 'prioritaria' ? 1.35 : tipo === 'sucursal' ? 0.8 : 1;
+  const cp =
+    cpInput.value.trim();
 
-  const estimado = Math.round(base * mult * tipoMult / 100) * 100;
-  const dias = tipo === 'prioritaria'
-    ? (zona === 'caba' ? '1–2' : zona === 'provincial' ? '2–3' : '3–5')
-    : (zona === 'caba' ? '2–3' : zona === 'provincial' ? '3–5' : '5–8');
+  const peso =
+    Number(pesoInput.value);
 
-  res.style.display = 'block';
-  res.innerHTML = `
-    <strong>📦 Estimación de envío</strong><br><br>
-    Destino CP: <strong>${cp}</strong><br>
-    Zona: <strong>${zona === 'caba' ? 'CABA' : zona === 'provincial' ? 'Provincia de Bs As' : 'Interior del país'}</strong><br>
-    Servicio: <strong>${tipo === 'clasica' ? 'Encomienda Clásica' : tipo === 'prioritaria' ? 'Prioritaria' : 'A sucursal'}</strong><br>
-    Peso: <strong>${peso}g</strong><br>
-    Tiempo estimado: <strong>${dias} días hábiles</strong><br><br>
-    💰 Costo estimado: <strong style="font-size:1.2rem;color:#e8c068">${fmt(estimado)}</strong>
+  const tipo =
+    tipoInput.value;
+
+
+  if (!cp || !peso || peso <= 0) {
+
+    result.innerHTML =
+      "⚠️ Completá el código postal y el peso.";
+
+    result.classList.add("show");
+
+    return;
+
+  }
+
+
+  let base;
+
+
+  if (peso <= 500) {
+    base = 3200;
+  } else if (peso <= 1000) {
+    base = 4500;
+  } else if (peso <= 2000) {
+    base = 6000;
+  } else if (peso <= 5000) {
+    base = 7500;
+  } else if (peso <= 10000) {
+    base = 9500;
+  } else {
+    base = 12000;
+  }
+
+
+  let multiplier = 1;
+
+
+  if (tipo === "prioritaria") {
+    multiplier = 1.35;
+  }
+
+  if (tipo === "sucursal") {
+    multiplier = .85;
+  }
+
+
+  const price =
+    Math.round(base * multiplier);
+
+
+  let days = "3 a 7 días hábiles";
+
+
+  if (tipo === "prioritaria") {
+    days = "2 a 5 días hábiles";
+  }
+
+  if (tipo === "sucursal") {
+    days = "3 a 7 días hábiles";
+  }
+
+
+  result.innerHTML = `
+    <strong>${formatPrice(price)}</strong>
+    <br>
+    <span>
+      Estimación para CP ${escapeHTML(cp)}
+      · ${days}
+    </span>
   `;
+
+
+  result.classList.add("show");
+
 }
 
-/* ══════════════════════════════════
+
+/* =========================================================
    TOAST
-══════════════════════════════════ */
-function toast(msg) {
-  const wrap = document.getElementById('toasts');
-  const el   = document.createElement('div');
-  el.className = 'toast green';
-  el.textContent = msg;
-  wrap.appendChild(el);
+   ========================================================= */
+
+function showToast(message) {
+
+  const container =
+    document.getElementById("toasts");
+
+  if (!container) return;
+
+
+  const toast =
+    document.createElement("div");
+
+  toast.className = "toast";
+
+  toast.textContent = message;
+
+
+  container.appendChild(toast);
+
+
   setTimeout(() => {
-    el.style.animation = 'tout .3s ease forwards';
-    el.addEventListener('animationend', () => el.remove());
-  }, 2800);
+
+    toast.remove();
+
+  }, 3000);
+
 }
 
-/* ══════════════════════════════════
-   INICIAR
-══════════════════════════════════ */
-applyFilters();
-renderCart();
+
+/* =========================================================
+   REINICIAR FILTROS
+   ========================================================= */
+
+function resetFilters() {
+
+  currentCat = "todos";
+
+
+  const searchInput =
+    document.getElementById("searchInput");
+
+  const sortSelect =
+    document.getElementById("sortSelect");
+
+
+  if (searchInput) {
+    searchInput.value = "";
+  }
+
+  if (sortSelect) {
+    sortSelect.value = "default";
+  }
+
+
+  document
+    .querySelectorAll(".category-btn")
+    .forEach(btn => {
+
+      btn.classList.toggle(
+        "active",
+        btn.dataset.cat === "todos"
+      );
+
+    });
+
+
+  applyFilters();
+
+}
+
+
+/* =========================================================
+   EVENTOS DE BÚSQUEDA
+   ========================================================= */
+
+const searchInput =
+  document.getElementById("searchInput");
+
+if (searchInput) {
+
+  searchInput.addEventListener(
+    "input",
+    applyFilters
+  );
+
+}
+
+
+const sortSelect =
+  document.getElementById("sortSelect");
+
+if (sortSelect) {
+
+  sortSelect.addEventListener(
+    "change",
+    applyFilters
+  );
+
+}
+
+
+/* =========================================================
+   ESC PARA CERRAR
+   ========================================================= */
+
+document.addEventListener("keydown", event => {
+
+  if (event.key === "Escape") {
+
+    closeModal();
+
+    const drawer =
+      document.getElementById("cartDrawer");
+
+    const overlay =
+      document.getElementById("cartOverlay");
+
+
+    drawer?.classList.remove("open");
+    overlay?.classList.remove("open");
+
+  }
+
+});
+
+
+/* =========================================================
+   INICIO
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  applyFilters();
+
+  renderCart();
+
+});
