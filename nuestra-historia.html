@@ -4,17 +4,99 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Nuestra Historia · Aromoda</title>
+  <link rel="stylesheet" href="styles.css" />
   <style>
-    body { font-family: "Inter", sans-serif; max-width: 720px; margin: 40px auto; padding: 0 20px; background: white; color: #333; line-height: 1.6; }
-    h1 { font-family: "Playfair Display", serif; font-size: 2.5rem; margin-bottom: 20px; color: #c5a36a; text-align: center; }
-    p { margin-bottom: 15px; }
-    a.back-link { display: inline-block; margin-top: 30px; color: #c5a36a; font-weight: 700; text-decoration: none; }
+    /* Contenido específico CSS */
+    body {
+      font-family: "Inter", sans-serif;
+      max-width: 720px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: white;
+      color: #333;
+      line-height: 1.6;
+    }
+    main {
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #c5a36a;
+      text-align: center;
+    }
+    p {
+      margin-bottom: 15px;
+    }
+    a.back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: #c5a36a;
+      font-weight: 700;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
-  <h1>Nuestra Historia</h1>
-  <p>Desde nuestro inicio, Aromoda se propuso ofrecer moda femenina urbana que una estilo y calidad con precios accesibles para todas.</p>
-  <p>Crecimos con la comunidad de San Andrés de Giles y seguimos comprometidos con la innovación, sustentabilidad y cercanía con nuestras clientes.</p>
-  <a href="index.html" class="back-link">← Volver a Aromoda</a>
+  <!-- Barra superior promocional -->
+  <div class="promo-bar">
+    <div class="container promo-rotator">
+      <span class="promo-item">3 y 6 cuotas sin interés</span>
+      <span class="promo-item">Envíos a todo el país</span>
+      <span class="promo-item">¡Suscribite y recibí un 10% OFF en tu primera compra!</span>
+    </div>
+  </div>
+
+  <!-- Header simple solo título -->
+  <header class="site-header simple-header">
+    <div class="container header-inner">
+      <h1 class="site-title">AROMODA</h1>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main>
+    <h1>Nuestra Historia</h1>
+    <p>Desde nuestro inicio, Aromoda se propuso ofrecer moda femenina urbana que una estilo y calidad con precios accesibles para todas.</p>
+    <p>Crecimos con la comunidad de San Andrés de Giles y seguimos comprometidos con la innovación, sustentabilidad y cercanía con nuestras clientes.</p>
+    <a href="index.html" class="back-link">← Volver a Aromoda</a>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <a href="index.html" class="logo-footer" aria-label="Logo Aromoda footer">
+          <img src="https://i.postimg.cc/85DJDDCq/Whats-App-Image-2026-09-23-at-11-07-00.jpg" alt="Aromoda logo" />
+        </a>
+        <p>Seguinos en nuestras redes</p>
+        <nav class="social-links">
+          <a href="https://www.instagram.com/aromoda65" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/aromodaaromoda" target="_blank" rel="noopener">Facebook</a>
+        </nav>
+      </div>
+      <div>
+        <h4>Tienda</h4>
+        <ul>
+          <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+          <li><a href="nuestra-historia.html">Nuestra Historia</a></li>
+          <li><a href="consejos-cuidado.html">Consejos para el cuidado</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Ayuda</h4>
+        <ul>
+          <li><a href="guia-talle.html" class="btn-link">Guía de talle</a></li>
+          <li><a href="politicas-devolucion.html" class="btn-link">Políticas de Devolución</a></li>
+          <li><a href="https://wa.me/5492325590916" target="_blank" rel="noopener">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <small>© 2026 AROMODA · San Andrés de Giles · Argentina</small>
+    </div>
+  </footer>
 </body>
 </html>

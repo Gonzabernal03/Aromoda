@@ -4,28 +4,118 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Guía de talle · Aromoda</title>
+  <link rel="stylesheet" href="styles.css" />
   <style>
-    body { font-family: "Inter", sans-serif; max-width: 720px; margin: 40px auto; padding: 0 20px; background: white; color: #333; line-height: 1.6; }
-    h1 { font-family: "Playfair Display", serif; font-size: 2.5rem; margin-bottom: 20px; color: #c5a36a; text-align: center; }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
-    th { background: #f7f4f1; }
-    a.back-link { display: inline-block; margin-top: 30px; color: #c5a36a; font-weight: 700; text-decoration: none; }
+    /* Contenido específico CSS */
+    body {
+      font-family: "Inter", sans-serif;
+      max-width: 720px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: white;
+      color: #333;
+      line-height: 1.6;
+    }
+    main {
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #c5a36a;
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background: #f7f4f1;
+    }
+    a.back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: #c5a36a;
+      font-weight: 700;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
-  <h1>Guía de talle</h1>
-  <table>
-    <thead>
-      <tr><th>Talle</th><th>Busto (cm)</th><th>Cintura (cm)</th><th>Cadera (cm)</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>S</td><td>82-86</td><td>62-66</td><td>88-92</td></tr>
-      <tr><td>M</td><td>87-91</td><td>67-71</td><td>93-97</td></tr>
-      <tr><td>L</td><td>92-96</td><td>72-76</td><td>98-102</td></tr>
-      <tr><td>XL</td><td>97-101</td><td>77-81</td><td>103-107</td></tr>
-    </tbody>
-  </table>
-  <a href="index.html" class="back-link">← Volver a Aromoda</a>
+  <!-- Barra superior promocional -->
+  <div class="promo-bar">
+    <div class="container promo-rotator">
+      <span class="promo-item">3 y 6 cuotas sin interés</span>
+      <span class="promo-item">Envíos a todo el país</span>
+      <span class="promo-item">¡Suscribite y recibí un 10% OFF en tu primera compra!</span>
+    </div>
+  </div>
+
+  <!-- Header simple solo título -->
+  <header class="site-header simple-header">
+    <div class="container header-inner">
+      <h1 class="site-title">AROMODA</h1>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main>
+    <h1>Guía de talle</h1>
+    <table>
+      <thead>
+        <tr><th>Talle</th><th>Busto (cm)</th><th>Cintura (cm)</th><th>Cadera (cm)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>S</td><td>82-86</td><td>62-66</td><td>88-92</td></tr>
+        <tr><td>M</td><td>87-91</td><td>67-71</td><td>93-97</td></tr>
+        <tr><td>L</td><td>92-96</td><td>72-76</td><td>98-102</td></tr>
+        <tr><td>XL</td><td>97-101</td><td>77-81</td><td>103-107</td></tr>
+      </tbody>
+    </table>
+    <a href="index.html" class="back-link">← Volver a Aromoda</a>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <a href="index.html" class="logo-footer" aria-label="Logo Aromoda footer">
+          <img src="https://i.postimg.cc/85DJDDCq/Whats-App-Image-2026-09-23-at-11-07-00.jpg" alt="Aromoda logo" />
+        </a>
+        <p>Seguinos en nuestras redes</p>
+        <nav class="social-links">
+          <a href="https://www.instagram.com/aromoda65" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/aromodaaromoda" target="_blank" rel="noopener">Facebook</a>
+        </nav>
+      </div>
+      <div>
+        <h4>Tienda</h4>
+        <ul>
+          <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+          <li><a href="nuestra-historia.html">Nuestra Historia</a></li>
+          <li><a href="consejos-cuidado.html">Consejos para el cuidado</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Ayuda</h4>
+        <ul>
+          <li><a href="guia-talle.html" class="btn-link">Guía de talle</a></li>
+          <li><a href="politicas-devolucion.html" class="btn-link">Políticas de Devolución</a></li>
+          <li><a href="https://wa.me/5492325590916" target="_blank" rel="noopener">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <small>© 2026 AROMODA · San Andrés de Giles · Argentina</small>
+    </div>
+  </footer>
 </body>
 </html>
