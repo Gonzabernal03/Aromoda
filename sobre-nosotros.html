@@ -6,17 +6,26 @@
   <title>Sobre Nosotros · Aromoda</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* Contenido específico CSS */
+    /* Ajustes para layout completo y footer al pie */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
     body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
       font-family: "Inter", sans-serif;
-      max-width: 720px;
-      margin: 40px auto;
-      padding: 0 20px;
       background: white;
       color: #333;
       line-height: 1.6;
+      max-width: 720px;
+      margin: 0 auto; /* centrado */
+      padding: 0 20px;
     }
     main {
+      flex: 1; /* ocupa espacio entre header y footer */
       padding-top: 40px;
       padding-bottom: 40px;
     }
@@ -37,6 +46,21 @@
       font-weight: 700;
       text-decoration: none;
     }
+    footer {
+      background-color: #1c1a18; /* fondo negro */
+      color: rgba(255, 255, 255, 0.7);
+      padding: 45px 20px 25px;
+      font-size: 0.9rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.4);
+      text-align: center;
+      padding-top: 12px;
+    }
+    /* Puedes agregar el resto de estilos footer-grid y social-links según styles.css */
   </style>
 </head>
 <body>
@@ -100,3 +124,4 @@
   </footer>
 </body>
 </html>
+
