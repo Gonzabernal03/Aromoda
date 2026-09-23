@@ -384,3 +384,20 @@ document.addEventListener('keydown', e => {
 // === INIT ===
 fetchProducts();
 updateCartCount();
+const heroBg = document.querySelector('.hero-bg');
+
+const heroImages = [
+  'https://i.postimg.cc/Ghc9hYDP/Whats-App-Image-2026-09-15-at-19-40-52.jpg',
+  'https://i.postimg.cc/yx76x4kp/Whats-App-Image-2026-09-14-at-18-11-46.jpg',
+  'https://i.postimg.cc/2yTkBcWd/Whats-App-Image-2026-09-14-at-18-07-24.jpg',
+];
+
+let currentIndex = 0;
+
+function changeHeroImage() {
+  heroBg.style.backgroundImage = `url(${heroImages[currentIndex]})`;
+  currentIndex = (currentIndex + 1) % heroImages.length;
+}
+
+changeHeroImage();
+setInterval(changeHeroImage, 3000);

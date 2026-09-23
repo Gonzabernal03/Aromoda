@@ -35,8 +35,6 @@ body {
   width: min(var(--container), 100% - 40px);
   margin: 0 auto;
 }
-
-/* PROMO BAR ROTATOR */
 .promo-bar {
   background: var(--dark);
   color: rgba(255,255,255,0.8);
@@ -44,27 +42,28 @@ body {
   height: 30px;
   display: flex;
   align-items: center;
-  justify-content: center;
   overflow: hidden;
   position: relative;
 }
+
 .promo-rotator {
+  display: inline-block;
   white-space: nowrap;
-  animation: promoRotate 10s infinite;
+  will-change: transform;
+  animation: scrollPromo 15s linear infinite;
 }
+
 .promo-item {
   display: inline-block;
   margin: 0 30px;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
 }
-.promo-item.active {
-  opacity: 1;
-}
-@keyframes promoRotate {
-  0%, 33% { transform: translateX(0); }
-  35%, 66% { transform: translateX(-100%); }
-  68%, 100% { transform: translateX(-200%); }
+@keyframes scrollPromo {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 /* HEADER */
@@ -81,33 +80,38 @@ body {
   align-items: center;
   justify-content: space-between;
   height: 70px;
+  position: relative;
 }
+
+/* Logo a la izquierda */
 .logo img {
   height: 50px;
   object-fit: contain;
 }
-.main-nav ul {
-  display: flex;
-  list-style: none;
-  gap: 25px;
-}
-.main-nav a, .btn-link {
-  font-weight: 600;
-  font-size: 0.9rem;
+
+/* Título centrado absoluto */
+.site-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
+  font-weight: 700;
   color: var(--dark);
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: color var(--transition);
+  margin: 0;
+  pointer-events: none; /* Para que no bloquee clicks */
+  user-select: none;
 }
-.main-nav a:hover, .btn-link:hover {
-  color: var(--accent);
-}
+
+/* Contenedor de acciones a la derecha */
 .header-actions {
   display: flex;
   align-items: center;
   gap: 15px;
 }
+
+/* Ajustes para buscador y boton carrito */
+
 #search {
   padding: 6px 12px;
   border-radius: 999px;
@@ -120,7 +124,8 @@ body {
   outline: none;
   border-color: var(--accent);
 }
-/* Cart button */
+
+/* Carrito */
 #cart-button {
   position: relative;
   background: transparent;
@@ -143,19 +148,22 @@ body {
 /* HERO */
 .hero {
   height: 500px;
-  background-image: url('https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=1471&q=80');
-  background-position: center;
-  background-size: cover;
   position: relative;
   display: flex;
   align-items: center;
+  /* Quitamos el background-image directo */
+  /* background-image: url('...'); */
+  background-position: center;
+  background-size: cover;
 }
-.hero::before {
-  content: "";
+.hero-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(28,26,24,0.8), transparent 70%);
-  z-index: 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: background-image 1s ease-in-out;
+  z-index: 0; /* detrás del contenido */
 }
 .hero-content {
   position: relative;
@@ -188,35 +196,30 @@ body {
 }
 
 /* CATEGORIES */
-.categories {
-  margin: 50px auto;
-  max-width: var(--container);
-}
-.categories h2 {
-  text-align: center;
-  font-family: "Playfair Display", serif;
-  font-size: 2.6rem;
-  margin-bottom: 20px;
-}
-.category-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-}
 .category-btn {
-  padding: 10px 20px;
-  border-radius: 999px;
-  border: 1.5px solid #ccc;
-  background: var(--surface);
+  padding: 8px 16px;           /* un poco menos de padding para estilo más delicado */
+  border-radius: 0;            /* quitar el borde redondeado para diseño más limpio */
+  border: none;                /* eliminar borde visible */
+  background: transparent;     /* fondo transparente para simplicidad */
   cursor: pointer;
   font-weight: 600;
-  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif; /* tipografía limpia y moderna */
+  font-size: 1rem;
+  color: var(--dark);
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
-.category-btn.active, .category-btn:hover {
-  background: var(--accent);
-  color: white;
-  border-color: var(--accent-dark);
+
+.category-btn:hover {
+  color: var(--accent);
+  background: transparent;     /* mantiene transparencia al hacer hover */
+  border: none;
+}
+
+/* Para el botón activo le puedes dar un estilo ligero, sin borde */
+.category-btn.active {
+  color: var(--accent-dark);
+  background: transparent;
+  font-weight: 700;
 }
 
 /* PRODUCT GRID */
@@ -274,13 +277,19 @@ body {
   background: var(--accent);
   color: white;
   font-weight: 700;
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  padding: 5px 12px;
-  border-radius: 20px;
+  font-size: 0.85rem;      /* un poco más grande */
+  letter-spacing: 0.05em;  /* menos espacio */
+  padding: 10px 14px;      /* más espacio vertical y horizontal */
+  border-radius: 6px;      /* bordes ligeramente redondeados para cuadrado suave */
   text-transform: uppercase;
   user-select: none;
   pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;         /* ancho mínimo para que sea más ancho */
+  height: 36px;            /* altura fija para hacerlo más alto */
+  box-sizing: border-box;
 }
 .badge.hot { background: #e2783d;}
 .badge.off { background: var(--danger);}
