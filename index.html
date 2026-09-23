@@ -1,605 +1,240 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>AROMODA | Ropa en San Andrés de Giles</title>
-
-  <!-- IMPORTANTE: este nombre debe coincidir exactamente con el archivo -->
-  <link rel="stylesheet" href="style.css">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AROMODA | Ropa femenina</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
 </head>
-
 <body>
 
-  <!-- ================================
-       BARRA SUPERIOR
-  ================================= -->
+  <!-- :::::::::::::: BARRA SUPERIOR PROMOCIONAL :::::::::::::: -->
   <div class="promo-bar">
-    <div class="container promo-inner">
-      <span>📦 Envíos a todo el país</span>
-      <span>📍 San Andrés de Giles</span>
-      <span>📲 Pedidos por WhatsApp</span>
+    <div class="container promo-rotator">
+      <span class="promo-item active">3 y 6 cuotas sin interés</span>
+      <span class="promo-item">Envíos a todo el país</span>
+      <span class="promo-item">¡Suscribite y recibí un 10% OFF en tu primera compra!</span>
     </div>
   </div>
 
-
-  <!-- ================================
-       HEADER
-  ================================= -->
-  <header class="site-header" id="header">
-
+  <!-- :::::::::::::: HEADER :::::::::::::: -->
+  <header class="site-header">
     <div class="container header-inner">
-
-      <button class="hamburger" id="hamburger" aria-label="Abrir menú">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
-      <a href="#inicio" class="logo">
-        <span class="logo-aro">ARO</span><span class="logo-moda">MODA</span>
+      <!-- ACA PEGA EL LINK DE TU LOGO -->
+      <a href="#inicio" class="logo" aria-label="Logo Aromoda">
+        <img src="https://images.unsplash.com/photo-1521335629791-ce4aec67dddc?auto=format&fit=crop&w=80&q=80" alt="Aromoda logo" />
       </a>
-
-      <nav class="main-nav" id="nav">
+      <nav class="main-nav" role="navigation">
         <ul>
-          <li><a href="#inicio" onclick="closeNav()">Inicio</a></li>
-          <li><a href="#catalogo" onclick="closeNav()">Catálogo</a></li>
-          <li><a href="#envios" onclick="closeNav()">Envíos</a></li>
-          <li><a href="#contacto" onclick="closeNav()">Contacto</a></li>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#catalog">Catálogo</a></li>
+          <li><a href="#shipping">Envíos</a></li>
+          <li><a href="#contact">Contacto</a></li>
+          <li><button id="open-nosotros" class="btn-link">Nosotros</button></li>
+          <li><button id="open-politicas" class="btn-link">Políticas de Devolución</button></li>
         </ul>
       </nav>
 
-      <div class="header-right">
-
-        <a
-          href="https://www.instagram.com/aromoda65"
-          target="_blank"
-          rel="noopener"
-          class="social-btn"
-          title="Instagram"
-        >📸</a>
-
-        <a
-          href="https://www.facebook.com/aromodaaromoda"
-          target="_blank"
-          rel="noopener"
-          class="social-btn"
-          title="Facebook"
-        >👍</a>
-
-        <button class="cart-icon-btn" id="cartToggle" aria-label="Abrir carrito">
-          🛒
-          <span class="cart-badge" id="cartBadge">0</span>
+      <div class="header-actions">
+        <input type="search" id="search" placeholder="Buscar prenda..." aria-label="Buscar prenda" />
+        <button id="cart-button" aria-label="Abrir carrito">
+          <!-- Icono carrito SVG minimalista -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" width="24" height="24"><path d="M6 6h15l-1.5 9h-13"></path><circle cx="9" cy="21" r="1"></circle><circle cx="18" cy="21" r="1"></circle></svg>
+          <span id="cart-count" class="cart-count">0</span>
         </button>
-
+        <a href="https://wa.me/5492325590916" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <!-- Icono WhatsApp SVG -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="#25D366" viewBox="0 0 24 24" width="24" height="24"><path d="M20.52 3.48A11.936 11.936 0 0012 0C5.371 0 0 5.37 0 12c0 2.113.55 4.084 1.512 5.823L0 24l6.492-1.555A11.946 11.946 0 0012 24c6.628 0 12-5.372 12-12 0-3.214-1.296-6.223-3.48-8.52zM12 21.6c-1.906 0-3.69-.54-5.225-1.467l-.374-.223-3.83.92.975-3.737-.243-.38A8.4 8.4 0 013.6 12c0-4.623 3.753-8.376 8.4-8.376 2.243 0 4.364.88 5.943 2.465a8.303 8.303 0 012.451 5.91c0 4.623-3.753 8.4-8.394 8.4z"/><path fill="#fff" d="M17.237 14.007c-.272-.136-1.615-.797-1.865-.887-.25-.09-.43-.136-.61.137-.182.273-.71.887-.873 1.07-.16.182-.32.204-.592.068-.273-.136-1.154-.423-2.2-1.354-.813-.724-1.36-1.62-1.52-1.893-.163-.273-.017-.42.12-.555.123-.124.273-.32.41-.48.137-.164.182-.273.273-.455.09-.182.045-.34-.023-.48-.068-.136-.61-1.47-.83-2.01-.217-.527-.437-.45-.61-.458l-.52-.009c-.182 0-.48.068-.73.34-.25.273-.955.934-.955 2.28 0 1.347.978 2.648 1.114 2.832.136.182 1.92 2.933 4.653 4.11.65.28 1.156.447 1.55.573.65.21 1.243.18 1.71.11.52-.08 1.615-.66 1.845-1.297.227-.637.227-1.18.16-1.296-.068-.114-.25-.182-.522-.318z"/></svg>
+        </a>
       </div>
-
     </div>
-
   </header>
 
-
-  <!-- ================================
-       HERO
-  ================================= -->
-  <main>
-
-    <section class="hero" id="inicio">
-
-      <div class="hero-overlay"></div>
-
-      <div class="container hero-content">
-
-        <p class="hero-eyebrow">
-          ✦ NUEVA COLECCIÓN 2026
-        </p>
-
-        <h1>
-          Tu moda,<br>
-          <em>tu estilo.</em>
-        </h1>
-
-        <p class="hero-sub">
-          Ropa urbana, casual y básicos para todos los días.
-          <br>
-          Desde San Andrés de Giles, con envíos a todo el país.
-        </p>
-
-        <div class="hero-buttons">
-
-          <a href="#catalogo" class="btn btn-primary">
-            Ver catálogo
-          </a>
-
-          <a
-            href="https://wa.me/5492325590916?text=Hola!%20Vi%20AROMODA%20y%20quiero%20consultar."
-            target="_blank"
-            rel="noopener"
-            class="btn btn-whatsapp"
-          >
-            💬 WhatsApp
-          </a>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================================
-         CATEGORÍAS
-    ================================= -->
-    <section class="categories-section">
-
-      <div class="container">
-
-        <div class="section-header">
-          <span class="section-kicker">ENCONTRÁ TU ESTILO</span>
-          <h2>Categorías</h2>
-          <p>Elegí una categoría para ver nuestros productos.</p>
-        </div>
-
-        <div class="categories-grid">
-
-          <button class="category-btn active" data-cat="todos" onclick="filterCat(this)">
-            ✨ Todos
-          </button>
-
-          <button class="category-btn" data-cat="remeras" onclick="filterCat(this)">
-            👕 Remeras
-          </button>
-
-          <button class="category-btn" data-cat="pantalones" onclick="filterCat(this)">
-            👖 Pantalones
-          </button>
-
-          <button class="category-btn" data-cat="vestidos" onclick="filterCat(this)">
-            👗 Vestidos
-          </button>
-
-          <button class="category-btn" data-cat="camperas" onclick="filterCat(this)">
-            🧥 Camperas
-          </button>
-
-          <button class="category-btn" data-cat="buzos" onclick="filterCat(this)">
-            🧶 Buzos
-          </button>
-
-          <button class="category-btn" data-cat="conjuntos" onclick="filterCat(this)">
-            👚 Conjuntos
-          </button>
-
-          <button class="category-btn" data-cat="accesorios" onclick="filterCat(this)">
-            👜 Accesorios
-          </button>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================================
-         CATÁLOGO
-    ================================= -->
-    <section class="catalog-section" id="catalogo">
-
-      <div class="container">
-
-        <div class="section-header catalog-title">
-          <span class="section-kicker">AROMODA</span>
-          <h2>Nuestro catálogo</h2>
-          <p>Elegí tu prenda y agregala al carrito.</p>
-        </div>
-
-
-        <div class="catalog-toolbar">
-
-          <div class="search-wrap">
-            <span>🔍</span>
-            <input
-              type="search"
-              id="searchInput"
-              placeholder="Buscar una prenda..."
-              autocomplete="off"
-            >
-          </div>
-
-          <select class="sort-select" id="sortSelect">
-            <option value="default">Ordenar</option>
-            <option value="price-asc">Menor precio</option>
-            <option value="price-desc">Mayor precio</option>
-            <option value="name-asc">A – Z</option>
-            <option value="new">Más nuevos</option>
-          </select>
-
-          <span class="count-label" id="resultsCount"></span>
-
-        </div>
-
-
-        <div class="product-grid" id="productGrid"></div>
-
-        <div class="no-results" id="noResults" hidden>
-          <div class="no-results-icon">🔍</div>
-          <h3>No encontramos productos</h3>
-          <p>Probá con otra búsqueda o categoría.</p>
-          <button class="btn btn-outline" onclick="resetFilters()">
-            Ver todos
-          </button>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================================
-         ENVÍOS
-    ================================= -->
-    <section class="shipping-section" id="envios">
-
-      <div class="container">
-
-        <div class="section-header light">
-          <span class="section-kicker">RECIBÍ TU COMPRA</span>
-          <h2>Calculá tu envío</h2>
-          <p>Envíos a todo el país.</p>
-        </div>
-
-
-        <div class="shipping-grid">
-
-          <div class="shipping-card">
-
-            <h3>📦 Calculadora de envío</h3>
-
-            <p class="shipping-description">
-              Ingresá los datos para obtener una estimación orientativa.
-            </p>
-
-            <div class="form-group">
-              <label for="cpDestino">Código postal</label>
-              <input
-                type="text"
-                id="cpDestino"
-                placeholder="Ej: 1000"
-                maxlength="8"
-              >
-            </div>
-
-            <div class="form-row">
-
-              <div class="form-group">
-                <label for="pesoEnvio">Peso aproximado</label>
-                <input
-                  type="number"
-                  id="pesoEnvio"
-                  placeholder="Ej: 500"
-                  min="1"
-                >
-                <small>En gramos</small>
-              </div>
-
-              <div class="form-group">
-                <label for="tipoEnvio">Tipo</label>
-
-                <select id="tipoEnvio">
-                  <option value="clasica">Encomienda clásica</option>
-                  <option value="prioritaria">Prioritaria</option>
-                  <option value="sucursal">A sucursal</option>
-                </select>
-
-              </div>
-
-            </div>
-
-            <button class="btn btn-primary full" onclick="calcularEnvio()">
-              Calcular envío
-            </button>
-
-            <div class="shipping-result" id="shippingResult"></div>
-
-            <p class="shipping-note">
-              ⚠️ El valor mostrado es una estimación orientativa.
-            </p>
-
-          </div>
-
-
-          <div class="shipping-info">
-
-            <div class="info-card">
-              <span>🏠</span>
-              <div>
-                <h4>A domicilio</h4>
-                <p>Recibí tu pedido en tu domicilio.</p>
-              </div>
-            </div>
-
-            <div class="info-card">
-              <span>🏢</span>
-              <div>
-                <h4>A sucursal</h4>
-                <p>Una alternativa económica.</p>
-              </div>
-            </div>
-
-            <div class="info-card">
-              <span>📍</span>
-              <div>
-                <h4>Retiro en Giles</h4>
-                <p>Coordinamos por WhatsApp.</p>
-              </div>
-            </div>
-
-            <div class="info-card">
-              <span>💳</span>
-              <div>
-                <h4>Formas de pago</h4>
-                <p>Transferencia, MercadoPago o efectivo.</p>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================================
-         CONTACTO
-    ================================= -->
-    <section class="contact-section" id="contacto">
-
-      <div class="container">
-
-        <div class="section-header">
-          <span class="section-kicker">AROMODA</span>
-          <h2>¿Hablamos?</h2>
-          <p>Consultanos por nuestras prendas, talles y disponibilidad.</p>
-        </div>
-
-
-        <div class="contact-grid">
-
-          <a
-            href="https://wa.me/5492325590916?text=Hola!%20Quiero%20consultar%20sobre%20AROMODA."
-            target="_blank"
-            rel="noopener"
-            class="contact-card whatsapp-card"
-          >
-            <span class="contact-icon">💬</span>
-            <div>
-              <h3>WhatsApp</h3>
-              <p>Consultas y pedidos</p>
-            </div>
-          </a>
-
-
-          <a
-            href="https://www.instagram.com/aromoda65"
-            target="_blank"
-            rel="noopener"
-            class="contact-card"
-          >
-            <span class="contact-icon">📸</span>
-            <div>
-              <h3>Instagram</h3>
-              <p>@aromoda65</p>
-            </div>
-          </a>
-
-
-          <a
-            href="https://www.facebook.com/aromodaaromoda"
-            target="_blank"
-            rel="noopener"
-            class="contact-card"
-          >
-            <span class="contact-icon">👍</span>
-            <div>
-              <h3>Facebook</h3>
-              <p>aromodaaromoda</p>
-            </div>
-          </a>
-
-
-          <div class="contact-card">
-            <span class="contact-icon">📍</span>
-            <div>
-              <h3>Ubicación</h3>
-              <p>San Andrés de Giles, Buenos Aires</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <!-- ================================
-       FOOTER
-  ================================= -->
-  <footer>
-
-    <div class="container footer-grid">
-
-      <div>
-        <a href="#inicio" class="logo footer-logo">
-          <span class="logo-aro">ARO</span><span class="logo-moda">MODA</span>
-        </a>
-
-        <p>
-          Ropa urbana, casual y básicos.
-          San Andrés de Giles, Buenos Aires.
-        </p>
-
-        <div class="footer-socials">
-          <a href="https://www.instagram.com/aromoda65" target="_blank" rel="noopener">
-            📸 Instagram
-          </a>
-
-          <a href="https://www.facebook.com/aromodaaromoda" target="_blank" rel="noopener">
-            👍 Facebook
-          </a>
-        </div>
-      </div>
-
-
-      <div>
-        <h4>Tienda</h4>
-
-        <a href="#catalogo">Catálogo</a>
-        <a href="#envios">Envíos</a>
-        <a href="#contacto">Contacto</a>
-      </div>
-
-
-      <div>
-        <h4>Ayuda</h4>
-
-        <a href="#catalogo">Talles</a>
-        <a href="#envios">Envíos</a>
-        <a href="#contacto">Consultas</a>
-      </div>
-
+  <!-- :::::::::::::: HERO :::::::::::::: -->
+  <section id="inicio" class="hero">
+    <!-- Una imagen de fondo real de ropa femenina, modelo -->
+    <!-- ACA PEGA EL LINK DE TU IMAGEN 1 -->
+    <div class="hero-bg"></div>
+    <div class="container hero-content">
+      <h1>Tu moda,<br><em>tu estilo.</em></h1>
+      <p>Ropa femenina, urbana y casual.<br>Desde San Andrés de Giles con envíos a todo el país.</p>
+      <a href="#catalog" class="btn btn-primary">Ver catálogo</a>
     </div>
+  </section>
 
+  <!-- :::::::::::::: CATEGORÍAS :::::::::::::: -->
+  <section class="categories container">
+    <h2>Categorías</h2>
+    <div class="category-list">
+      <button class="category-btn active" data-cat="all">Todos</button>
+      <button class="category-btn" data-cat="remeras">Remeras</button>
+      <button class="category-btn" data-cat="pantalones">Pantalones</button>
+      <button class="category-btn" data-cat="vestidos">Vestidos</button>
+      <button class="category-btn" data-cat="camperas">Camperas</button>
+      <button class="category-btn" data-cat="buzos">Buzos</button>
+      <button class="category-btn" data-cat="conjuntos">Conjuntos</button>
+      <button class="category-btn" data-cat="accesorios">Accesorios</button>
+    </div>
+  </section>
 
-    <div class="footer-bottom">
-      <div class="container">
-        <span>© 2026 AROMODA</span>
-        <span>San Andrés de Giles · Argentina 🇦🇷</span>
+  <!-- :::::::::::::: CATÁLOGO :::::::::::::: -->
+  <section id="catalog" class="catalog container">
+    <h2>Catálogo</h2>
+    <div id="product-grid" class="product-grid"></div>
+    <div id="no-results" class="no-results" hidden>
+      <p>No se encontraron productos.</p>
+      <button id="reset-filters" class="btn btn-outline">Mostrar todos</button>
+    </div>
+  </section>
+
+  <!-- :::::::::::::: MODAL DETALLE PRODUCTO :::::::::::::: -->
+  <div id="product-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button id="modal-close" aria-label="Cerrar"><svg width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="modal-content">
+      <div class="modal-images">
+        <button id="prev-image" aria-label="Imagen anterior">‹</button>
+        <img id="modal-image" src="" alt="Detalle de prenda" />
+        <button id="next-image" aria-label="Imagen siguiente">›</button>
+      </div>
+      <div class="modal-info">
+        <h3 id="modal-title"></h3>
+        <p id="modal-description"></p>
+
+        <div class="modal-selectors">
+          <label>Talle:
+            <select id="modal-size-select" aria-label="Selector de talle"></select>
+          </label>
+          <label>Color:
+            <select id="modal-color-select" aria-label="Selector de color"></select>
+          </label>
+          <label>Cantidad:
+            <input type="number" id="modal-quantity" min="1" max="10" value="1" />
+          </label>
+        </div>
+
+        <div class="shipping-calculator">
+          <label for="modal-cp">Código Postal:</label>
+          <input type="text" id="modal-cp" maxlength="8" placeholder="Ej: 1000"/>
+          <button id="modal-calc-shipping">Calcular envío</button>
+          <p id="modal-shipping-result"></p>
+        </div>
+
+        <div class="modal-actions">
+          <button id="add-to-cart-btn" class="btn btn-primary">Agregar al carrito</button>
+          <button id="buy-now-btn" class="btn btn-outline">Comprar ahora</button>
+        </div>
+
+        <div id="modal-similar-products" class="similar-products">
+          <h4>Productos similares</h4>
+          <div class="similar-grid"></div>
+        </div>
       </div>
     </div>
-
-  </footer>
-
-
-  <!-- ================================
-       CARRITO
-  ================================= -->
-  <div class="overlay" id="cartOverlay" onclick="toggleCart()"></div>
-
-  <aside class="cart-drawer" id="cartDrawer">
-
-    <div class="drawer-header">
-      <h2>🛒 Tu carrito</h2>
-
-      <button class="close-btn" onclick="toggleCart()">
-        ✕
-      </button>
-    </div>
-
-
-    <div class="cart-body" id="cartBody">
-
-      <div class="cart-empty" id="cartEmpty">
-        <div>🛍️</div>
-        <p>Tu carrito está vacío.</p>
-        <button class="btn btn-outline" onclick="toggleCart()">
-          Seguir comprando
-        </button>
-      </div>
-
-    </div>
-
-
-    <div class="cart-footer" id="cartFoot">
-
-      <div class="cart-row">
-        <span>Subtotal</span>
-        <strong id="subTotal">$0</strong>
-      </div>
-
-      <div class="cart-row">
-        <span>Envío</span>
-        <strong id="shipLabel">A calcular</strong>
-      </div>
-
-      <div class="cart-total">
-        <span>Total</span>
-        <strong id="grandTotal">$0</strong>
-      </div>
-
-      <a href="#envios" class="btn btn-outline full" onclick="toggleCart()">
-        📦 Calcular envío
-      </a>
-
-      <button class="btn btn-whatsapp full" onclick="sendWhatsApp()">
-        💬 Pedir por WhatsApp
-      </button>
-
-    </div>
-
-  </aside>
-
-
-  <!-- ================================
-       MODAL DE TALLE
-  ================================= -->
-  <div class="overlay" id="modalOverlay" onclick="closeModal()"></div>
-
-  <div class="size-modal" id="sizeModal">
-
-    <div class="modal-header">
-      <h3 id="modalTitle">Elegí tu talle</h3>
-
-      <button class="close-btn" onclick="closeModal()">
-        ✕
-      </button>
-    </div>
-
-
-    <div class="modal-body">
-
-      <div class="size-picker" id="sizePicker"></div>
-
-      <div class="modal-product-info" id="modalInfo"></div>
-
-    </div>
-
-
-    <div class="modal-footer">
-
-      <button
-        class="btn btn-primary full"
-        onclick="confirmAddToCart()"
-      >
-        🛒 Agregar al carrito
-      </button>
-
-    </div>
-
   </div>
 
+  <!-- :::::::::::::: POPUP NEWSLETTER :::::::::::::: -->
+  <div id="newsletter-popup" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="newsletter-title">
+    <button id="newsletter-close" aria-label="Cerrar">×</button>
+    <div class="modal-content newsletter-content">
+      <h2 id="newsletter-title">Suscribite y recibí un 10% OFF</h2>
+      <p>Ingresá tu email para acceder al descuento y novedades.</p>
+      <form id="newsletter-form">
+        <input type="email" id="newsletter-email" required placeholder="Tu email" aria-label="Correo electrónico" />
+        <button type="submit" class="btn btn-primary">Suscribir</button>
+      </form>
+      <p id="newsletter-msg" class="msg"></p>
+    </div>
+  </div>
 
-  <!-- ================================
-       TOAST
-  ================================= -->
-  <div class="toasts" id="toasts"></div>
+  <!-- :::::::::::::: TRUST BADGES :::::::::::::: -->
+  <section class="trust-badges container">
+    <div class="trust-item">
+      <!-- Camión SVG -->
+      <svg width="24" height="24" viewBox="0 0 24 24"><path d="M3 13h11v-2H3v2zm0 2h2v3h-2v-3zm14-4h-2v-2h3l3 4h-4v-2zm-6-5h10v4h-2v-2h-4v2h-4v-4z" fill="#c5a36a"/></svg>
+      <p>Envíos a todo el país</p>
+    </div>
+    <div class="trust-item">
+      <!-- Tarjeta crédito SVG -->
+      <svg width="24" height="24" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" stroke="#c5a36a" stroke-width="2" fill="none" rx="2"/><line x1="2" y1="10" x2="22" y2="10" stroke="#c5a36a" stroke-width="2"/></svg>
+      <p>Todos los medios de pago</p>
+    </div>
+    <div class="trust-item">
+      <!-- Flechas circulares SVG -->
+      <svg width="24" height="24" viewBox="0 0 24 24"><path d="M4 4v6h6" stroke="#c5a36a" stroke-width="2" fill="none"/><path d="M20 20v-6h-6" stroke="#c5a36a" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="7" stroke="#c5a36a" stroke-width="2" fill="none"/></svg>
+      <p>30 días para cambios</p>
+    </div>
+    <div class="trust-item">
+      <!-- Candado SVG -->
+      <svg width="24" height="24" viewBox="0 0 24 24"><rect x="6" y="11" width="12" height="9" rx="1.5" stroke="#c5a36a" stroke-width="2" fill="none"/><path d="M12 7a3 3 0 0 1 3 3v1H9v-1a3 3 0 0 1 3-3z" stroke="#c5a36a" stroke-width="2" fill="none"/></svg>
+      <p>Compra 100% segura</p>
+    </div>
+  </section>
 
+  <!-- :::::::::::::: FOOTER :::::::::::::: -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <a href="#inicio" class="logo-footer" aria-label="Logo Aromoda footer">
+          <img src="https://i.postimg.cc/85DJDDCq/Whats-App-Image-2026-09-23-at-11-07-00.jpg" alt="Aromoda logo" />
+        </a>
+        <p>Ropa femenina urbana y casual. San Andrés de Giles, Buenos Aires.</p>
+        <nav class="social-links">
+          <a href="https://www.instagram.com/aromoda65" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/aromodaaromoda" target="_blank" rel="noopener">Facebook</a>
+          <a href="mailto:tuemail@aromoda.com" target="_blank" rel="noopener">Email</a>
+        </nav>
+      </div>
+      <div>
+        <h4>Tienda</h4>
+        <ul>
+          <li><a href="#catalog">Catálogo</a></li>
+          <li><a href="#shipping">Envíos</a></li>
+          <li><a href="#contact">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Ayuda</h4>
+        <ul>
+          <li><button id="open-nosotros-footer" class="btn-link">Nosotros</button></li>
+          <li><button id="open-politicas-footer" class="btn-link">Políticas de Devolución</button></li>
+          <li><a href="https://wa.me/5492325590916" target="_blank" rel="noopener">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <small>© 2026 AROMODA · San Andrés de Giles · Argentina</small>
+    </div>
+  </footer>
 
-  <!-- ================================
-       JAVASCRIPT
-  ================================= -->
+  <!-- :::::::::::::: MODALES INSTITUCIONALES :::::::::::::: -->
+  <div id="nosotros-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="nosotros-title">
+    <button class="modal-close" aria-label="Cerrar Modal">×</button>
+    <div class="modal-content">
+      <h2 id="nosotros-title">Nosotros</h2>
+      <p>Aromoda nace con la misión de brindar moda femenina urbana...</p>
+      <p>Misión: Ofrecer ropa de calidad y tendencia, accesible para todas.</p>
+      <p>Valores: Sostenibilidad, compromiso y atención personalizada.</p>
+    </div>
+  </div>
+
+  <div id="politicas-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="politicas-title">
+    <button class="modal-close" aria-label="Cerrar Modal">×</button>
+    <div class="modal-content">
+      <h2 id="politicas-title">Políticas de Devolución</h2>
+      <p>Para devoluciones, contactate por WhatsApp al 2325590916.</p>
+      <p>Condiciones: Pago aceptado, prenda sin usar, con etiqueta...</p>
+      <a href="https://wa.me/5492325590916" target="_blank" class="btn btn-primary">Contactar WhatsApp</a>
+    </div>
+  </div>
+
+  <!-- :::::::::::::: BOTON FLOTANTE WHATSAPP :::::::::::::: -->
+  <a href="https://wa.me/5492325590916" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+    <!-- WhatsApp SVG -->
+    <svg fill="white" viewBox="0 0 24 24" width="30" height="30"><path d="M20.52 3.48A11.936 11.936 0 0012 0C5.371 0 0 5.37 0 12c0 2.113.55 4.084 1.512 5.823L0 24l6.492-1.555A11.946 11.946 0 0012 24c6.628 0 12-5.372 12-12 0-3.214-1.296-6.223-3.48-8.52zM12 21.6c-1.906 0-3.69-.54-5.225-1.467l-.374-.223-3.83.92.975-3.737-.243-.38A8.4 8.4 0 013.6 12c0-4.623 3.753-8.376 8.4-8.376 2.243 0 4.364.88 5.943 2.465a8.303 8.303 0 012.451 5.91c0 4.623-3.753 8.4-8.394 8.4zM17.237 14.007c-.272-.136-1.615-.797-1.865-.887-.25-.09-.43-.136-.61.137-.182.273-.71.887-.873 1.07-.16.182-.32.204-.592.068-.273-.136-1.154-.423-2.2-1.354-.813-.724-1.36-1.62-1.52-1.893-.163-.273-.017-.42.12-.555.123-.124.273-.32.41-.48.137-.164.182-.273.273-.455.09-.182.045-.34-.023-.48-.068-.136-.61-1.47-.83-2.01-.217-.527-.437-.45-.61-.458l-.52-.009c-.182 0-.48.068-.73.34-.25.273-.955.934-.955 2.28 0 1.347.978 2.648 1.114 2.832.136.182 1.92 2.933 4.653 4.11.65.28 1.156.447 1.55.573.65.21 1.243.18 1.71.11.52-.08 1.615-.66 1.845-1.297.227-.637.227-1.18.16-1.296-.068-.114-.25-.182-.522-.318z"/></svg>
+  </a>
+
   <script src="script.js"></script>
-
 </body>
 </html>

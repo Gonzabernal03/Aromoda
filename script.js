@@ -1,1421 +1,386 @@
-/* =========================================================
-   AROMODA - JAVASCRIPT
-   ========================================================= */
-
-
-/* =========================================================
-   CONFIGURACIÓN
-   ========================================================= */
-
-const WHATSAPP_NUMBER = "5492325590916";
-
-
-/* =========================================================
-   PRODUCTOS
-   ========================================================= */
-
-const PRODUCTS = [
-
-  {
-    id: 1,
-    name: "Remera Básica Algodón",
-    cat: "remeras",
-    price: 8500,
-    oldPrice: null,
-    badge: "nuevo",
-    description: "Remera básica cómoda para todos los días.",
-    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-    emoji: "👕",
-    isNew: true,
-    pesoG: 200
-  },
-
-  {
-    id: 2,
-    name: "Remera Oversize Estampada",
-    cat: "remeras",
-    price: 11500,
-    oldPrice: null,
-    badge: "hot",
-    description: "Modelo oversize con estilo urbano.",
-    sizes: ["S", "M", "L", "XL"],
-    emoji: "👕",
-    isNew: true,
-    pesoG: 250
-  },
-
-  {
-    id: 3,
-    name: "Remera Manga Larga",
-    cat: "remeras",
-    price: 9800,
-    oldPrice: null,
-    badge: null,
-    description: "Remera manga larga para combinar todos los días.",
-    sizes: ["S", "M", "L", "XL"],
-    emoji: "👕",
-    isNew: false,
-    pesoG: 250
-  },
-
-  {
-    id: 4,
-    name: "Jean Skinny Azul",
-    cat: "pantalones",
-    price: 28500,
-    oldPrice: 34000,
-    badge: "nuevo",
-    description: "Jean clásico de calce skinny.",
-    sizes: ["36", "38", "40", "42", "44", "46"],
-    emoji: "👖",
-    isNew: true,
-    pesoG: 650
-  },
-
-  {
-    id: 5,
-    name: "Jean Mom Fit",
-    cat: "pantalones",
-    price: 31000,
-    oldPrice: null,
-    badge: "hot",
-    description: "Jean mom fit de estilo urbano.",
-    sizes: ["36", "38", "40", "42", "44"],
-    emoji: "👖",
-    isNew: false,
-    pesoG: 700
-  },
-
-  {
-    id: 6,
-    name: "Pantalón Cargo Beige",
-    cat: "pantalones",
-    price: 24500,
-    oldPrice: 29000,
-    badge: "oferta",
-    description: "Cargo cómodo y versátil.",
-    sizes: ["36", "38", "40", "42", "44"],
-    emoji: "👖",
-    isNew: false,
-    pesoG: 550
-  },
-
-  {
-    id: 7,
-    name: "Jogger Deportivo",
-    cat: "pantalones",
-    price: 18000,
-    oldPrice: 24000,
-    badge: "oferta",
-    description: "Jogger cómodo para un look relajado.",
-    sizes: ["S", "M", "L", "XL"],
-    emoji: "👖",
-    isNew: false,
-    pesoG: 500
-  },
-
-  {
-    id: 8,
-    name: "Vestido Midi Floral",
-    cat: "vestidos",
-    price: 34000,
-    oldPrice: null,
-    badge: "nuevo",
-    description: "Vestido midi con estampado floral.",
-    sizes: ["S", "M", "L", "XL"],
-    emoji: "👗",
-    isNew: true,
-    pesoG: 400
-  },
-
-  {
-    id: 9,
-    name: "Vestido Camisero",
-    cat: "vestidos",
-    price: 29500,
-    oldPrice: null,
-    badge: null,
-    description: "Vestido camisero cómodo y versátil.",
-    sizes: ["S", "M", "L", "XL"],
-    emoji: "👗",
-    isNew: false,
-    pesoG: 400
-  },
-
-  {
-    id: 10,
-    name: "Vestido Mini Lencero",
-    cat: "vestidos",
-    price: 27000,
-    oldPrice: 32000,
-    badge: "hot",
-    description: "Vestido mini de estilo femenino.",
-    sizes: ["S", "M", "L"],
-    emoji: "👗",
-    isNew: false,
-    pesoG: 300
-  },
-
-  {
-    id: 11,
-    name: "Campera Bomber Negra",
-    cat: "camperas",
-    price: 52000,
-    oldPrice: 69000,
-    badge: "oferta",
-    description: "Campera bomber negra de estilo urbano.",
-    sizes: ["S", "M", "L", "XL"],
-    emoji: "🧥",
-    isNew: false,
-    pesoG: 900
-  },
-
-  {
-    id: 12,
-    name: "Campera de Jean",
-    cat: "camperas",
-    price: 47000,
-    oldPrice: null,
-    badge: null,
-    description: "Campera de jean clásica.",
-    sizes: ["S", "M", "L", "XL"],
-    emoji: "🧥",
-    isNew: false,
-    pesoG: 850
-  },
-
-  {
-    id: 13,
-    name: "Campera Rompeviento",
-    cat: "camperas",
-    price: 38500,
-    oldPrice: null,
-    badge: "nuevo",
-    description: "Campera liviana para días de viento.",
-    sizes: ["S", "M", "L", "XL"],
-    emoji: "🧥",
-    isNew: true,
-    pesoG: 550
-  },
-
-  {
-    id: 14,
-    name: "Buzo Canguro Unisex",
-    cat: "buzos",
-    price: 21000,
-    oldPrice: null,
-    badge: "nuevo",
-    description: "Buzo canguro cómodo y amplio.",
-    sizes: ["S", "M", "L", "XL"],
-    emoji: "🧶",
-    isNew: true,
-    pesoG: 650
-  },
-
-  {
-    id: 15,
-    name: "Buzo Crop con Capucha",
-    cat: "buzos",
-    price: 19500,
-    oldPrice: null,
-    badge: "hot",
-    description: "Buzo crop con capucha.",
-    sizes: ["S", "M", "L"],
-    emoji: "🧶",
-    isNew: false,
-    pesoG: 500
-  },
-
-  {
-    id: 16,
-    name: "Sweater Tejido Oversize",
-    cat: "buzos",
-    price: 23000,
-    oldPrice: 27000,
-    badge: null,
-    description: "Sweater tejido de calce oversize.",
-    sizes: ["S", "M", "L", "XL"],
-    emoji: "🧶",
-    isNew: false,
-    pesoG: 550
-  },
-
-  {
-    id: 17,
-    name: "Conjunto Deportivo Licra",
-    cat: "conjuntos",
-    price: 36000,
-    oldPrice: null,
-    badge: "nuevo",
-    description: "Conjunto deportivo cómodo.",
-    sizes: ["S", "M", "L", "XL"],
-    emoji: "👚",
-    isNew: true,
-    pesoG: 500
-  },
-
-  {
-    id: 18,
-    name: "Conjunto Buzo + Jogger",
-    cat: "conjuntos",
-    price: 42000,
-    oldPrice: 55000,
-    badge: "oferta",
-    description: "Conjunto cómodo de buzo y jogger.",
-    sizes: ["S", "M", "L", "XL"],
-    emoji: "👚",
-    isNew: false,
-    pesoG: 850
-  },
-
-  {
-    id: 19,
-    name: "Conjunto Lino Verano",
-    cat: "conjuntos",
-    price: 45000,
-    oldPrice: null,
-    badge: "nuevo",
-    description: "Conjunto fresco para verano.",
-    sizes: ["S", "M", "L"],
-    emoji: "👚",
-    isNew: true,
-    pesoG: 450
-  },
-
-  {
-    id: 20,
-    name: "Cinturón Cuero Trenzado",
-    cat: "accesorios",
-    price: 9500,
-    oldPrice: null,
-    badge: null,
-    description: "Cinturón trenzado para completar tu look.",
-    sizes: ["Único"],
-    emoji: "👜",
-    isNew: false,
-    pesoG: 150
-  },
-
-  {
-    id: 21,
-    name: "Bolso Tote Grande",
-    cat: "accesorios",
-    price: 22000,
-    oldPrice: null,
-    badge: "nuevo",
-    description: "Bolso tote amplio y práctico.",
-    sizes: ["Único"],
-    emoji: "👜",
-    isNew: true,
-    pesoG: 500
-  },
-
-  {
-    id: 22,
-    name: "Gorro Beanie Tejido",
-    cat: "accesorios",
-    price: 7500,
-    oldPrice: null,
-    badge: null,
-    description: "Gorro tejido para completar tu look.",
-    sizes: ["Único"],
-    emoji: "🧢",
-    isNew: false,
-    pesoG: 100
-  },
-
-  {
-    id: 23,
-    name: "Medias Pack x3",
-    cat: "accesorios",
-    price: 5500,
-    oldPrice: 7500,
-    badge: "oferta",
-    description: "Pack de tres pares de medias.",
-    sizes: ["Único"],
-    emoji: "🧦",
-    isNew: false,
-    pesoG: 150
-  }
-
-];
-
-
-/* =========================================================
-   ESTADO
-   ========================================================= */
-
-let currentCat = "todos";
-let pendingProduct = null;
-let selectedSize = null;
-
-let cart = loadCart();
-
-
-/* =========================================================
-   UTILIDADES
-   ========================================================= */
-
-function formatPrice(value) {
-
-  return "$" + Number(value).toLocaleString("es-AR");
-
-}
-
-
-function escapeHTML(value) {
-
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-
-}
-
-
-function saveCart() {
-
-  try {
-    localStorage.setItem(
-      "aromoda_cart",
-      JSON.stringify(cart)
-    );
-  } catch (error) {
-    console.warn("No se pudo guardar el carrito.", error);
-  }
-
-}
-
-
-function loadCart() {
-
-  try {
-
-    const saved = localStorage.getItem("aromoda_cart");
-
-    if (!saved) {
-      return [];
-    }
-
-    const parsed = JSON.parse(saved);
-
-    return Array.isArray(parsed) ? parsed : [];
-
-  } catch (error) {
-
-    console.warn("Carrito anterior inválido. Se inicia uno nuevo.");
-
-    return [];
-
-  }
-
-}
-
-
-/* =========================================================
-   NAVEGACIÓN
-   ========================================================= */
-
-const hamburger = document.getElementById("hamburger");
-const nav = document.getElementById("nav");
-
-if (hamburger) {
-
-  hamburger.addEventListener("click", () => {
-
-    nav.classList.toggle("open");
-
+/* ====================
+   Aromoda - JS
+==================== */
+
+// CONFIG
+const PRODUCTS_API_URL = 'https://script.google.com/macros/s/AKfycbzU06ULRkmtity8JGFISV5Wc4lu89f67SRJM8tg46eNkAuXDoP5BpQZRCnyHcGla0mm/exec'; // Cambiar por tu API de Google Apps Script
+const SHEET_API_BASE = PRODUCTS_API_URL;
+const WHATSAPP_NUMBER = '5492325590916';
+
+// ELEMENTS
+const promoItems = document.querySelectorAll('.promo-item');
+let promoIndex = 0;
+
+const productGrid = document.getElementById('product-grid');
+const noResults = document.getElementById('no-results');
+const resetFiltersBtn = document.getElementById('reset-filters');
+const searchInput = document.getElementById('search');
+const categoryButtons = document.querySelectorAll('.category-btn');
+const cartButton = document.getElementById('cart-button');
+const cartCount = document.getElementById('cart-count');
+
+const productModal = document.getElementById('product-modal');
+const modalCloseBtn = document.getElementById('modal-close');
+const modalImage = document.getElementById('modal-image');
+const modalTitle = document.getElementById('modal-title');
+const modalDescription = document.getElementById('modal-description');
+const modalSizeSelect = document.getElementById('modal-size-select');
+const modalColorSelect = document.getElementById('modal-color-select');
+const modalQuantity = document.getElementById('modal-quantity');
+const modalCP = document.getElementById('modal-cp');
+const modalCalcShipping = document.getElementById('modal-calc-shipping');
+const modalShippingResult = document.getElementById('modal-shipping-result');
+const addToCartBtn = document.getElementById('add-to-cart-btn');
+const buyNowBtn = document.getElementById('buy-now-btn');
+const similarGrid = document.querySelector('#modal-similar-products .similar-grid');
+
+const newsletterPopup = document.getElementById('newsletter-popup');
+const newsletterClose = document.getElementById('newsletter-close');
+const newsletterForm = document.getElementById('newsletter-form');
+const newsletterEmail = document.getElementById('newsletter-email');
+const newsletterMsg = document.getElementById('newsletter-msg');
+
+const trustBadges = document.querySelector('.trust-badges');
+
+const nosotrosModal = document.getElementById('nosotros-modal');
+const politicasModal = document.getElementById('politicas-modal');
+
+const openNosotrosBtns = document.querySelectorAll('#open-nosotros, #open-nosotros-footer');
+const openPoliticasBtns = document.querySelectorAll('#open-politicas, #open-politicas-footer');
+
+const cart = JSON.parse(localStorage.getItem('aromoda_cart') || '[]');
+
+let products = [];
+let filteredProducts = [];
+let currentCategory = 'all';
+let currentSearch = '';
+let modalProduct = null;
+let modalImageIndex = 0;
+
+// === PROMO BAR ROTATOR ===
+function rotatePromo() {
+  promoItems.forEach((el, i) => {
+    el.classList.toggle('active', i === promoIndex);
   });
+  promoIndex = (promoIndex + 1) % promoItems.length;
+}
+setInterval(rotatePromo, 4000);
+rotatePromo();
 
+// === FETCH PRODUCTS ===
+async function fetchProducts() {
+  try {
+    const res = await fetch(SHEET_API_BASE);
+    const data = await res.json();
+    // Map or transform data if necessary according to your sheet columns
+    products = data.map(p => ({
+      id: Number(p.id),
+      name: p.nombre,
+      cat: p.cat.toLowerCase(),
+      price: Number(p.precio),
+      oldPrice: p.precio_ant ? Number(p.precio_ant) : null,
+      badge: p.badge ? p.badge.toLowerCase() : null,
+      description: p.descripcion,
+      sizes: p.talles.split(',').map(s => s.trim()),
+      colors: p.colores ? p.colores.split(',').map(c => c.trim()) : ['Único'],
+      images: [p.imagen1, p.imagen2], // Asegúrate de tener URLs
+      stock: p.stock ? Number(p.stock) : 0,
+      sold: p.vendidos ? Number(p.vendidos) : 0,
+    }));
+    filteredProducts = [...products];
+    renderProducts(filteredProducts);
+  } catch(e) {
+    productGrid.innerHTML = '<p>Error cargando productos</p>';
+    console.error('Error fetching products:', e);
+  }
 }
 
-
-function closeNav() {
-
-  if (nav) {
-    nav.classList.remove("open");
+// === RENDER PRODUCTS GRID ===
+function renderProducts(list) {
+  if (list.length === 0) {
+    productGrid.innerHTML = '';
+    noResults.hidden = false;
+    return;
   }
-
+  noResults.hidden = true;
+  productGrid.innerHTML = '';
+  list.forEach(p => {
+    const card = document.createElement('article');
+    card.classList.add('product-card');
+    // Badge text mapping
+    let badgeText = '';
+    switch(p.badge) {
+      case 'nuevo': badgeText = 'NEW IN'; break;
+      case 'hot': badgeText = 'MÁS VENDIDO'; break;
+      case 'oferta': badgeText = '30% OFF'; break;
+      case 'agotado': badgeText = 'AGOTADO'; break;
+    }
+    const isOutOfStock = p.stock === 0;
+    if(isOutOfStock) {
+      badgeText = 'AGOTADO';
+    }
+    card.innerHTML = `
+      <div class="product-img" data-id="${p.id}">
+        ${badgeText ? `<span class="badge ${(p.badge==='oferta'?'off':p.badge==='hot'?'hot':p.badge==='nuevo'?'nuevo':'agotado')}">${badgeText}</span>` : ''}
+        <img src="${p.images[0]}" alt="${p.name}" class="main-image" />
+        <img src="${p.images[1]}" alt="${p.name} vista alternativa" class="hover-image" />
+      </div>
+      <div class="product-info">
+        <div class="product-category">${p.cat}</div>
+        <h3 class="product-name">${p.name}</h3>
+        <p class="product-desc">${p.description}</p>
+        <div>
+          <span class="price">$${p.price.toLocaleString()}</span>
+          ${p.oldPrice ? `<span class="old-price">$${p.oldPrice.toLocaleString()}</span>` : ''}
+        </div>
+        <button class="add-to-cart-btn" data-id="${p.id}" ${isOutOfStock ? 'disabled' : ''}>
+          ${isOutOfStock ? 'Agotado' : 'Elegir talle y agregar'}
+        </button>
+      </div>
+    `;
+    productGrid.appendChild(card);
+  });
 }
 
-
-window.addEventListener("scroll", () => {
-
-  const header = document.getElementById("header");
-
-  if (!header) return;
-
-  if (window.scrollY > 20) {
-    header.classList.add("scrolled");
-  } else {
-    header.classList.remove("scrolled");
+// === EVENT LISTENERS ===
+productGrid.addEventListener('click', e => {
+  if(e.target.classList.contains('add-to-cart-btn') || e.target.closest('.product-img')) {
+    const id = Number(e.target.dataset.id || e.target.closest('[data-id]').dataset.id);
+    openModalProduct(id);
   }
-
 });
 
+categoryButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    categoryButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentCategory = btn.dataset.cat;
+    applyFilters();
+  });
+});
 
-/* =========================================================
-   FILTROS
-   ========================================================= */
-
-function filterCat(button) {
-
-  document
-    .querySelectorAll(".category-btn")
-    .forEach(btn => btn.classList.remove("active"));
-
-  button.classList.add("active");
-
-  currentCat = button.dataset.cat || "todos";
-
+searchInput.addEventListener('input', () => {
+  currentSearch = searchInput.value.trim().toLowerCase();
   applyFilters();
+});
 
-  document
-    .getElementById("catalogo")
-    ?.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-
-}
-
+resetFiltersBtn?.addEventListener('click', () => {
+  searchInput.value = '';
+  currentSearch = '';
+  currentCategory = 'all';
+  categoryButtons.forEach(b => b.classList.toggle('active', b.dataset.cat === 'all'));
+  applyFilters();
+});
 
 function applyFilters() {
-
-  const searchInput =
-    document.getElementById("searchInput");
-
-  const sortSelect =
-    document.getElementById("sortSelect");
-
-  const search =
-    searchInput
-      ? searchInput.value.trim().toLowerCase()
-      : "";
-
-  const sort =
-    sortSelect
-      ? sortSelect.value
-      : "default";
-
-
-  let filtered = PRODUCTS.filter(product => {
-
-    const categoryMatch =
-      currentCat === "todos" ||
-      product.cat === currentCat;
-
-    const searchMatch =
-      !search ||
-      product.name.toLowerCase().includes(search) ||
-      product.description.toLowerCase().includes(search) ||
-      product.cat.toLowerCase().includes(search);
-
-    return categoryMatch && searchMatch;
-
+  filteredProducts = products.filter(p => {
+    const catMatch = currentCategory === 'all' || p.cat === currentCategory;
+    const searchMatch = p.name.toLowerCase().includes(currentSearch) || p.description.toLowerCase().includes(currentSearch);
+    return catMatch && searchMatch;
   });
-
-
-  switch (sort) {
-
-    case "price-asc":
-      filtered.sort((a, b) => a.price - b.price);
-      break;
-
-    case "price-desc":
-      filtered.sort((a, b) => b.price - a.price);
-      break;
-
-    case "name-asc":
-      filtered.sort((a, b) =>
-        a.name.localeCompare(b.name, "es")
-      );
-      break;
-
-    case "new":
-      filtered.sort((a, b) =>
-        Number(b.isNew) - Number(a.isNew)
-      );
-      break;
-
-  }
-
-
-  renderProducts(filtered);
-
+  renderProducts(filteredProducts);
 }
 
+// === MODAL PRODUCT DETAIL ===
+function openModalProduct(id) {
+  modalProduct = products.find(p => p.id === id);
+  if(!modalProduct) return;
 
-/* =========================================================
-   RENDER PRODUCTOS
-   ========================================================= */
+  modalImageIndex = 0;
+  updateModalContent();
+  productModal.classList.remove('hidden');
+}
 
-function renderProducts(products) {
-
-  const grid =
-    document.getElementById("productGrid");
-
-  const noResults =
-    document.getElementById("noResults");
-
-  const count =
-    document.getElementById("resultsCount");
-
-
-  if (!grid) return;
-
-
-  grid.innerHTML = "";
-
-
-  if (count) {
-
-    count.textContent =
-      products.length +
-      (products.length === 1
-        ? " producto"
-        : " productos");
-
-  }
-
-
-  if (products.length === 0) {
-
-    if (noResults) {
-      noResults.hidden = false;
-    }
-
-    return;
-
-  }
-
-
-  if (noResults) {
-    noResults.hidden = true;
-  }
-
-
-  products.forEach(product => {
-
-    const card =
-      document.createElement("article");
-
-    card.className = "product-card";
-
-
-    const badgeHTML =
-      product.badge
-        ? `
-          <span class="card-badge badge-${product.badge}">
-            ${product.badge}
-          </span>
-        `
-        : "";
-
-
-    const oldPriceHTML =
-      product.oldPrice
-        ? `
-          <span class="old-price">
-            ${formatPrice(product.oldPrice)}
-          </span>
-        `
-        : "";
-
-
-    const sizesHTML =
-      product.sizes
-        .map(size =>
-          `<span class="size-tag">${escapeHTML(size)}</span>`
-        )
-        .join("");
-
-
-    card.innerHTML = `
-
-      <div class="card-img">
-
-        ${badgeHTML}
-
-        <button
-          class="card-favorite"
-          onclick="toggleWish(this)"
-          aria-label="Favorito"
-        >
-          ♡
-        </button>
-
-        <div class="card-emoji">
-          ${product.emoji}
-        </div>
-
-      </div>
-
-
-      <div class="card-info">
-
-        <div class="card-category">
-          ${escapeHTML(product.cat)}
-        </div>
-
-        <h3 class="card-name">
-          ${escapeHTML(product.name)}
-        </h3>
-
-        <p class="card-description">
-          ${escapeHTML(product.description)}
-        </p>
-
-        <div class="card-sizes">
-          ${sizesHTML}
-        </div>
-
-        <div class="card-bottom">
-
-          <div class="price-line">
-
-            <span class="price">
-              ${formatPrice(product.price)}
-            </span>
-
-            ${oldPriceHTML}
-
-          </div>
-
-          <button
-            class="add-btn"
-            onclick="openSizeModal(${product.id})"
-          >
-            🛒 Elegir talle y agregar
-          </button>
-
-        </div>
-
-      </div>
-
-    `;
-
-
-    grid.appendChild(card);
-
+function updateModalContent() {
+  modalTitle.textContent = modalProduct.name;
+  modalDescription.textContent = modalProduct.description;
+  modalImage.src = modalProduct.images[modalImageIndex];
+  // Sizes
+  modalSizeSelect.innerHTML = '';
+  modalProduct.sizes.forEach(s => {
+    modalSizeSelect.innerHTML += `<option value="${s}">${s}</option>`;
   });
-
-}
-
-
-/* =========================================================
-   FAVORITOS
-   ========================================================= */
-
-function toggleWish(button) {
-
-  button.classList.toggle("active");
-
-  button.textContent =
-    button.classList.contains("active")
-      ? "♥"
-      : "♡";
-
-}
-
-
-/* =========================================================
-   MODAL TALLE
-   ========================================================= */
-
-function openSizeModal(productId) {
-
-  const product =
-    PRODUCTS.find(p => p.id === productId);
-
-  if (!product) return;
-
-
-  pendingProduct = product;
-  selectedSize = null;
-
-
-  const modal =
-    document.getElementById("sizeModal");
-
-  const overlay =
-    document.getElementById("modalOverlay");
-
-  const title =
-    document.getElementById("modalTitle");
-
-  const picker =
-    document.getElementById("sizePicker");
-
-  const info =
-    document.getElementById("modalInfo");
-
-
-  title.textContent =
-    "Elegí el talle";
-
-
-  picker.innerHTML =
-    product.sizes
-      .map(size => `
-        <button
-          class="size-option"
-          onclick="selectSize(this, '${escapeHTML(size)}')"
-        >
-          ${escapeHTML(size)}
-        </button>
-      `)
-      .join("");
-
-
-  info.innerHTML = `
-    <strong>${escapeHTML(product.name)}</strong><br>
-    Precio: ${formatPrice(product.price)}<br>
-    Elegí un talle antes de agregar el producto al carrito.
-  `;
-
-
-  modal.classList.add("open");
-  overlay.classList.add("open");
-
-}
-
-
-function selectSize(button, size) {
-
-  document
-    .querySelectorAll(".size-option")
-    .forEach(option =>
-      option.classList.remove("selected")
-    );
-
-  button.classList.add("selected");
-
-  selectedSize = size;
-
-}
-
-
-function closeModal() {
-
-  const modal =
-    document.getElementById("sizeModal");
-
-  const overlay =
-    document.getElementById("modalOverlay");
-
-
-  modal.classList.remove("open");
-  overlay.classList.remove("open");
-
-  pendingProduct = null;
-  selectedSize = null;
-
-}
-
-
-function confirmAddToCart() {
-
-  if (!pendingProduct) return;
-
-
-  if (!selectedSize) {
-
-    showToast("Elegí un talle antes de continuar.");
-
-    return;
-
-  }
-
-
-  addToCart(
-    pendingProduct,
-    selectedSize
-  );
-
-  closeModal();
-
-}
-
-
-/* =========================================================
-   CARRITO
-   ========================================================= */
-
-function addToCart(product, size) {
-
-  const key =
-    `${product.id}-${size}`;
-
-
-  const existing =
-    cart.find(item => item.key === key);
-
-
-  if (existing) {
-
-    existing.qty += 1;
-
+  // Colors
+  modalColorSelect.innerHTML = '';
+  if(modalProduct.colors.length) {
+    modalProduct.colors.forEach(c => {
+      modalColorSelect.innerHTML += `<option value="${c}">${c}</option>`;
+    });
   } else {
+    modalColorSelect.innerHTML = '<option value="Único">Único</option>';
+  }
+  // Reset quantity and shipping
+  modalQuantity.value = 1;
+  modalCP.value = '';
+  modalShippingResult.textContent = '';
 
+  // Render similares
+  renderSimilarProducts();
+}
+
+modalCloseBtn.addEventListener('click', () => {
+  productModal.classList.add('hidden');
+  modalProduct = null;
+});
+
+document.getElementById('prev-image').addEventListener('click', () => {
+  if(!modalProduct) return;
+  modalImageIndex = (modalImageIndex -1 + modalProduct.images.length) % modalProduct.images.length;
+  modalImage.src = modalProduct.images[modalImageIndex];
+});
+document.getElementById('next-image').addEventListener('click', () => {
+  if(!modalProduct) return;
+  modalImageIndex = (modalImageIndex +1) % modalProduct.images.length;
+  modalImage.src = modalProduct.images[modalImageIndex];
+});
+
+// SHIPPING CALCULATOR (modal)
+modalCalcShipping.addEventListener('click', () => {
+  const cp = modalCP.value.trim();
+  if(!cp) {
+    modalShippingResult.textContent = 'Por favor ingresa un código postal.';
+    return;
+  }
+  let base = 4000; // base estimado
+  // Método simple basado en peso aproximado del producto y tipo envío omitido por simplicidad
+  modalShippingResult.textContent = `Costo estimado: $${base.toLocaleString()} - 3 a 7 días hábiles`;
+});
+
+// === CART LOGIC ===
+function saveCart() {
+  localStorage.setItem('aromoda_cart', JSON.stringify(cart));
+  updateCartCount();
+}
+
+function updateCartCount() {
+  const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+  cartCount.textContent = totalItems;
+}
+saveCart();
+
+addToCartBtn.addEventListener('click', () => {
+  if(!modalProduct) return;
+  const selectedSize = modalSizeSelect.value;
+  const selectedColor = modalColorSelect.value;
+  const qty = parseInt(modalQuantity.value);
+  if(!selectedSize) {
+    alert('Por favor selecciona un talle.');
+    return;
+  }
+  if(qty < 1) {
+    alert('Cantidad inválida.');
+    return;
+  }
+  // Agregar a carrito (simple)
+  const key = `${modalProduct.id}-${selectedSize}-${selectedColor}`;
+  const existing = cart.find(i => i.key === key);
+  if(existing) {
+    existing.qty += qty;
+  } else {
     cart.push({
-
       key,
-
-      id: product.id,
-
-      name: product.name,
-
-      price: product.price,
-
-      emoji: product.emoji,
-
-      size,
-
-      qty: 1,
-
-      pesoG: product.pesoG
-
+      id: modalProduct.id,
+      name: modalProduct.name,
+      size: selectedSize,
+      color: selectedColor,
+      price: modalProduct.price,
+      qty,
     });
-
   }
-
-
   saveCart();
-
-  renderCart();
-
-  showToast(
-    `${product.name} agregado al carrito.`
-  );
-
-}
-
-
-function changeQty(key, amount) {
-
-  const item =
-    cart.find(product => product.key === key);
-
-  if (!item) return;
-
-
-  item.qty += amount;
-
-
-  if (item.qty <= 0) {
-
-    cart =
-      cart.filter(product =>
-        product.key !== key
-      );
-
-  }
-
-
-  saveCart();
-
-  renderCart();
-
-}
-
-
-function removeFromCart(key) {
-
-  cart =
-    cart.filter(item =>
-      item.key !== key
-    );
-
-  saveCart();
-
-  renderCart();
-
-}
-
-
-/* =========================================================
-   RENDER CARRITO
-   ========================================================= */
-
-function renderCart() {
-
-  const body =
-    document.getElementById("cartBody");
-
-  const empty =
-    document.getElementById("cartEmpty");
-
-  const footer =
-    document.getElementById("cartFoot");
-
-  const badge =
-    document.getElementById("cartBadge");
-
-  const subtotalElement =
-    document.getElementById("subTotal");
-
-  const totalElement =
-    document.getElementById("grandTotal");
-
-
-  if (!body) return;
-
-
-  const totalItems =
-    cart.reduce(
-      (sum, item) =>
-        sum + item.qty,
-      0
-    );
-
-
-  const subtotal =
-    cart.reduce(
-      (sum, item) =>
-        sum + item.price * item.qty,
-      0
-    );
-
-
-  if (badge) {
-    badge.textContent = totalItems;
-  }
-
-
-  if (cart.length === 0) {
-
-    body.innerHTML = `
-      <div class="cart-empty">
-        <div>🛍️</div>
-        <p>Tu carrito está vacío.</p>
-        <button
-          class="btn btn-outline"
-          onclick="toggleCart()"
-        >
-          Seguir comprando
-        </button>
-      </div>
-    `;
-
-
-    if (footer) {
-      footer.style.display = "none";
-    }
-
-    return;
-
-  }
-
-
-  if (footer) {
-    footer.style.display = "block";
-  }
-
-
-  body.innerHTML =
-    cart
-      .map(item => `
-
-        <div class="cart-item">
-
-          <div class="cart-item-img">
-            ${item.emoji}
-          </div>
-
-          <div class="cart-item-info">
-
-            <div class="cart-item-name">
-              ${escapeHTML(item.name)}
-            </div>
-
-            <div class="cart-item-size">
-              Talle: ${escapeHTML(item.size)}
-            </div>
-
-            <div class="cart-item-price">
-              ${formatPrice(item.price)}
-            </div>
-
-            <div class="qty-controls">
-
-              <button
-                class="qty-btn"
-                onclick="changeQty('${item.key}', -1)"
-              >
-                −
-              </button>
-
-              <span class="qty-value">
-                ${item.qty}
-              </span>
-
-              <button
-                class="qty-btn"
-                onclick="changeQty('${item.key}', 1)"
-              >
-                +
-              </button>
-
-            </div>
-
-          </div>
-
-          <button
-            class="delete-btn"
-            onclick="removeFromCart('${item.key}')"
-            title="Eliminar"
-          >
-            🗑️
-          </button>
-
-        </div>
-
-      `)
-      .join("");
-
-
-  if (subtotalElement) {
-    subtotalElement.textContent =
-      formatPrice(subtotal);
-  }
-
-
-  if (totalElement) {
-    totalElement.textContent =
-      formatPrice(subtotal);
-  }
-
-}
-
-
-/* =========================================================
-   ABRIR / CERRAR CARRITO
-   ========================================================= */
-
-const cartToggle =
-  document.getElementById("cartToggle");
-
-if (cartToggle) {
-
-  cartToggle.addEventListener(
-    "click",
-    toggleCart
-  );
-
-}
-
-
-function toggleCart() {
-
-  const drawer =
-    document.getElementById("cartDrawer");
-
-  const overlay =
-    document.getElementById("cartOverlay");
-
-
-  drawer.classList.toggle("open");
-  overlay.classList.toggle("open");
-
-}
-
-
-/* =========================================================
-   WHATSAPP
-   ========================================================= */
-
-function sendWhatsApp() {
-
-  if (cart.length === 0) {
-
-    showToast("El carrito está vacío.");
-
-    return;
-
-  }
-
-
-  let message =
-    "Hola! Quiero hacer un pedido en AROMODA:%0A%0A";
-
-
-  cart.forEach(item => {
-
-    message +=
-      `• ${item.name}%0A` +
-      `  Talle: ${item.size}%0A` +
-      `  Cantidad: ${item.qty}%0A` +
-      `  Precio: ${formatPrice(item.price)}%0A%0A`;
-
+  productModal.classList.add('hidden');
+  alert(`${modalProduct.name} agregado al carrito.`);
+});
+
+// Comprar ahora redirige a checkout limpio que puedes crear aparte
+buyNowBtn.addEventListener('click', () => {
+  if(!modalProduct) return;
+  // En este caso, guardar pedido o enviar a checkout
+  alert('Funcionalidad de Compra directa aún no implementada. Prueba desde el carrito.');
+  productModal.classList.add('hidden');
+});
+
+// === SIMILAR PRODUCTS (mismo categoria, max 4)
+function renderSimilarProducts() {
+  similarGrid.innerHTML = '';
+  if(!modalProduct) return;
+  const similars = products.filter(p => p.cat === modalProduct.cat && p.id !== modalProduct.id).slice(0,4);
+
+  similars.forEach(p => {
+    const card = document.createElement('div');
+    card.classList.add('product-card');
+    card.style.flex = '0 0 140px';
+    card.innerHTML = `<img src="${p.images[0]}" alt="${p.name}" /><h5>${p.name}</h5>`;
+    card.addEventListener('click', () => {
+      openModalProduct(p.id);
+    });
+    similarGrid.appendChild(card);
   });
-
-
-  const subtotal =
-    cart.reduce(
-      (sum, item) =>
-        sum + item.price * item.qty,
-      0
-    );
-
-
-  message +=
-    `Subtotal: ${formatPrice(subtotal)}%0A%0A`;
-
-  message +=
-    "Quiero consultar disponibilidad y envío.";
-
-
-  const url =
-    `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
-
-
-  window.open(url, "_blank");
-
 }
 
-
-/* =========================================================
-   CALCULADORA DE ENVÍO
-   ========================================================= */
-
-function calcularEnvio() {
-
-  const cpInput =
-    document.getElementById("cpDestino");
-
-  const pesoInput =
-    document.getElementById("pesoEnvio");
-
-  const tipoInput =
-    document.getElementById("tipoEnvio");
-
-  const result =
-    document.getElementById("shippingResult");
-
-
-  const cp =
-    cpInput.value.trim();
-
-  const peso =
-    Number(pesoInput.value);
-
-  const tipo =
-    tipoInput.value;
-
-
-  if (!cp || !peso || peso <= 0) {
-
-    result.innerHTML =
-      "⚠️ Completá el código postal y el peso.";
-
-    result.classList.add("show");
-
+// === NEWSLETTER POPUP ===
+let newsletterShown = false;
+window.addEventListener('load', () => {
+  if(!newsletterShown) {
+    setTimeout(() => {
+      newsletterPopup.classList.remove('hidden');
+      newsletterShown = true;
+    }, 3500);
+  }
+});
+newsletterClose.addEventListener('click', () => {
+  newsletterPopup.classList.add('hidden');
+});
+newsletterForm.addEventListener('submit', async e => {
+  e.preventDefault();
+  const email = newsletterEmail.value.trim();
+  if(!email || !email.includes('@')) {
+    newsletterMsg.textContent = 'Por favor, ingresa un email válido.';
+    newsletterMsg.style.color = 'var(--danger)';
     return;
-
   }
-
-
-  let base;
-
-
-  if (peso <= 500) {
-    base = 3200;
-  } else if (peso <= 1000) {
-    base = 4500;
-  } else if (peso <= 2000) {
-    base = 6000;
-  } else if (peso <= 5000) {
-    base = 7500;
-  } else if (peso <= 10000) {
-    base = 9500;
-  } else {
-    base = 12000;
-  }
-
-
-  let multiplier = 1;
-
-
-  if (tipo === "prioritaria") {
-    multiplier = 1.35;
-  }
-
-  if (tipo === "sucursal") {
-    multiplier = .85;
-  }
-
-
-  const price =
-    Math.round(base * multiplier);
-
-
-  let days = "3 a 7 días hábiles";
-
-
-  if (tipo === "prioritaria") {
-    days = "2 a 5 días hábiles";
-  }
-
-  if (tipo === "sucursal") {
-    days = "3 a 7 días hábiles";
-  }
-
-
-  result.innerHTML = `
-    <strong>${formatPrice(price)}</strong>
-    <br>
-    <span>
-      Estimación para CP ${escapeHTML(cp)}
-      · ${days}
-    </span>
-  `;
-
-
-  result.classList.add("show");
-
-}
-
-
-/* =========================================================
-   TOAST
-   ========================================================= */
-
-function showToast(message) {
-
-  const container =
-    document.getElementById("toasts");
-
-  if (!container) return;
-
-
-  const toast =
-    document.createElement("div");
-
-  toast.className = "toast";
-
-  toast.textContent = message;
-
-
-  container.appendChild(toast);
-
-
-  setTimeout(() => {
-
-    toast.remove();
-
-  }, 3000);
-
-}
-
-
-/* =========================================================
-   REINICIAR FILTROS
-   ========================================================= */
-
-function resetFilters() {
-
-  currentCat = "todos";
-
-
-  const searchInput =
-    document.getElementById("searchInput");
-
-  const sortSelect =
-    document.getElementById("sortSelect");
-
-
-  if (searchInput) {
-    searchInput.value = "";
-  }
-
-  if (sortSelect) {
-    sortSelect.value = "default";
-  }
-
-
-  document
-    .querySelectorAll(".category-btn")
-    .forEach(btn => {
-
-      btn.classList.toggle(
-        "active",
-        btn.dataset.cat === "todos"
-      );
-
+  try {
+    // POST subscripción al Apps Script (tu endpoint real)
+    await fetch(SHEET_API_BASE, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({type:'subscribe', email})
     });
-
-
-  applyFilters();
-
-}
-
-
-/* =========================================================
-   EVENTOS DE BÚSQUEDA
-   ========================================================= */
-
-const searchInput =
-  document.getElementById("searchInput");
-
-if (searchInput) {
-
-  searchInput.addEventListener(
-    "input",
-    applyFilters
-  );
-
-}
-
-
-const sortSelect =
-  document.getElementById("sortSelect");
-
-if (sortSelect) {
-
-  sortSelect.addEventListener(
-    "change",
-    applyFilters
-  );
-
-}
-
-
-/* =========================================================
-   ESC PARA CERRAR
-   ========================================================= */
-
-document.addEventListener("keydown", event => {
-
-  if (event.key === "Escape") {
-
-    closeModal();
-
-    const drawer =
-      document.getElementById("cartDrawer");
-
-    const overlay =
-      document.getElementById("cartOverlay");
-
-
-    drawer?.classList.remove("open");
-    overlay?.classList.remove("open");
-
+    newsletterMsg.textContent = 'Gracias por suscribirte!';
+    newsletterMsg.style.color = 'var(--success)';
+    newsletterEmail.value = '';
+  } catch {
+    newsletterMsg.textContent = 'Error enviando la suscripción. Intenta de nuevo.';
+    newsletterMsg.style.color = 'var(--danger)';
   }
-
 });
 
+// === MODALES INSTITUCIONALES ===
+function setupModalOpeners(btns, modal) {
+  btns.forEach(b => {
+    b.addEventListener('click', () => {
+      modal.classList.remove('hidden');
+    });
+  });
+}
+function setupModalClose(modal) {
+  const closeBtn = modal.querySelector('.modal-close');
+  closeBtn.addEventListener('click', () => {
+    modal.classList.add('hidden');
+  });
+}
+setupModalOpeners(openNosotrosBtns, nosotrosModal);
+setupModalOpeners(openPoliticasBtns, politicasModal);
+setupModalClose(nosotrosModal);
+setupModalClose(politicasModal);
 
-/* =========================================================
-   INICIO
-   ========================================================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  applyFilters();
-
-  renderCart();
-
+// === ESC TO CLOSE MODALS ===
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape') {
+    [productModal, newsletterPopup, nosotrosModal, politicasModal].forEach(modal => modal.classList.add('hidden'));
+  }
 });
+
+// === INIT ===
+fetchProducts();
+updateCartCount();
