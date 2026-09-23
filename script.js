@@ -3,7 +3,7 @@
 ==================== */
 
 // CONFIG
-const PRODUCTS_API_URL = 'https://script.google.com/macros/s/AKfycbxHuBRGbOM4zs9wH5n-7OLNUprUzw0Pvvscj0U_1dC-GiTZ6UdVsbXgZz4Np0ZNq6rF/exec'; // Cambiar por tu API de Google Apps Script
+const PRODUCTS_API_URL = 'https://script.google.com/macros/s/AKfycbzzQwwzrZJZMFOhvZd3d_JB1EopU0_20St_ZCc2g8Xlih61Qw8hRO6gDKolQx7I5rm3/exec'; // Cambiar por tu API de Google Apps Script
 const SHEET_API_BASE = PRODUCTS_API_URL;
 const WHATSAPP_NUMBER = '5492325590916';
 
