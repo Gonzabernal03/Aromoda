@@ -7,60 +7,71 @@
   <link rel="stylesheet" href="styles.css" />
   <style>
     /* Ajustes para layout completo y footer al pie */
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      font-family: "Inter", sans-serif;
-      background: white;
-      color: #333;
-      line-height: 1.6;
-      max-width: 720px;
-      margin: 0 auto; /* centrado */
-      padding: 0 20px;
-    }
-    main {
-      flex: 1; /* ocupa espacio entre header y footer */
-      padding-top: 40px;
-      padding-bottom: 40px;
-    }
-    h1 {
-      font-family: "Playfair Display", serif;
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: #c5a36a;
-      text-align: center;
-    }
-    p {
-      margin-bottom: 15px;
-    }
-    a.back-link {
-      display: inline-block;
-      margin-top: 30px;
-      color: #c5a36a;
-      font-weight: 700;
-      text-decoration: none;
-    }
-    footer {
-      background-color: #1c1a18; /* fondo negro */
-      color: rgba(255, 255, 255, 0.7);
-      padding: 45px 20px 25px;
-      font-size: 0.9rem;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    .footer-bottom {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      color: rgba(255, 255, 255, 0.4);
-      text-align: center;
-      padding-top: 12px;
-    }
-    /* Puedes agregar el resto de estilos footer-grid y social-links según styles.css */
+    / body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+           }
+     body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  background: white;
+  color: #333;
+  line-height: 1.6;
+  max-width: 720px;
+  margin: 0 auto; /* centrado */
+  padding: 0 20px;
+}
+main {
+  flex: 1; /* ocupa espacio entre header y footer */
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #c5a36a;
+  text-align: center;
+}
+p {
+  margin-bottom: 15px;
+}
+a.back-link {
+  display: inline-block;
+  margin-top: 30px;
+  color: #c5a36a;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Logo más pequeño en el footer */
+footer .logo-footer img {
+  height: 30px;
+  margin-bottom: 8px;
+}
+
+/* Footer ancho completo y más bajito */
+footer {
+  background-color: #1c1a18;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  padding: 15px 20px;
+  width: 100vw;
+  box-sizing: border-box;
+  margin-left: calc(50% - 50vw);
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+  padding-top: 8px;
+}
+
+    /* Puedes agregar el resto de estilos footer-grid y social-links según style.css */
   </style>
 </head>
 <body>
