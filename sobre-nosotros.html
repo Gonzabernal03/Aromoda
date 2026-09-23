@@ -11,8 +11,8 @@
   height: 100%;
   margin: 0;
   padding: 0;
-           }
-     body {
+}
+body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -46,13 +46,11 @@ a.back-link {
   font-weight: 700;
   text-decoration: none;
 }
-
 /* Logo más pequeño en el footer */
 footer .logo-footer img {
   height: 30px;
   margin-bottom: 8px;
 }
-
 /* Footer ancho completo y más bajito */
 footer {
   background-color: #1c1a18;
@@ -63,7 +61,49 @@ footer {
   box-sizing: border-box;
   margin-left: calc(50% - 50vw);
 }
-
+/* Footer grid con columnas para contenido */
+.footer-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: var(--container, 1180px);
+  margin: 0 auto;
+  padding: 20px 0;
+}
+.footer-grid > div {
+  flex: 1 1 200px;
+  min-width: 180px;
+}
+/* Títulos de secciones */
+.footer-grid h4 {
+  font-weight: 700;
+  color: white;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+/* Listas sin estilos por defecto y separadas */
+.footer-grid ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.footer-grid ul li {
+  margin-bottom: 10px;
+}
+/* Estilos para enlaces */
+.footer-grid ul li a,
+.social-links a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  display: block;
+  transition: color 0.3s ease;
+}
+.footer-grid ul li a:hover,
+.social-links a:hover {
+  color: var(--accent, #c5a36a);
+}
+/* Separador y estilo para el texto inferior del footer */
 .footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.4);
