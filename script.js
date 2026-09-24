@@ -3,7 +3,7 @@
 ==================== */
 
 // CONFIG
-const PRODUCTS_API_URL = 'https://script.google.com/macros/s/AKfycby4ycWr-eajqEcblGosgVuM-Z2K8Ut4PyUiK350Bh6INHYmfMIbT2PDQkC5KelJo4Fy/exec'; // Cambiar por tu API de Google Apps Script
+const PRODUCTS_API_URL = 'https://script.google.com/macros/s/AKfycbyMtRdwCxn4cxr1KtH7GcZfihNcaukx3v-qFn2gnnwtwxdtqYStFnz3E9shjOYjYcon/exec'; // Cambiar por tu API de Google Apps Script
 const SHEET_API_BASE = PRODUCTS_API_URL;
 const WHATSAPP_NUMBER = '5492325590916';
 
@@ -247,55 +247,30 @@ modalCalcShipping.addEventListener('click', () => {
 });
 
 // === CART LOGIC ===
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
 function saveCart() {
-  localStorage.setItem('cart', JSON.stringify(cart));
+  localStorage.setItem('aromoda_cart', JSON.stringify(cart));
   updateCartCount();
 }
+
 function updateCartCount() {
-  const count = cart.reduce((acc, item) => acc + item.qty, 0);
-  const cartCountElem = document.getElementById('cart-count');
-  if (cartCountElem) {
-    cartCountElem.textContent = count;
-  }
+  const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+  cartCount.textContent = totalItems;
 }
-// Función para agregar producto al carrito
-// Recibe un objeto producto con {id, name, price}, junto a size, color y cantidad
-function addToCart(product, selectedSize, selectedColor, qty) {
-  const key = `${product.id}-${selectedSize}-${selectedColor}`;
-  const existing = cart.find(item => item.key === key);
-  if (existing) {
-    existing.qty += qty;
-  } else {
-    cart.push({
-      key,
-      id: product.id,
-      name: product.name,
-      size: selectedSize,
-      color: selectedColor,
-      price: product.price,
-      qty,
-    });
-  }
-  saveCart();
-  alert(`${product.name} agregado al carrito.`);
-}
-// Evento de botón "Agregar al carrito"
+saveCart();
+
 addToCartBtn.addEventListener('click', () => {
-  if (!modalProduct) return;
+  if(!modalProduct) return;
   const selectedSize = modalSizeSelect.value;
   const selectedColor = modalColorSelect.value;
   const qty = parseInt(modalQuantity.value);
-  if (!selectedSize) {
+  if(!selectedSize) {
     alert('Por favor selecciona un talle.');
     return;
   }
-  if (qty < 1 || isNaN(qty)) {
+  if(qty < 1) {
     alert('Cantidad inválida.');
     return;
   }
-  addToCart(modalProduct, selectedSize, selectedColor, qty);
-});
   // Inicializar carrito desde localStorage o vacío
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -432,7 +407,7 @@ updateCartCount();
 const heroBg = document.querySelector('.hero-bg');
 
 const heroImages = [
-  'https://i.postimg.cc/6QqmqFpG/of.jpg',
+  'https://i.postimg.cc/Ghc9hYDP/Whats-App-Image-2026-09-15-at-19-40-52.jpg',
   'https://i.postimg.cc/yx76x4kp/Whats-App-Image-2026-09-14-at-18-11-46.jpg',
   'https://i.postimg.cc/2yTkBcWd/Whats-App-Image-2026-09-14-at-18-07-24.jpg',
 ];
