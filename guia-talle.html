@@ -8,44 +8,103 @@
   <style>
     /* Contenido específico CSS */
     body {
-      font-family: "Inter", sans-serif;
-      max-width: 720px;
-      margin: 40px auto;
-      padding: 0 20px;
-      background: white;
-      color: #333;
-      line-height: 1.6;
-    }
-    main {
-      padding-top: 40px;
-      padding-bottom: 40px;
-    }
-    h1 {
-      font-family: "Playfair Display", serif;
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: #c5a36a;
-      text-align: center;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: center;
-    }
-    th {
-      background: #f7f4f1;
-    }
-    a.back-link {
-      display: inline-block;
-      margin-top: 30px;
-      color: #c5a36a;
-      font-weight: 700;
-      text-decoration: none;
+      display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  background: white;
+  color: #333;
+  line-height: 1.6;
+  max-width: 720px;
+  margin: 0 auto; /* centrado */
+  padding: 0 20px;
+}
+main {
+  flex: 1; /* ocupa espacio entre header y footer */
+  padding-top: 40px;
+  padding-bottom: 200px;
+}
+h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #c5a36a;
+  text-align: center;
+}
+p {
+  margin-bottom: 15px;
+}
+a.back-link {
+  display: inline-block;
+  margin-top: 30px;
+  color: #c5a36a;
+  font-weight: 700;
+  text-decoration: none;
+}
+/* Logo más pequeño en el footer */
+footer .logo-footer img {
+  height: 40px;
+  margin-bottom: 10px;
+}
+/* Footer ancho completo y más bajito */
+footer {
+  background-color: #1c1a18;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  padding: 15px 20px;
+  width: 100vw;
+  box-sizing: border-box;
+  margin-left: calc(50% - 50vw);
+}
+/* Footer grid con columnas para contenido */
+.footer-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: var(--container, 1180px);
+  margin: 0 auto;
+  padding: 20px 0;
+}
+.footer-grid > div {
+  flex: 1 1 200px;
+  min-width: 180px;
+}
+/* Títulos de secciones */
+.footer-grid h4 {
+  font-weight: 700;
+  color: white;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+/* Listas sin estilos por defecto y separadas */
+.footer-grid ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.footer-grid ul li {
+  margin-bottom: 10px;
+}
+/* Estilos para enlaces */
+.footer-grid ul li a,
+.social-links a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  display: block;
+  transition: color 0.3s ease;
+}
+.footer-grid ul li a:hover,
+.social-links a:hover {
+  color: var(--accent, #c5a36a);
+}
+/* Separador y estilo para el texto inferior del footer */
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+  padding-top: 8px;
+
     }
   </style>
 </head>

@@ -271,26 +271,46 @@ addToCartBtn.addEventListener('click', () => {
     alert('Cantidad inválida.');
     return;
   }
-  // Agregar a carrito (simple)
-  const key = `${modalProduct.id}-${selectedSize}-${selectedColor}`;
-  const existing = cart.find(i => i.key === key);
+  // Inicializar carrito desde localStorage o vacío
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+// Función para guardar el carrito y actualizar contador
+function saveCart() {
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartCount();
+}
+
+// Función para actualizar el contador visible en el carrito
+function updateCartCount() {
+  const count = cart.reduce((acc, item) => acc + item.qty, 0);
+  document.getElementById('cart-count').textContent = count;
+}
+
+// Función para agregar producto al carrito
+// Recibe un objeto producto con {id, name, price}, junto a size, color y cantidad
+function addToCart(product, selectedSize, selectedColor, qty) {
+  const key = `${product.id}-${selectedSize}-${selectedColor}`;
+  const existing = cart.find(item => item.key === key);
   if(existing) {
     existing.qty += qty;
   } else {
     cart.push({
       key,
-      id: modalProduct.id,
-      name: modalProduct.name,
+      id: product.id,
+      name: product.name,
       size: selectedSize,
       color: selectedColor,
-      price: modalProduct.price,
+      price: product.price,
       qty,
     });
   }
   saveCart();
-  productModal.classList.add('hidden');
-  alert(`${modalProduct.name} agregado al carrito.`);
-});
+  alert(`${product.name} agregado al carrito.`);
+}
+
+// Actualizar contador al cargar la página
+updateCartCount();
+
 
 // Comprar ahora redirige a checkout limpio que puedes crear aparte
 buyNowBtn.addEventListener('click', () => {

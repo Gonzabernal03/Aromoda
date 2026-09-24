@@ -85,7 +85,7 @@ body {
 
 /* Logo a la izquierda */
 .logo img {
-  height: 50px;
+  height: 90px;
   object-fit: contain;
 }
 
@@ -147,7 +147,7 @@ body {
 
 /* HERO */
 .hero {
-  height: 500px;
+  height: 100vh;
   position: relative;
   display: flex;
   align-items: center;
@@ -162,7 +162,7 @@ body {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  transition: background-image 1s ease-in-out;
+  transition: background-image 2s ease-in-out;
   z-index: 0; /* detrás del contenido */
 }
 .hero-content {
