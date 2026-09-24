@@ -147,7 +147,7 @@ body {
 
 /* HERO */
 .hero {
-  height: 100vh;
+  height: 600px;
   position: relative;
   display: flex;
   align-items: center;
