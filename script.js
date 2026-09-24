@@ -3,7 +3,7 @@
 ==================== */
 
 // CONFIG
-const PRODUCTS_API_URL = 'https://script.google.com/macros/s/AKfycbxKlXQsFYsFIaCHeD8Sz73cePZh5MedYIXymDUhzvyWSnYCkRph3XYrfSaQ-aixiHol/exec'; // Cambiar por tu API de Google Apps Script
+const PRODUCTS_API_URL = 'https://script.google.com/macros/s/AKfycby5vd7lQwtP7Gk__p7YO-Pe8XS-IIR0G6FyvmMBexX7LBqaNIeEPWRd1ak_gAqdlakJ/exec'; // Cambiar por tu API de Google Apps Script
 const SHEET_API_BASE = PRODUCTS_API_URL;
 const WHATSAPP_NUMBER = '5492325590916';
 
@@ -247,9 +247,6 @@ modalCalcShipping.addEventListener('click', () => {
 });
 
 // === CART LOGIC ===
-// Variables y funciones globales (fuera de event listeners)
-let cart = JSON.parse(localStorage.getItem('aromoda_cart') || '[]');
-
 function saveCart() {
   localStorage.setItem('aromoda_cart', JSON.stringify(cart));
   updateCartCount();
@@ -259,87 +256,41 @@ function updateCartCount() {
   const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
   cartCount.textContent = totalItems;
 }
+saveCart();
 
-function addToCart(product, selectedSize, selectedColor, qty) {
-  const key = `${product.id}-${selectedSize}-${selectedColor}`;
-  const existing = cart.find(item => item.key === key);
-  if (existing) {
-    existing.qty += qty;
-  } else {
-    cart.push({
-      key,
-      id: product.id,
-      name: product.name,
-      size: selectedSize,
-      color: selectedColor,
-      price: product.price,
-      qty,
-    });
-  }
-  saveCart();
-  alert(`${product.name} agregado al carrito.`);
-}
-
-// Event listener solo con lógica simple:
 addToCartBtn.addEventListener('click', () => {
-  if (!modalProduct) return;
-
+  if(!modalProduct) return;
   const selectedSize = modalSizeSelect.value;
   const selectedColor = modalColorSelect.value;
   const qty = parseInt(modalQuantity.value);
-
-  if (!selectedSize) {
+  if(!selectedSize) {
     alert('Por favor selecciona un talle.');
     return;
   }
-  if (qty < 1) {
+  if(qty < 1) {
     alert('Cantidad inválida.');
     return;
   }
-
-  addToCart(modalProduct, selectedSize, selectedColor, qty);
-});
-
-  // Inicializar carrito desde localStorage o vacío
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-// Función para guardar el carrito y actualizar contador
-function saveCart() {
-  localStorage.setItem('cart', JSON.stringify(cart));
-  updateCartCount();
-}
-
-// Función para actualizar el contador visible en el carrito
-function updateCartCount() {
-  const count = cart.reduce((acc, item) => acc + item.qty, 0);
-  document.getElementById('cart-count').textContent = count;
-}
-
-// Función para agregar producto al carrito
-// Recibe un objeto producto con {id, name, price}, junto a size, color y cantidad
-function addToCart(product, selectedSize, selectedColor, qty) {
-  const key = `${product.id}-${selectedSize}-${selectedColor}`;
-  const existing = cart.find(item => item.key === key);
+  // Agregar a carrito (simple)
+  const key = `${modalProduct.id}-${selectedSize}-${selectedColor}`;
+  const existing = cart.find(i => i.key === key);
   if(existing) {
     existing.qty += qty;
   } else {
     cart.push({
       key,
-      id: product.id,
-      name: product.name,
+      id: modalProduct.id,
+      name: modalProduct.name,
       size: selectedSize,
       color: selectedColor,
-      price: product.price,
+      price: modalProduct.price,
       qty,
     });
   }
   saveCart();
-  alert(`${product.name} agregado al carrito.`);
-}
-
-// Actualizar contador al cargar la página
-updateCartCount();
-
+  productModal.classList.add('hidden');
+  alert(`${modalProduct.name} agregado al carrito.`);
+});
 
 // Comprar ahora redirige a checkout limpio que puedes crear aparte
 buyNowBtn.addEventListener('click', () => {
