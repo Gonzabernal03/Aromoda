@@ -247,30 +247,55 @@ modalCalcShipping.addEventListener('click', () => {
 });
 
 // === CART LOGIC ===
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
 function saveCart() {
-  localStorage.setItem('aromoda_cart', JSON.stringify(cart));
+  localStorage.setItem('cart', JSON.stringify(cart));
   updateCartCount();
 }
-
 function updateCartCount() {
-  const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
-  cartCount.textContent = totalItems;
+  const count = cart.reduce((acc, item) => acc + item.qty, 0);
+  const cartCountElem = document.getElementById('cart-count');
+  if (cartCountElem) {
+    cartCountElem.textContent = count;
+  }
 }
-saveCart();
-
+// Función para agregar producto al carrito
+// Recibe un objeto producto con {id, name, price}, junto a size, color y cantidad
+function addToCart(product, selectedSize, selectedColor, qty) {
+  const key = `${product.id}-${selectedSize}-${selectedColor}`;
+  const existing = cart.find(item => item.key === key);
+  if (existing) {
+    existing.qty += qty;
+  } else {
+    cart.push({
+      key,
+      id: product.id,
+      name: product.name,
+      size: selectedSize,
+      color: selectedColor,
+      price: product.price,
+      qty,
+    });
+  }
+  saveCart();
+  alert(`${product.name} agregado al carrito.`);
+}
+// Evento de botón "Agregar al carrito"
 addToCartBtn.addEventListener('click', () => {
-  if(!modalProduct) return;
+  if (!modalProduct) return;
   const selectedSize = modalSizeSelect.value;
   const selectedColor = modalColorSelect.value;
   const qty = parseInt(modalQuantity.value);
-  if(!selectedSize) {
+  if (!selectedSize) {
     alert('Por favor selecciona un talle.');
     return;
   }
-  if(qty < 1) {
+  if (qty < 1 || isNaN(qty)) {
     alert('Cantidad inválida.');
     return;
   }
+  addToCart(modalProduct, selectedSize, selectedColor, qty);
+});
   // Inicializar carrito desde localStorage o vacío
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
