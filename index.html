@@ -85,45 +85,50 @@
   <div id="product-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <button id="modal-close" aria-label="Cerrar"><svg width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     <div class="modal-content">
-      <div class="modal-images">
-        <button id="prev-image" aria-label="Imagen anterior">‹</button>
-        <img id="modal-image" src="" alt="Detalle de prenda" />
-        <button id="next-image" aria-label="Imagen siguiente">›</button>
-      </div>
-      <div class="modal-info">
-        <h3 id="modal-title"></h3>
-        <p id="modal-description"></p>
+  <div class="modal-images">
+    <button id="prev-image" aria-label="Imagen anterior">‹</button>
+    <img id="modal-image" src="" alt="Detalle de prenda" />
+    <button id="next-image" aria-label="Imagen siguiente">›</button>
 
-        <div class="modal-selectors">
-          <label>Talle:
-            <select id="modal-size-select" aria-label="Selector de talle"></select>
-          </label>
-          <label>Color:
-            <select id="modal-color-select" aria-label="Selector de color"></select>
-          </label>
-          <label>Cantidad:
-            <input type="number" id="modal-quantity" min="1" max="10" value="1" />
-          </label>
-        </div>
-
-        <div class="shipping-calculator">
-          <label for="modal-cp">Código Postal:</label>
-          <input type="text" id="modal-cp" maxlength="8" placeholder="Ej: 1000"/>
-          <button id="modal-calc-shipping">Calcular envío</button>
-          <p id="modal-shipping-result"></p>
-        </div>
-
-        <div class="modal-actions">
-          <button id="add-to-cart-btn" class="btn btn-primary">Agregar al carrito</button>
-          <button id="buy-now-btn" class="btn btn-outline">Comprar ahora</button>
-        </div>
-
-        <div id="modal-similar-products" class="similar-products">
-          <h4>Productos similares</h4>
-          <div class="similar-grid"></div>
-        </div>
-      </div>
+    <!-- Precio y cálculo de cuotas debajo de la imagen -->
+    <div class="modal-price-container">
+      <div id="modal-price" class="modal-price"></div>
+      <div id="modal-installments" class="modal-installments"></div>
     </div>
+  </div>
+
+  <div class="modal-info">
+    <h3 id="modal-title"></h3>
+
+    <div class="modal-selectors">
+      <label>Talle:
+        <select id="modal-size-select" aria-label="Selector de talle"></select>
+      </label>
+      <label>Color:
+        <select id="modal-color-select" aria-label="Selector de color"></select>
+      </label>
+      <label>Cantidad:
+        <input type="number" id="modal-quantity" min="1" max="10" value="1" />
+      </label>
+    </div>
+
+    <div class="shipping-calculator">
+      <label for="modal-cp">Código Postal:</label>
+      <input type="text" id="modal-cp" maxlength="8" placeholder="Ej: 1000"/>
+      <button id="modal-calc-shipping">Calcular envío</button>
+      <p id="modal-shipping-result"></p>
+    </div>
+
+    <div class="modal-actions">
+      <button id="add-to-cart-btn" class="btn btn-primary">Agregar al carrito</button>
+      <button id="buy-now-btn" class="btn btn-outline">Comprar ahora</button>
+    </div>
+
+    <!-- Descripción debajo de botones -->
+    <p id="modal-description" class="modal-description"></p>
+  </div>
+</div>
+
   </div>
 
   <!-- :::::::::::::: POPUP NEWSLETTER :::::::::::::: -->
