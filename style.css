@@ -406,14 +406,16 @@ body {
 }
 .modal-images {
   position: relative;
-  flex: 1 1 300px;
+  flex: 1 1 400px;
+  min-width: 300px;
+  min-height: 500px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 15px;
 }
 .modal-images img {
-  max-height: 500px;
+  max-height: 100%;
   max-width: 100%;
   object-fit: contain;
   border-radius: var(--radius);
