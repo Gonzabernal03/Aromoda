@@ -409,9 +409,10 @@ body {
   min-width: 300px;    /* evita que sea muy pequeño */
   min-height: 500px;  /* espacio vertical para la imagen */
   display: flex;
+  flex-direction: column; /* aquí para colocar imagen+precio verticalmente */
   align-items: center;
-  justify-content: center;
-  gap: 15px;
+  justify-content: flex-start; /* alinea elementos arriba */
+  gap: 10px;
 }
 .modal-images img {
   max-height: 100%;
@@ -429,7 +430,33 @@ body {
   color: var(--accent);
   cursor: pointer;
   user-select: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
+#prev-image {
+  left: 0;
+}
+#next-image {
+  right: 0;
+}
+
+/* Nuevos estilos para precio e interés */
+.modal-price-container {
+  text-align: center;
+  width: 100%;
+}
+.modal-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.modal-installments {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
 .modal-info {
   flex: 1 1 350px;
   display: flex;
@@ -441,12 +468,16 @@ body {
   color: var(--dark);
   margin-bottom: 15px;
 }
+
+/* Mueve descripción debajo de los botones con margen */
 .modal-info p {
   color: var(--muted);
-  margin-bottom: 20px;
   font-size: 1rem;
-  flex-grow: 1;
+  margin-top: 20px; /* espacio arriba para separar de botones */
+  flex-grow: 0;
+  margin-bottom: 0; /* evitar margenes dobles */
 }
+
 .modal-selectors label {
   display: block;
   margin-bottom: 12px;
@@ -495,7 +526,6 @@ body {
   background: var(--accent);
   color: white;
 }
-
 /* SHIPPING CALCULATOR (in modal) */
 .shipping-calculator {
   margin-top: 20px;
