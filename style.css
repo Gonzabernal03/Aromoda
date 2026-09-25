@@ -398,6 +398,7 @@ body {
   padding: 30px;
   box-shadow: var(--shadow-lg);
   flex-wrap: wrap;
+  overflow: visible;
 }
 .modal-content img {
   border-radius: 15px;
@@ -413,8 +414,11 @@ body {
 }
 .modal-images img {
   max-height: 460px;
+  max-width: 100%;
   object-fit: contain;
   border-radius: var(--radius);
+  display: block;
+  margin: 0 auto;
 }
 .modal-images button {
   background: transparent;
