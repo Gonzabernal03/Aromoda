@@ -392,8 +392,6 @@ body {
   border-radius: var(--radius);
   max-width: 900px;
   width: 100%;
-  display: flex;
-  gap: 30px;
   position: relative;
   padding: 30px;
   box-shadow: var(--shadow-lg);
