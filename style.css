@@ -382,7 +382,7 @@ body {
   align-items: center;
   z-index: 1500;
   padding: 30px 15px;
-  overflow-y: hidden;
+  overflow-y: visible;
 }
 .modal.hidden {
   display: none;
@@ -405,9 +405,9 @@ body {
 }
 .modal-images {
   position: relative;
-  flex: 1 1 400px;
-  min-width: 300px;
-  min-height: 500px;
+  flex: 1 1 400px;     /* tamaño base flexible */
+  min-width: 300px;    /* evita que sea muy pequeño */
+  min-height: 500px;  /* espacio vertical para la imagen */
   display: flex;
   align-items: center;
   justify-content: center;
