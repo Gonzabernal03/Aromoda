@@ -182,6 +182,7 @@ function applyFilters() {
 }
 
 // === MODAL PRODUCT DETAIL ===
+// === MODAL PRODUCT DETAIL ===
 function openModalProduct(id) {
   modalProduct = products.find(p => p.id === id);
   if(!modalProduct) return;
@@ -214,8 +215,25 @@ function updateModalContent() {
   modalCP.value = '';
   modalShippingResult.textContent = '';
 
+  // Actualizar precio y cuotas
+  updateModalPrice();
+
   // Render similares
   renderSimilarProducts();
+}
+
+// Función para actualizar el precio y cálculo de cuotas
+function updateModalPrice() {
+  const priceElement = document.getElementById('modal-price');
+  const installmentsElement = document.getElementById('modal-installments');
+  const price = modalProduct.price;
+
+  priceElement.textContent = `$${price.toLocaleString()}`;
+
+  // Cálculo cuotas (ejemplo 3 cuotas sin interés)
+  const installments = 3;
+  const installmentAmount = price / installments;
+  installmentsElement.textContent = `${installments} cuotas sin interés de $${installmentAmount.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
 }
 
 modalCloseBtn.addEventListener('click', () => {
@@ -295,7 +313,6 @@ addToCartBtn.addEventListener('click', () => {
 // Comprar ahora redirige a checkout limpio que puedes crear aparte
 buyNowBtn.addEventListener('click', () => {
   if(!modalProduct) return;
-  // En este caso, guardar pedido o enviar a checkout
   alert('Funcionalidad de Compra directa aún no implementada. Prueba desde el carrito.');
   productModal.classList.add('hidden');
 });
@@ -317,6 +334,7 @@ function renderSimilarProducts() {
     similarGrid.appendChild(card);
   });
 }
+
 
 // === NEWSLETTER POPUP ===
 let newsletterShown = false;
