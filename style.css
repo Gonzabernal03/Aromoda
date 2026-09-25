@@ -382,7 +382,7 @@ body {
   align-items: center;
   z-index: 1500;
   padding: 30px 15px;
-  overflow-y: visible;
+  overflow-y: auto;
 }
 .modal.hidden {
   display: none;
