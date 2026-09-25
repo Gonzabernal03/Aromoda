@@ -401,7 +401,6 @@ body {
   overflow: visible;
 }
 .modal-content img {
-  border-radius: 0px;
   max-width: 100%;
 }
 .modal-images {
