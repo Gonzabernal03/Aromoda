@@ -379,7 +379,7 @@ body {
   background: rgba(0,0,0,0.6);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items:flex-start;
   z-index: 1500;
   padding: 30px 15px;
   overflow-y: auto;
