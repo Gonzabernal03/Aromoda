@@ -35,13 +35,31 @@
     <!-- Buscador y carrito a la derecha -->
     <div class="header-actions">
       <input type="search" id="search" placeholder="Buscar prenda..." aria-label="Buscar prenda" />
-      <button id="cart-button" aria-label="Abrir carrito">
+      <button id="cart-button" aria-label="Abrir carrito" type="button" >
         <!-- Icono carrito SVG minimalista -->
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" width="24" height="24"><path d="M6 6h15l-1.5 9h-13"></path><circle cx="9" cy="21" r="1"></circle><circle cx="18" cy="21" r="1"></circle></svg>
         <span id="cart-count" class="cart-count">0</span>
       </button>
     </div>
-
+<!-- ========================================= --> <!-- CARRITO LATERAL --> <!-- ========================================= -->
+    <div id="cart-overlay" class="cart-overlay"></div>
+    <aside id="cart-drawer" class="cart-drawer">
+      <div class="cart-header"> <h2>Mi carrito</h2>
+        <button id="close-cart" type="button" aria-label="Cerrar carrito" > 
+          × 
+        </button> </div> 
+      <!-- Productos del carrito -->
+      <div id="cart-items" class="cart-items"> 
+        <!-- JavaScript va a colocar los productos acá -->
+      </div>
+      <!-- Resumen --> 
+      <div class="cart-footer">
+        <div class="cart-total"> 
+          <span>Total</span>
+          <strong id="cart-total">$0</strong>
+        </div>
+        <button id="checkout-whatsapp" type="button" class="checkout-button" >
+          Comprar por WhatsApp </button> </div> </aside>
   </div>
 </header>
 
