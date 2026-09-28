@@ -265,20 +265,11 @@ modalCalcShipping.addEventListener('click', () => {
 });
 
 // === CART LOGIC ===
-```js
-// ==========================================
-// CART LOGIC - AROMODA
-// ==========================================
-
-// Cargar carrito guardado
-let cart = JSON.parse(localStorage.getItem('aromoda_cart')) || [];
-
 
 // ==========================================
 // ELEMENTOS DEL CARRITO
 // ==========================================
 
-const cartButton = document.getElementById('cart-button');
 const cartDrawer = document.getElementById('cart-drawer');
 const cartOverlay = document.getElementById('cart-overlay');
 const closeCartButton = document.getElementById('close-cart');
@@ -307,19 +298,17 @@ function saveCart() {
 
 
 // ==========================================
-// CONTADOR DEL CARRITO
+// CONTADOR
 // ==========================================
 
 function updateCartCount() {
 
   const totalItems = cart.reduce(
-    (sum, item) => sum + item.qty,
+    (sum, item) => sum + Number(item.qty),
     0
   );
 
-  if (cartCount) {
-    cartCount.textContent = totalItems;
-  }
+  cartCount.textContent = totalItems;
 }
 
 
@@ -329,7 +318,10 @@ function updateCartCount() {
 
 function openCart() {
 
-  if (!cartDrawer || !cartOverlay) return;
+  if (!cartDrawer || !cartOverlay) {
+    console.error('No se encontró el carrito en el HTML.');
+    return;
+  }
 
   cartDrawer.classList.add('open');
   cartOverlay.classList.add('open');
@@ -359,23 +351,16 @@ function closeCart() {
 // BOTÓN DEL CARRITO
 // ==========================================
 
-if (cartButton) {
-  cartButton.addEventListener('click', openCart);
-}
+cartButton.addEventListener('click', openCart);
 
 
 // ==========================================
-// BOTÓN CERRAR
+// CERRAR
 // ==========================================
 
 if (closeCartButton) {
   closeCartButton.addEventListener('click', closeCart);
 }
-
-
-// ==========================================
-// CERRAR HACIENDO CLICK AFUERA
-// ==========================================
 
 if (cartOverlay) {
   cartOverlay.addEventListener('click', closeCart);
@@ -383,20 +368,7 @@ if (cartOverlay) {
 
 
 // ==========================================
-// CERRAR CON ESC
-// ==========================================
-
-document.addEventListener('keydown', (event) => {
-
-  if (event.key === 'Escape') {
-    closeCart();
-  }
-
-});
-
-
-// ==========================================
-// MOSTRAR PRODUCTOS DEL CARRITO
+// MOSTRAR CARRITO
 // ==========================================
 
 function renderCart() {
@@ -405,8 +377,6 @@ function renderCart() {
 
   cartItemsContainer.innerHTML = '';
 
-
-  // Carrito vacío
 
   if (cart.length === 0) {
 
@@ -425,13 +395,12 @@ function renderCart() {
   }
 
 
-  // Mostrar productos
-
   cart.forEach((item, index) => {
 
     const itemElement = document.createElement('div');
 
     itemElement.className = 'cart-item';
+
 
     itemElement.innerHTML = `
 
@@ -455,7 +424,8 @@ function renderCart() {
 
           <button
             type="button"
-            onclick="changeCartQuantity(${index}, -1)"
+            class="cart-minus"
+            data-index="${index}"
           >
             −
           </button>
@@ -464,7 +434,8 @@ function renderCart() {
 
           <button
             type="button"
-            onclick="changeCartQuantity(${index}, 1)"
+            class="cart-plus"
+            data-index="${index}"
           >
             +
           </button>
@@ -472,7 +443,7 @@ function renderCart() {
           <button
             type="button"
             class="remove-item"
-            onclick="removeCartItem(${index})"
+            data-index="${index}"
           >
             Eliminar
           </button>
@@ -489,24 +460,73 @@ function renderCart() {
 
     `;
 
+
     cartItemsContainer.appendChild(itemElement);
 
   });
 
 
-  // Calcular total
-
   const total = cart.reduce(
-    (sum, item) => sum + (Number(item.price) * item.qty),
+    (sum, item) =>
+      sum + (Number(item.price) * Number(item.qty)),
     0
   );
 
 
   if (cartTotalElement) {
-    cartTotalElement.textContent = formatPrice(total);
+    cartTotalElement.textContent =
+      formatPrice(total);
   }
 
 }
+
+
+// ==========================================
+// CONTROLES DEL CARRITO
+// ==========================================
+
+cartItemsContainer.addEventListener('click', (event) => {
+
+  const minusButton =
+    event.target.closest('.cart-minus');
+
+  const plusButton =
+    event.target.closest('.cart-plus');
+
+  const removeButton =
+    event.target.closest('.remove-item');
+
+
+  if (minusButton) {
+
+    const index =
+      Number(minusButton.dataset.index);
+
+    changeCartQuantity(index, -1);
+
+  }
+
+
+  if (plusButton) {
+
+    const index =
+      Number(plusButton.dataset.index);
+
+    changeCartQuantity(index, 1);
+
+  }
+
+
+  if (removeButton) {
+
+    const index =
+      Number(removeButton.dataset.index);
+
+    removeCartItem(index);
+
+  }
+
+});
 
 
 // ==========================================
@@ -517,10 +537,9 @@ function changeCartQuantity(index, amount) {
 
   if (!cart[index]) return;
 
-  cart[index].qty += amount;
+  cart[index].qty =
+    Number(cart[index].qty) + amount;
 
-
-  // Si llega a 0, eliminar
 
   if (cart[index].qty <= 0) {
 
@@ -528,13 +547,14 @@ function changeCartQuantity(index, amount) {
 
   }
 
+
   saveCart();
 
 }
 
 
 // ==========================================
-// ELIMINAR PRODUCTO
+// ELIMINAR
 // ==========================================
 
 function removeCartItem(index) {
@@ -555,9 +575,13 @@ function removeCartItem(index) {
 function formatPrice(price) {
 
   return new Intl.NumberFormat('es-AR', {
+
     style: 'currency',
+
     currency: 'ARS',
+
     maximumFractionDigits: 0
+
   }).format(Number(price));
 
 }
@@ -572,16 +596,15 @@ addToCartBtn.addEventListener('click', () => {
   if (!modalProduct) return;
 
 
-  const selectedSize = modalSizeSelect.value;
-  const selectedColor = modalColorSelect.value;
+  const selectedSize =
+    modalSizeSelect.value;
 
-  const qty = parseInt(
-    modalQuantity.value,
-    10
-  );
+  const selectedColor =
+    modalColorSelect.value;
 
+  const qty =
+    parseInt(modalQuantity.value, 10);
 
-  // Verificar talle
 
   if (!selectedSize) {
 
@@ -591,8 +614,6 @@ addToCartBtn.addEventListener('click', () => {
   }
 
 
-  // Verificar cantidad
-
   if (!qty || qty < 1) {
 
     alert('Cantidad inválida.');
@@ -601,22 +622,18 @@ addToCartBtn.addEventListener('click', () => {
   }
 
 
-  // Crear identificador único
-
   const key =
     `${modalProduct.id}-${selectedSize}-${selectedColor}`;
 
 
-  // Buscar si ya existe
-
-  const existing = cart.find(
-    item => item.key === key
-  );
+  const existing =
+    cart.find(item => item.key === key);
 
 
   if (existing) {
 
-    existing.qty += qty;
+    existing.qty =
+      Number(existing.qty) + qty;
 
   } else {
 
@@ -641,17 +658,13 @@ addToCartBtn.addEventListener('click', () => {
   }
 
 
-  // Guardar
-
   saveCart();
 
-
-  // Cerrar ventana del producto
 
   productModal.classList.add('hidden');
 
 
-  // Abrir carrito
+  // Abrir automáticamente el carrito
 
   openCart();
 
@@ -659,7 +672,7 @@ addToCartBtn.addEventListener('click', () => {
 
 
 // ==========================================
-// COMPRAR POR WHATSAPP
+// WHATSAPP
 // ==========================================
 
 if (checkoutWhatsApp) {
@@ -678,13 +691,16 @@ if (checkoutWhatsApp) {
       'Hola AROMODA! 👋 Quiero realizar este pedido:\n\n';
 
 
-    cart.forEach((item) => {
+    cart.forEach(item => {
 
       message +=
         `• ${item.name} | Talle: ${item.size}`;
 
       if (item.color) {
-        message += ` | Color: ${item.color}`;
+
+        message +=
+          ` | Color: ${item.color}`;
+
       }
 
       message +=
@@ -695,7 +711,7 @@ if (checkoutWhatsApp) {
 
     const total = cart.reduce(
       (sum, item) =>
-        sum + (Number(item.price) * item.qty),
+        sum + Number(item.price) * Number(item.qty),
       0
     );
 
@@ -704,11 +720,8 @@ if (checkoutWhatsApp) {
       `\nTOTAL: ${formatPrice(total)}`;
 
 
-    const phone = '5492325590916';
-
-
     const url =
-      `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
 
     window.open(url, '_blank');
@@ -719,13 +732,12 @@ if (checkoutWhatsApp) {
 
 
 // ==========================================
-// INICIALIZAR
+// INICIALIZAR CARRITO
 // ==========================================
 
 updateCartCount();
 
 renderCart();
-```
 
 
 // Comprar ahora redirige a checkout limpio que puedes crear aparte
