@@ -265,50 +265,468 @@ modalCalcShipping.addEventListener('click', () => {
 });
 
 // === CART LOGIC ===
+```js
+// ==========================================
+// CART LOGIC - AROMODA
+// ==========================================
+
+// Cargar carrito guardado
+let cart = JSON.parse(localStorage.getItem('aromoda_cart')) || [];
+
+
+// ==========================================
+// ELEMENTOS DEL CARRITO
+// ==========================================
+
+const cartButton = document.getElementById('cart-button');
+const cartDrawer = document.getElementById('cart-drawer');
+const cartOverlay = document.getElementById('cart-overlay');
+const closeCartButton = document.getElementById('close-cart');
+
+const cartItemsContainer = document.getElementById('cart-items');
+const cartTotalElement = document.getElementById('cart-total');
+
+const checkoutWhatsApp = document.getElementById('checkout-whatsapp');
+
+
+// ==========================================
+// GUARDAR CARRITO
+// ==========================================
+
 function saveCart() {
-  localStorage.setItem('aromoda_cart', JSON.stringify(cart));
+
+  localStorage.setItem(
+    'aromoda_cart',
+    JSON.stringify(cart)
+  );
+
   updateCartCount();
+
+  renderCart();
 }
+
+
+// ==========================================
+// CONTADOR DEL CARRITO
+// ==========================================
 
 function updateCartCount() {
-  const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
-  cartCount.textContent = totalItems;
+
+  const totalItems = cart.reduce(
+    (sum, item) => sum + item.qty,
+    0
+  );
+
+  if (cartCount) {
+    cartCount.textContent = totalItems;
+  }
 }
-saveCart();
+
+
+// ==========================================
+// ABRIR CARRITO
+// ==========================================
+
+function openCart() {
+
+  if (!cartDrawer || !cartOverlay) return;
+
+  cartDrawer.classList.add('open');
+  cartOverlay.classList.add('open');
+
+  document.body.style.overflow = 'hidden';
+
+  renderCart();
+}
+
+
+// ==========================================
+// CERRAR CARRITO
+// ==========================================
+
+function closeCart() {
+
+  if (!cartDrawer || !cartOverlay) return;
+
+  cartDrawer.classList.remove('open');
+  cartOverlay.classList.remove('open');
+
+  document.body.style.overflow = '';
+}
+
+
+// ==========================================
+// BOTÓN DEL CARRITO
+// ==========================================
+
+if (cartButton) {
+  cartButton.addEventListener('click', openCart);
+}
+
+
+// ==========================================
+// BOTÓN CERRAR
+// ==========================================
+
+if (closeCartButton) {
+  closeCartButton.addEventListener('click', closeCart);
+}
+
+
+// ==========================================
+// CERRAR HACIENDO CLICK AFUERA
+// ==========================================
+
+if (cartOverlay) {
+  cartOverlay.addEventListener('click', closeCart);
+}
+
+
+// ==========================================
+// CERRAR CON ESC
+// ==========================================
+
+document.addEventListener('keydown', (event) => {
+
+  if (event.key === 'Escape') {
+    closeCart();
+  }
+
+});
+
+
+// ==========================================
+// MOSTRAR PRODUCTOS DEL CARRITO
+// ==========================================
+
+function renderCart() {
+
+  if (!cartItemsContainer) return;
+
+  cartItemsContainer.innerHTML = '';
+
+
+  // Carrito vacío
+
+  if (cart.length === 0) {
+
+    cartItemsContainer.innerHTML = `
+      <div class="cart-empty">
+        <strong>Tu carrito está vacío</strong>
+        <p>Agregá productos para comenzar tu compra.</p>
+      </div>
+    `;
+
+    if (cartTotalElement) {
+      cartTotalElement.textContent = '$0';
+    }
+
+    return;
+  }
+
+
+  // Mostrar productos
+
+  cart.forEach((item, index) => {
+
+    const itemElement = document.createElement('div');
+
+    itemElement.className = 'cart-item';
+
+    itemElement.innerHTML = `
+
+      <div class="cart-item-info">
+
+        <h3>${item.name}</h3>
+
+        <p>Talle: ${item.size}</p>
+
+        ${
+          item.color
+            ? `<p>Color: ${item.color}</p>`
+            : ''
+        }
+
+        <p class="cart-item-price">
+          ${formatPrice(item.price)}
+        </p>
+
+        <div class="cart-item-controls">
+
+          <button
+            type="button"
+            onclick="changeCartQuantity(${index}, -1)"
+          >
+            −
+          </button>
+
+          <span>${item.qty}</span>
+
+          <button
+            type="button"
+            onclick="changeCartQuantity(${index}, 1)"
+          >
+            +
+          </button>
+
+          <button
+            type="button"
+            class="remove-item"
+            onclick="removeCartItem(${index})"
+          >
+            Eliminar
+          </button>
+
+        </div>
+
+      </div>
+
+      <div>
+        <strong>
+          ${formatPrice(item.price * item.qty)}
+        </strong>
+      </div>
+
+    `;
+
+    cartItemsContainer.appendChild(itemElement);
+
+  });
+
+
+  // Calcular total
+
+  const total = cart.reduce(
+    (sum, item) => sum + (Number(item.price) * item.qty),
+    0
+  );
+
+
+  if (cartTotalElement) {
+    cartTotalElement.textContent = formatPrice(total);
+  }
+
+}
+
+
+// ==========================================
+// CAMBIAR CANTIDAD
+// ==========================================
+
+function changeCartQuantity(index, amount) {
+
+  if (!cart[index]) return;
+
+  cart[index].qty += amount;
+
+
+  // Si llega a 0, eliminar
+
+  if (cart[index].qty <= 0) {
+
+    cart.splice(index, 1);
+
+  }
+
+  saveCart();
+
+}
+
+
+// ==========================================
+// ELIMINAR PRODUCTO
+// ==========================================
+
+function removeCartItem(index) {
+
+  if (!cart[index]) return;
+
+  cart.splice(index, 1);
+
+  saveCart();
+
+}
+
+
+// ==========================================
+// FORMATO DE PRECIO
+// ==========================================
+
+function formatPrice(price) {
+
+  return new Intl.NumberFormat('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+    maximumFractionDigits: 0
+  }).format(Number(price));
+
+}
+
+
+// ==========================================
+// AGREGAR PRODUCTO
+// ==========================================
 
 addToCartBtn.addEventListener('click', () => {
-  if(!modalProduct) return;
+
+  if (!modalProduct) return;
+
+
   const selectedSize = modalSizeSelect.value;
   const selectedColor = modalColorSelect.value;
-  const qty = parseInt(modalQuantity.value);
-  if(!selectedSize) {
+
+  const qty = parseInt(
+    modalQuantity.value,
+    10
+  );
+
+
+  // Verificar talle
+
+  if (!selectedSize) {
+
     alert('Por favor selecciona un talle.');
+
     return;
   }
-  if(qty < 1) {
+
+
+  // Verificar cantidad
+
+  if (!qty || qty < 1) {
+
     alert('Cantidad inválida.');
+
     return;
   }
-  // Agregar a carrito (simple)
-  const key = `${modalProduct.id}-${selectedSize}-${selectedColor}`;
-  const existing = cart.find(i => i.key === key);
-  if(existing) {
+
+
+  // Crear identificador único
+
+  const key =
+    `${modalProduct.id}-${selectedSize}-${selectedColor}`;
+
+
+  // Buscar si ya existe
+
+  const existing = cart.find(
+    item => item.key === key
+  );
+
+
+  if (existing) {
+
     existing.qty += qty;
+
   } else {
+
     cart.push({
-      key,
+
+      key: key,
+
       id: modalProduct.id,
+
       name: modalProduct.name,
+
       size: selectedSize,
+
       color: selectedColor,
-      price: modalProduct.price,
-      qty,
+
+      price: Number(modalProduct.price),
+
+      qty: qty
+
     });
+
   }
+
+
+  // Guardar
+
   saveCart();
+
+
+  // Cerrar ventana del producto
+
   productModal.classList.add('hidden');
-  alert(`${modalProduct.name} agregado al carrito.`);
+
+
+  // Abrir carrito
+
+  openCart();
+
 });
+
+
+// ==========================================
+// COMPRAR POR WHATSAPP
+// ==========================================
+
+if (checkoutWhatsApp) {
+
+  checkoutWhatsApp.addEventListener('click', () => {
+
+    if (cart.length === 0) {
+
+      alert('Tu carrito está vacío.');
+
+      return;
+    }
+
+
+    let message =
+      'Hola AROMODA! 👋 Quiero realizar este pedido:\n\n';
+
+
+    cart.forEach((item) => {
+
+      message +=
+        `• ${item.name} | Talle: ${item.size}`;
+
+      if (item.color) {
+        message += ` | Color: ${item.color}`;
+      }
+
+      message +=
+        ` | Cantidad: ${item.qty} | ${formatPrice(item.price * item.qty)}\n`;
+
+    });
+
+
+    const total = cart.reduce(
+      (sum, item) =>
+        sum + (Number(item.price) * item.qty),
+      0
+    );
+
+
+    message +=
+      `\nTOTAL: ${formatPrice(total)}`;
+
+
+    const phone = '5492325590916';
+
+
+    const url =
+      `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+
+    window.open(url, '_blank');
+
+  });
+
+}
+
+
+// ==========================================
+// INICIALIZAR
+// ==========================================
+
+updateCartCount();
+
+renderCart();
+```
+
 
 // Comprar ahora redirige a checkout limpio que puedes crear aparte
 buyNowBtn.addEventListener('click', () => {
