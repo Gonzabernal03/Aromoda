@@ -425,22 +425,25 @@ body {
 .hero-bg {
   position: absolute;
   inset: 0;
+  width: 100%; /* quitar en casa de que no sirva de nada */
+  height: 100%; /* quitar en casa de que no sirva de nada */
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   transition: background-image 1s ease-in-out;
-  z-index: 0; /* detrás del contenido */
+  z-index: -1; /* detrás del contenido  antes tenia 0*/
 }
 .hero-content {
   position: relative;
+  z-index: 1;
   color: white;
   padding-left: 40px;
-  max-width: 470px;
-  font-weight: 600;
+  max-width: 470px;  /* recoponer esto si no cambia en nada font-weight: 600 */
 }
 .hero-content h1 {
   font-family: "Playfair Display", serif;
   font-size: 3.5rem;
+  line-height: 1.1;/* quitar en casa de que no sirva de nada */
   margin-bottom: 20px;
 }
 .hero-content em {
@@ -659,7 +662,7 @@ body {
   max-width: 900px;
   width: 100%;
   display: flex;
-  gap: 20px
+  gap: 20px;
   position: relative;
   padding: 30px;
   box-shadow: var(--shadow-lg);
