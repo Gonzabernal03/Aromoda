@@ -423,10 +423,10 @@ body {
   background-size: cover;
 }
 .hero-bg {
-  position: absolute;
+  position: relative;
   inset: 0;
   width: 100%; /* quitar en casa de que no sirva de nada */
-  height: 100%; /* quitar en casa de que no sirva de nada */
+  height: 700px; /* quitar en casa de que no sirva de nada */
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -436,7 +436,7 @@ body {
 .hero-content {
   position: relative;
   z-index: 1;
-  color: white;
+  color: black;
   padding-left: 40px;
   font-weight: 600;
 }
