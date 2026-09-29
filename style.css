@@ -431,14 +431,14 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   transition: background-image 1s ease-in-out;
-  z-index: -1; /* detrás del contenido  antes tenia 0*/
+  z-index: 0; 
 }
 .hero-content {
   position: relative;
   z-index: 1;
   color: white;
   padding-left: 40px;
-  max-width: 470px;  /* recoponer esto si no cambia en nada font-weight: 600 */
+  font-weight: 600;
 }
 .hero-content h1 {
   font-family: "Playfair Display", serif;
