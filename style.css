@@ -469,7 +469,7 @@ body {
   padding: 8px 16px;           /* un poco menos de padding para estilo más delicado */
   border-radius: 0;            /* quitar el borde redondeado para diseño más limpio */
   border: none;                /* eliminar borde visible */
-  background: transparent;     /* fondo transparente para simplicidad */
+  background:#fff;     /* fondo transparente para simplicidad */
   cursor: pointer;
   font-weight: 600;
   font-family: 'Inter', sans-serif; /* tipografía limpia y moderna */
