@@ -423,8 +423,10 @@ body {
   background-size: cover;
 }
 .hero-bg {
-  position: relative;
+  position: absolute;
   inset: 0;
+  width: 100%; /* quitar en casa de que no sirva de nada */
+  height: 100%; /* quitar en casa de que no sirva de nada */
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -434,7 +436,7 @@ body {
 .hero-content {
   position: relative;
   z-index: 1;
-  color: black;
+  color: white;
   padding-left: 40px;
   font-weight: 600;
 }
@@ -452,7 +454,7 @@ body {
   padding: 12px 30px;
   background: var(--accent);
   border-radius: 50px;
-  color: white;
+  color: black;
   font-weight: 700;
   border: none;
   cursor: pointer;
