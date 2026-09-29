@@ -1,5 +1,5 @@
 :root {
-  --bg: #c5a36a;
+  --bg: #faf9f7;
   --surface: #fff;
   --accent: #c5a36a;
   --accent-dark: #9d783e;
@@ -434,7 +434,7 @@ body {
 .hero-content {
   position: relative;
   z-index: 1;
-  color: white;
+  color: #c5a36a;;
   padding-left: 40px;
   font-weight: 600;
 }
