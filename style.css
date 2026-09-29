@@ -425,8 +425,6 @@ body {
 .hero-bg {
   position: absolute;
   inset: 0;
-  width: 100%; /* quitar en casa de que no sirva de nada */
-  height: 700px; /* quitar en casa de que no sirva de nada */
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
