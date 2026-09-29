@@ -1,5 +1,5 @@
 :root {
-  --bg: #faf9f7;
+  --bg: #c5a36a;
   --surface: #fff;
   --accent: #c5a36a;
   --accent-dark: #9d783e;
@@ -423,7 +423,7 @@ body {
   background-size: cover;
 }
 .hero-bg {
-  position: absolute;
+  position: relative;
   inset: 0;
   background-position: center;
   background-size: cover;
