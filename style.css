@@ -480,14 +480,14 @@ body {
 
 .category-btn:hover {
   color: var(--accent);
-  background: transparent;     /* mantiene transparencia al hacer hover */
+  background: #fff;     /* mantiene transparencia al hacer hover */
   border: none;
 }
 
 /* Para el botón activo le puedes dar un estilo ligero, sin borde */
 .category-btn.active {
   color: var(--accent-dark);
-  background: transparent;
+  background: #fff;
   font-weight: 700;
 }
 
