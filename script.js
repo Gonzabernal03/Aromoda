@@ -740,7 +740,6 @@ updateCartCount();
 renderCart();
 
 
-```javascript
 // ==========================================
 // BOTÓN COMPRAR AHORA
 // Agrega el producto al carrito y lo abre
@@ -804,7 +803,6 @@ buyNowBtn.addEventListener('click', () => {
   openCart();
 
 });
-```
 
 // === SIMILAR PRODUCTS (mismo categoria, max 4)
 function renderSimilarProducts() {
