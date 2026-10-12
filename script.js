@@ -862,8 +862,6 @@ await fetch(SHEET_API_BASE, {
 newsletterMsg.textContent =
   'Solicitud enviada. No se pudo verificar la confirmación del servidor.';
 newsletterMsg.style.color = 'var(--success)';
-  }
-});
 
 // === MODALES INSTITUCIONALES ===
 function setupModalOpeners(btns, modal) {
