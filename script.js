@@ -846,22 +846,19 @@ newsletterForm.addEventListener('submit', async e => {
   }
   try {
     // POST subscripción al Apps Script (tu endpoint real)
-   
-await fetch(SHEET_API_BASE, {
-  method: 'POST',
-  mode: 'no-cors',
-  headers: {
-    'Content-Type': 'text/plain;charset=utf-8'
-  },
-  body: JSON.stringify({
-    type: 'subscribe',
-    email: email
-  })
+    await fetch(SHEET_API_BASE, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({type:'subscribe', email})
+    });
+    newsletterMsg.textContent = 'Gracias por suscribirte!';
+    newsletterMsg.style.color = 'var(--success)';
+    newsletterEmail.value = '';
+  } catch {
+    newsletterMsg.textContent = 'Error enviando la suscripción. Intenta de nuevo.';
+    newsletterMsg.style.color = 'var(--danger)';
+  }
 });
-
-newsletterMsg.textContent =
-  'Solicitud enviada. No se pudo verificar la confirmación del servidor.';
-newsletterMsg.style.color = 'var(--success)';
 
 // === MODALES INSTITUCIONALES ===
 function setupModalOpeners(btns, modal) {
