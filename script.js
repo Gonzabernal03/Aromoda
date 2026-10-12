@@ -740,12 +740,71 @@ updateCartCount();
 renderCart();
 
 
-// Comprar ahora redirige a checkout limpio que puedes crear aparte
+```javascript
+// ==========================================
+// BOTÓN COMPRAR AHORA
+// Agrega el producto al carrito y lo abre
+// ==========================================
+
 buyNowBtn.addEventListener('click', () => {
-  if(!modalProduct) return;
-  alert('Funcionalidad de Compra directa aún no implementada. Prueba desde el carrito.');
+
+  // Verificar que haya un producto seleccionado
+  if (!modalProduct) return;
+
+  // Obtener talle, color y cantidad seleccionados
+  const selectedSize = modalSizeSelect.value;
+  const selectedColor = modalColorSelect.value;
+  const qty = parseInt(modalQuantity.value, 10);
+
+  // Validar talle
+  if (!selectedSize) {
+    alert('Por favor, seleccioná un talle.');
+    return;
+  }
+
+  // Validar cantidad
+  if (!Number.isInteger(qty) || qty < 1) {
+    alert('Por favor, ingresá una cantidad válida.');
+    return;
+  }
+
+  // Crear una clave única para producto, talle y color
+  const key = `${modalProduct.id}-${selectedSize}-${selectedColor}`;
+
+  // Verificar si el producto ya existe en el carrito
+  const existing = cart.find(item => item.key === key);
+
+  if (existing) {
+
+    // Sumar la cantidad seleccionada
+    existing.qty += qty;
+
+  } else {
+
+    // Agregar el producto al carrito
+    cart.push({
+      key: key,
+      id: modalProduct.id,
+      name: modalProduct.name,
+      size: selectedSize,
+      color: selectedColor,
+      price: Number(modalProduct.price),
+      qty: qty
+    });
+
+  }
+
+  // Guardar el carrito y actualizar los productos mostrados
+  saveCart();
+
+  // Cerrar la ventana del producto
   productModal.classList.add('hidden');
+
+  // Abrir el carrito automáticamente
+  openCart();
+
 });
+```
 
 // === SIMILAR PRODUCTS (mismo categoria, max 4)
 function renderSimilarProducts() {
