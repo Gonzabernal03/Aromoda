@@ -3,7 +3,8 @@
 ==================== */
 
 // CONFIG
-const PRODUCTS_API_URL = 'https://script.google.com/macros/s/AKfycby5vd7lQwtP7Gk__p7YO-Pe8XS-IIR0G6FyvmMBexX7LBqaNIeEPWRd1ak_gAqdlakJ/exec'; // Cambiar por tu API de Google Apps Script
+const PRODUCTS_API_URL = '/api/productos/';
+const BACKUP_SHEET_API = 'https://script.google.com/macros/s/AKfycby5vd7lQwtP7Gk__p7YO-Pe8XS-IIR0G6FyvmMBexX7LBqaNIeEPWRd1ak_gAqdlakJ/exec';
 const SHEET_API_BASE = PRODUCTS_API_URL;
 const WHATSAPP_NUMBER = '5492325590916';
 
@@ -70,29 +71,44 @@ rotatePromo();
 // === FETCH PRODUCTS ===
 async function fetchProducts() {
   try {
-    const res = await fetch(SHEET_API_BASE);
-    const data = await res.json();
-    // Map or transform data if necessary according to your sheet columns
-    products = data.map(p => ({
-      id: Number(p.id),
-      name: p.nombre,
-      cat: p.cat.toLowerCase(),
-      price: Number(p.precio),
-      oldPrice: p.precio_ant ? Number(p.precio_ant) : null,
-      badge: p.badge ? p.badge.toLowerCase() : null,
-      description: p.descripcion,
-      sizes: p.talles.split(',').map(s => s.trim()),
-      colors: p.colores ? p.colores.split(',').map(c => c.trim()) : ['Único'],
-      images: [p.imagen1, p.imagen2], // Asegúrate de tener URLs
-      stock: p.stock ? Number(p.stock) : 0,
-      sold: p.vendidos ? Number(p.vendidos) : 0,
-    }));
-    filteredProducts = [...products];
-    renderProducts(filteredProducts);
+    let res = await fetch(PRODUCTS_API_URL);
+    if (!res.ok) throw new Error('API local error');
+    let data = await res.json();
+    if (!data || data.length === 0) {
+      const backupRes = await fetch(BACKUP_SHEET_API);
+      data = await backupRes.json();
+    }
+    mapAndRenderProducts(data);
   } catch(e) {
-    productGrid.innerHTML = '<p>Error cargando productos</p>';
-    console.error('Error fetching products:', e);
+    console.warn('Cargando desde fuente de respaldo:', e);
+    try {
+      const res = await fetch(BACKUP_SHEET_API);
+      const data = await res.json();
+      mapAndRenderProducts(data);
+    } catch(err) {
+      productGrid.innerHTML = '<p>Error cargando productos</p>';
+      console.error('Error fetching products:', err);
+    }
   }
+}
+
+function mapAndRenderProducts(data) {
+  products = data.map(p => ({
+    id: Number(p.id),
+    name: p.nombre,
+    cat: (p.cat || '').toLowerCase(),
+    price: Number(p.precio),
+    oldPrice: p.precio_ant ? Number(p.precio_ant) : null,
+    badge: p.badge ? p.badge.toLowerCase() : null,
+    description: p.descripcion,
+    sizes: p.talles ? (typeof p.talles === 'string' ? p.talles.split(',').map(s => s.trim()) : p.talles) : ['Único'],
+    colors: p.colores ? (typeof p.colores === 'string' ? p.colores.split(',').map(c => c.trim()) : p.colores) : ['Único'],
+    images: [p.imagen1, p.imagen2],
+    stock: p.stock ? Number(p.stock) : 0,
+    sold: p.vendidos ? Number(p.vendidos) : 0,
+  }));
+  filteredProducts = [...products];
+  renderProducts(filteredProducts);
 }
 
 // === RENDER PRODUCTS GRID ===
@@ -845,18 +861,28 @@ newsletterForm.addEventListener('submit', async e => {
     return;
   }
   try {
-    // POST subscripción al Apps Script (tu endpoint real)
-    await fetch(SHEET_API_BASE, {
+    const res = await fetch('/api/newsletter/', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({type:'subscribe', email})
+      body: JSON.stringify({email})
     });
-    newsletterMsg.textContent = 'Gracias por suscribirte!';
+    if (!res.ok) throw new Error('API local error');
+    newsletterMsg.textContent = '¡Gracias por suscribirte!';
     newsletterMsg.style.color = 'var(--success)';
     newsletterEmail.value = '';
   } catch {
-    newsletterMsg.textContent = 'Error enviando la suscripción. Intenta de nuevo.';
-    newsletterMsg.style.color = 'var(--danger)';
+    try {
+      await fetch(BACKUP_SHEET_API, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({type:'subscribe', email})
+      });
+    } catch (e) {
+      // Ignora error si falla el backup
+    }
+    newsletterMsg.textContent = '¡Gracias por suscribirte!';
+    newsletterMsg.style.color = 'var(--success)';
+    newsletterEmail.value = '';
   }
 });
 

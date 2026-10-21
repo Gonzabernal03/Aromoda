@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: aromoda_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME:-aromoda_db}
+      POSTGRES_USER: ${DB_USER:-aromoda_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-aromoda_password}
+    ports:
+      - "5432:5432"
+    volumes:
+      - aromoda_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aromoda_user -d aromoda_db"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+  web:
+    build: .
+    container_name: aromoda_django
+    restart: always
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py cargar_productos &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - SECRET_KEY=django-insecure-aromoda-web-key-secret-2026-prod-local
+      - DB_NAME=aromoda_db
+      - DB_USER=aromoda_user
+      - DB_PASSWORD=aromoda_password
+      - DB_HOST=db
+      - DB_PORT=5432
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  aromoda_pgdata:
