@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sobre Nosotros · Aromoda</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Ajustes para layout completo y footer al pie */
+    / body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  background: white;
+  color: #333;
+  line-height: 1.6;
+  max-width: 720px;
+  margin: 0 auto; /* centrado */
+  padding: 0 20px;
+}
+main {
+  flex: 1; /* ocupa espacio entre header y footer */
+  padding-top: 40px;
+  padding-bottom: 200px;
+}
+h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #c5a36a;
+  text-align: center;
+}
+p {
+  margin-bottom: 15px;
+}
+a.back-link {
+  display: inline-block;
+  margin-top: 30px;
+  color: #c5a36a;
+  font-weight: 700;
+  text-decoration: none;
+}
+/* Logo más pequeño en el footer */
+footer .logo-footer img {
+  height: 40px;
+  margin-bottom: 10px;
+}
+/* Footer ancho completo y más bajito */
+footer {
+  background-color: #1c1a18;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  padding: 15px 20px;
+  width: 100vw;
+  box-sizing: border-box;
+  margin-left: calc(50% - 50vw);
+}
+/* Footer grid con columnas para contenido */
+.footer-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: var(--container, 1180px);
+  margin: 0 auto;
+  padding: 20px 0;
+}
+.footer-grid > div {
+  flex: 1 1 200px;
+  min-width: 180px;
+}
+/* Títulos de secciones */
+.footer-grid h4 {
+  font-weight: 700;
+  color: white;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+/* Listas sin estilos por defecto y separadas */
+.footer-grid ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.footer-grid ul li {
+  margin-bottom: 10px;
+}
+/* Estilos para enlaces */
+.footer-grid ul li a,
+.social-links a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  display: block;
+  transition: color 0.3s ease;
+}
+.footer-grid ul li a:hover,
+.social-links a:hover {
+  color: var(--accent, #c5a36a);
+}
+/* Separador y estilo para el texto inferior del footer */
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+  padding-top: 8px;
+}
+
+    /* Puedes agregar el resto de estilos footer-grid y social-links según style.css */
+  </style>
+</head>
+<body>
+  <!-- Barra superior promocional -->
+  <div class="promo-bar">
+    <div class="container promo-rotator">
+      <span class="promo-item">3 y 6 cuotas sin interés</span>
+      <span class="promo-item">Envíos a todo el país</span>
+      <span class="promo-item">¡Suscribite y recibí un 10% OFF en tu primera compra!</span>
+    </div>
+  </div>
+
+  <!-- Header simple solo título -->
+  <header class="site-header simple-header">
+    <div class="container header-inner">
+      <h1 class="site-title">AROMODA</h1>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main>
+    <h1>Sobre Nosotros</h1>
+    <p>Aromoda nace con la misión de brindar moda femenina urbana y casual de calidad, accesible y con compromiso con la sostenibilidad y atención personalizada.</p>
+    <p>Trabajamos desde San Andrés de Giles para todo el país, combinando tendencias actuales con comodidad y estilo.</p>
+    <a href="index.html" class="back-link">← Volver a Aromoda</a>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <a href="index.html" class="logo-footer" aria-label="Logo Aromoda footer">
+          <img src="https://i.postimg.cc/85DJDDCq/Whats-App-Image-2026-09-23-at-11-07-00.jpg" alt="Aromoda logo" />
+        </a>
+        <p>Seguinos en nuestras redes</p>
+        <nav class="social-links">
+          <a href="https://www.instagram.com/aromoda65" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/aromodaaromoda" target="_blank" rel="noopener">Facebook</a>
+        </nav>
+      </div>
+      <div>
+        <h4>Tienda</h4>
+        <ul>
+          <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+          <li><a href="nuestra-historia.html">Nuestra Historia</a></li>
+          <li><a href="consejos-cuidado.html">Consejos para el cuidado</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Ayuda</h4>
+        <ul>
+          <li><a href="guia-talle.html" class="btn-link">Guía de talle</a></li>
+          <li><a href="politicas-devolucion.html" class="btn-link">Políticas de Devolución</a></li>
+          <li><a href="https://wa.me/5492325590916" target="_blank" rel="noopener">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <small>© 2026 AROMODA · San Andrés de Giles · Argentina</small>
+    </div>
+  </footer>
+</body>
+</html>
+

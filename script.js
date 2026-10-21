@@ -111,7 +111,7 @@ function mapAndRenderProducts(data) {
   renderProducts(filteredProducts);
 }
 
-// === RENDER PRODUCTS GRID ===
+// === RENDER PRODUCTS GRID (D2C Minimalist Luxury) ===
 function renderProducts(list) {
   if (list.length === 0) {
     productGrid.innerHTML = '';
@@ -123,35 +123,55 @@ function renderProducts(list) {
   list.forEach(p => {
     const card = document.createElement('article');
     card.classList.add('product-card');
-    // Badge text mapping
+    card.dataset.id = p.id;
+
+    // Badges minimalistas de lujo
     let badgeText = '';
-    switch(p.badge) {
-      case 'nuevo': badgeText = 'NEW IN'; break;
-      case 'hot': badgeText = 'MÁS VENDIDO'; break;
-      case 'oferta': badgeText = '30% OFF'; break;
-      case 'agotado': badgeText = 'AGOTADO'; break;
-    }
-    const isOutOfStock = p.stock === 0;
-    if(isOutOfStock) {
+    let isSoldOut = p.stock === 0;
+    if (isSoldOut) {
       badgeText = 'AGOTADO';
+    } else if (p.badge === 'nuevo' || p.badge === 'new in') {
+      badgeText = 'NEW';
+    } else if (p.badge === 'oferta' || p.badge === '30% off') {
+      badgeText = 'SALE';
+    } else if (p.badge === 'hot') {
+      badgeText = 'BESTSELLER';
     }
+
+    const sizesChips = p.sizes && p.sizes.length 
+      ? p.sizes.map(s => `<span class="quick-size-chip" data-size="${s}">${s}</span>`).join('') 
+      : '<span class="quick-size-chip" data-size="Único">Único</span>';
+
+    const altImg = p.images[1] ? p.images[1] : p.images[0];
+    const installmentPrice = Math.round(p.price / 3);
+
     card.innerHTML = `
-      <div class="product-img" data-id="${p.id}">
-        ${badgeText ? `<span class="badge ${(p.badge==='oferta'?'off':p.badge==='hot'?'hot':p.badge==='nuevo'?'nuevo':'agotado')}">${badgeText}</span>` : ''}
-        <img src="${p.images[0]}" alt="${p.name}" class="main-image" />
-        <img src="${p.images[1]}" alt="${p.name} vista alternativa" class="hover-image" />
+      <div class="product-img-wrapper" data-id="${p.id}">
+        ${badgeText ? `<span class="product-badge-pill ${isSoldOut ? 'sold-out' : ''}">${badgeText}</span>` : ''}
+        <img src="${p.images[0]}" alt="${p.name}" class="product-img main-image" loading="lazy" />
+        <img src="${altImg}" alt="${p.name} vista editorial" class="product-img hover-image" loading="lazy" />
+        
+        <div class="product-quick-bar" data-id="${p.id}">
+          <span class="quick-bar-text">Seleccionar</span>
+          <div class="quick-sizes-list">
+            ${sizesChips}
+          </div>
+        </div>
       </div>
-      <div class="product-info">
-        <div class="product-category">${p.cat}</div>
-        <h3 class="product-name">${p.name}</h3>
-        <p class="product-desc">${p.description}</p>
-        <div>
-          <span class="price">$${p.price.toLocaleString()}</span>
+      
+      <div class="product-info-wrap" data-id="${p.id}">
+        <div class="product-meta-row">
+          <span class="product-card-category">${p.cat}</span>
+          ${p.stock > 0 && p.stock <= 3 ? '<span style="font-size:0.62rem; color:var(--danger); font-weight:600;">Últimas unidades</span>' : ''}
+        </div>
+        <h3 class="product-card-title">${p.name}</h3>
+        <div class="product-price-row">
+          <span class="current-price">$${p.price.toLocaleString()}</span>
           ${p.oldPrice ? `<span class="old-price">$${p.oldPrice.toLocaleString()}</span>` : ''}
         </div>
-        <button class="add-to-cart-btn" data-id="${p.id}" ${isOutOfStock ? 'disabled' : ''}>
-          ${isOutOfStock ? 'Agotado' : 'Elegir talle y agregar'}
-        </button>
+        <div class="product-installments-micro">
+          3 cuotas sin interés de $${installmentPrice.toLocaleString()}
+        </div>
       </div>
     `;
     productGrid.appendChild(card);
@@ -160,10 +180,19 @@ function renderProducts(list) {
 
 // === EVENT LISTENERS ===
 productGrid.addEventListener('click', e => {
-  if(e.target.classList.contains('add-to-cart-btn') || e.target.closest('.product-img')) {
-    const id = Number(e.target.dataset.id || e.target.closest('[data-id]').dataset.id);
-    openModalProduct(id);
+  const card = e.target.closest('.product-card');
+  if (!card) return;
+  const id = Number(card.dataset.id);
+
+  // Si clickea sobre un talle directo
+  const chip = e.target.closest('.quick-size-chip');
+  if (chip) {
+    const size = chip.dataset.size;
+    openModalProduct(id, size);
+    return;
   }
+
+  openModalProduct(id);
 });
 
 categoryButtons.forEach(btn => {
@@ -172,6 +201,20 @@ categoryButtons.forEach(btn => {
     btn.classList.add('active');
     currentCategory = btn.dataset.cat;
     applyFilters();
+  });
+});
+
+// Enlace de categorías en el header minimalista
+document.querySelectorAll('.header-nav .nav-link[data-cat]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    const cat = link.dataset.cat;
+    currentCategory = cat;
+    categoryButtons.forEach(b => b.classList.toggle('active', b.dataset.cat === cat));
+    applyFilters();
+    const catalogElem = document.getElementById('catalog');
+    if (catalogElem) {
+      catalogElem.scrollIntoView({ behavior: 'smooth' });
+    }
   });
 });
 
@@ -198,13 +241,15 @@ function applyFilters() {
 }
 
 // === MODAL PRODUCT DETAIL ===
-// === MODAL PRODUCT DETAIL ===
-function openModalProduct(id) {
+function openModalProduct(id, preselectedSize = null) {
   modalProduct = products.find(p => p.id === id);
   if(!modalProduct) return;
 
   modalImageIndex = 0;
   updateModalContent();
+  if (preselectedSize && modalSizeSelect) {
+    modalSizeSelect.value = preselectedSize;
+  }
   productModal.classList.remove('hidden');
 }
 
@@ -481,17 +526,34 @@ function renderCart() {
 
   });
 
-
   const total = cart.reduce(
     (sum, item) =>
       sum + (Number(item.price) * Number(item.qty)),
     0
   );
 
-
   if (cartTotalElement) {
-    cartTotalElement.textContent =
-      formatPrice(total);
+    cartTotalElement.textContent = formatPrice(total);
+  }
+
+  // Actualizar barra de envío gratis (D2C luxury mechanic)
+  const shippingText = document.getElementById('shipping-progress-text');
+  const shippingPercent = document.getElementById('shipping-progress-percent');
+  const shippingFill = document.getElementById('shipping-progress-fill');
+  const FREE_SHIPPING_THRESHOLD = 80000;
+
+  if (shippingText && shippingFill && shippingPercent) {
+    if (total >= FREE_SHIPPING_THRESHOLD) {
+      shippingText.textContent = '¡Tenés envío gratis a todo el país! 🎉';
+      shippingPercent.textContent = '100%';
+      shippingFill.style.width = '100%';
+    } else {
+      const remaining = FREE_SHIPPING_THRESHOLD - total;
+      const pct = Math.min(Math.round((total / FREE_SHIPPING_THRESHOLD) * 100), 99);
+      shippingText.textContent = `Te faltan ${formatPrice(remaining)} para envío gratis`;
+      shippingPercent.textContent = `${pct}%`;
+      shippingFill.style.width = `${pct}%`;
+    }
   }
 
 }
