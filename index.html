@@ -1,339 +1,294 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AROMODA | Minimalist Contemporary Fashion</title>
-  <meta name="description" content="Moda femenina contemporánea de corte depurado y calce impecable. Esenciales urbanos con envíos a todo el país y cuotas sin interés." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AROMODA | Colección SS27 & Ropa Femenina Urbana</title>
+  <meta name="description" content="Descubrí la nueva Colección SS27 de Aromoda. Moda femenina urbana, prendas de tendencia, 3 y 6 cuotas sin interés y envíos a todo el país." />
   
   <!-- Estilos principales -->
-  <link rel="stylesheet" href="{% static 'style.css' %}" />
+  <link rel="stylesheet" href="/static/style.css" />
   
-  <!-- Tipografías de Alta Gama: Playfair Display (Serif Editorial) & Inter (Sans Contemporáneo) -->
+  <!-- Tipografías de Alta Gama -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-  <!-- :::::::::::::: PILAR 1: BARRA DE ANUNCIOS SUPERIOR DISCRETA :::::::::::::: -->
-  <aside class="promo-bar" aria-label="Beneficios de compra">
+  <!-- :::::::::::::: BARRA SUPERIOR PROMOCIONAL :::::::::::::: -->
+  <div class="promo-bar">
     <div class="container promo-rotator">
-      <span class="promo-item active">ENVÍO SIN CARGO EN ÓRDENES SUPERIORES A $80.000</span>
-      <span class="promo-item">3 Y 6 CUOTAS SIN INTERÉS CON TARJETAS SELECCIONADAS</span>
-      <span class="promo-item">10% OFF EN TU PRIMERA COMPRA SUSCRIBIÉNDOTE AL NEWSLETTER</span>
-      <span class="promo-item">ENVÍOS A TODO EL PAÍS · CALIDAD TEXTIL PREMIUM</span>
+      <span class="promo-item active">3 Y 6 CUOTAS SIN INTERÉS</span>
+      <span class="promo-item">ENVÍOS A TODO EL PAÍS</span>
+      <span class="promo-item">ENVÍO GRATIS EN COMPRAS A PARTIR DE $80.000</span>
+      <span class="promo-item">¡SUSCRIBITE Y RECIBÍ UN 10% OFF EN TU PRIMERA COMPRA!</span>
     </div>
-  </aside>
+  </div>
 
-  <!-- :::::::::::::: PILAR 1: HEADER & NAVEGACIÓN MINIMALISTA :::::::::::::: -->
+  <!-- :::::::::::::: HEADER :::::::::::::: -->
   <header class="site-header">
     <div class="container header-inner">
-      
-      <!-- Navegación izquierda con categorías esenciales -->
-      <nav class="header-nav" aria-label="Navegación principal">
-        <a href="#catalog" class="nav-link" data-cat="all">Colección</a>
-        <a href="#catalog" class="nav-link" data-cat="pantalones">Pantalones</a>
-        <a href="#catalog" class="nav-link" data-cat="remeras">Remeras</a>
-        <a href="#catalog" class="nav-link" data-cat="buzos">Buzos</a>
-        <a href="guia-talle.html" class="nav-link">Fit Guide</a>
-        <a href="sobre-nosotros.html" class="nav-link">About</a>
-      </nav>
-
-      <!-- Logotipo tipográfico central -->
-      <a href="/" class="header-logo" aria-label="Aromoda inicio">
-        <span class="site-title">AROMODA</span>
-        <span class="site-tagline">Buenos Aires · Studio</span>
+      <!-- Logo a la izquierda -->
+      <a href="#inicio" class="logo" aria-label="Logo Aromoda">
+        <img src="https://i.postimg.cc/SxgNpRrH/Whats-App-Image-2026-09-24-at-10-19-59.jpg" alt="Aromoda logo" />
       </a>
 
-      <!-- Accesos directos derecha: Buscador y Carrito Drawer -->
-      <div class="header-actions">
-        
-        <!-- Buscador sutil -->
-        <div class="search-box">
-          <svg class="search-svg-embed" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="M21 21l-4.35-4.35"></path>
-          </svg>
-          <input type="search" id="search" placeholder="Buscar prenda..." aria-label="Buscar prenda en la tienda" />
-        </div>
+      <!-- Título AROMODA centrado editorial -->
+      <h1 class="site-title"><a href="#inicio">AROMODA</a></h1>
 
-        <!-- Botón de Carrito con Drawer deslizante -->
-        <button id="cart-button" class="action-icon-btn" aria-label="Ver bolsa de compras" type="button">
-          <!-- Ícono de Carrito / Bag Minimalista -->
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <path d="M16 10a4 4 0 0 1-8 0"></path>
+      <!-- Buscador y carrito a la derecha -->
+      <div class="header-actions">
+        <div class="search-wrap">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="search" id="search" placeholder="Buscar prenda..." aria-label="Buscar prenda" />
+        </div>
+        <button id="cart-button" aria-label="Abrir carrito de compras" type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" width="22" height="22">
+            <path d="M6 6h15l-1.5 9h-13z"></path>
+            <circle cx="9" cy="20" r="1.5"></circle>
+            <circle cx="18" cy="20" r="1.5"></circle>
           </svg>
           <span id="cart-count" class="cart-count">0</span>
         </button>
-
       </div>
+
+      <!-- ========================================= -->
+      <!-- CARRITO LATERAL (DRAWER) -->
+      <!-- ========================================= -->
+      <div id="cart-overlay" class="cart-overlay"></div>
+      <aside id="cart-drawer" class="cart-drawer" aria-label="Carrito de compras">
+        <div class="cart-header">
+          <div class="cart-title-wrap">
+            <h2>Mi Carrito</h2>
+            <span id="cart-drawer-count" class="cart-badge-total">0 prendas</span>
+          </div>
+          <button id="close-cart" type="button" aria-label="Cerrar carrito">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+
+        <!-- Barra dinámica de Envío Gratis -->
+        <div class="free-shipping-progress" id="free-shipping-bar">
+          <div class="shipping-progress-text" id="shipping-progress-text">
+            <span>¡Envío gratis superando $80.000!</span>
+          </div>
+          <div class="shipping-bar-track">
+            <div class="shipping-bar-fill" id="shipping-bar-fill" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Productos del carrito -->
+        <div id="cart-items" class="cart-items">
+          <!-- Inyectado por JS -->
+        </div>
+
+        <!-- Resumen y Checkout -->
+        <div class="cart-footer">
+          <div class="cart-summary-line">
+            <span>Subtotal</span>
+            <span id="cart-subtotal">$0</span>
+          </div>
+          <div class="cart-summary-line">
+            <span>Envío</span>
+            <span id="cart-shipping-cost">Calculado al finalizar</span>
+          </div>
+          <div class="cart-total">
+            <span>Total</span>
+            <strong id="cart-total">$0</strong>
+          </div>
+          <div class="installments-hint">
+            <span>Hasta 3 y 6 cuotas sin interés</span>
+          </div>
+          <button id="checkout-whatsapp" type="button" class="checkout-button">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M20.52 3.48A11.936 11.936 0 0012 0C5.371 0 0 5.37 0 12c0 2.113.55 4.084 1.512 5.823L0 24l6.492-1.555A11.946 11.946 0 0012 24c6.628 0 12-5.372 12-12 0-3.214-1.296-6.223-3.48-8.52zM12 21.6c-1.906 0-3.69-.54-5.225-1.467l-.374-.223-3.83.92.975-3.737-.243-.38A8.4 8.4 0 013.6 12c0-4.623 3.753-8.376 8.4-8.376 2.243 0 4.364.88 5.943 2.465a8.303 8.303 0 012.451 5.91c0 4.623-3.753 8.4-8.394 8.4zM17.237 14.007c-.272-.136-1.615-.797-1.865-.887-.25-.09-.43-.136-.61.137-.182.273-.71.887-.873 1.07-.16.182-.32.204-.592.068-.273-.136-1.154-.423-2.2-1.354-.813-.724-1.36-1.62-1.52-1.893-.163-.273-.017-.42.12-.555.123-.124.273-.32.41-.48.137-.164.182-.273.273-.455.09-.182.045-.34-.023-.48-.068-.136-.61-1.47-.83-2.01-.217-.527-.437-.45-.61-.458l-.52-.009c-.182 0-.48.068-.73.34-.25.273-.955.934-.955 2.28 0 1.347.978 2.648 1.114 2.832.136.182 1.92 2.933 4.653 4.11.65.28 1.156.447 1.55.573.65.21 1.243.18 1.71.11.52-.08 1.615-.66 1.845-1.297.227-.637.227-1.18.16-1.296-.068-.114-.25-.182-.522-.318z"/></svg>
+            Comprar por WhatsApp
+          </button>
+        </div>
+      </aside>
     </div>
   </header>
 
-  <!-- :::::::::::::: CARRITO LATERAL / SLIDING DRAWER :::::::::::::: -->
-  <div id="cart-overlay" class="cart-overlay" tabindex="-1" aria-hidden="true"></div>
-  <aside id="cart-drawer" class="cart-drawer" role="dialog" aria-modal="true" aria-label="Bolsa de compras">
-    
-    <div class="cart-header">
-      <h2>Bolsa de Compras</h2>
-      <button id="close-cart" type="button" aria-label="Cerrar bolsa">✕</button>
-    </div>
-
-    <!-- Barra de progreso para Envío Gratis (High-conversion D2C mechanic) -->
-    <div class="free-shipping-bar-wrap">
-      <div class="free-shipping-label">
-        <span id="shipping-progress-text">Envío gratis superando los $80.000</span>
-        <strong id="shipping-progress-percent">0%</strong>
-      </div>
-      <div class="shipping-progress-track">
-        <div id="shipping-progress-fill" class="shipping-progress-fill"></div>
+  <!-- :::::::::::::: HERO :::::::::::::: -->
+  <section id="inicio" class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <span class="hero-eyebrow">Nueva Temporada SS27</span>
+      <h1>Tu dosis diaria de estilo<br><em>empieza aquí.</em></h1>
+      <p class="hero-subtitle">Prendas con diseño, calce perfecto y la calidad que buscás para tu día a día.</p>
+      <div class="hero-actions">
+        <a href="#catalog" class="btn btn-hero">Ver Colección SS27</a>
+        <a href="#categories" class="btn btn-hero-secondary">Explorar Categorías</a>
       </div>
     </div>
+  </section>
 
-    <!-- Items del carrito -->
-    <div id="cart-items" class="cart-items">
-      <!-- Inyectado dinámicamente con JavaScript -->
-    </div>
-
-    <!-- Resumen y checkout -->
-    <div class="cart-footer">
-      <div class="cart-total">
-        <span>Total Estimado</span>
-        <strong id="cart-total">$0</strong>
-      </div>
-      <button id="checkout-whatsapp" type="button" class="checkout-button">
-        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
-        Comprar por WhatsApp
-      </button>
-    </div>
-  </aside>
-
-  <main>
-    <!-- :::::::::::::: PILAR 2: HERO SECTION EDITORIAL :::::::::::::: -->
-    <section id="inicio" class="hero" aria-label="Portada de temporada">
-      <div class="hero-bg-wrapper">
-        <div class="hero-bg"></div>
-      </div>
-      <div class="hero-overlay"></div>
+  <!-- :::::::::::::: CATÁLOGO & COLECCIÓN SS27 (ESTILO EXACTO REFERENCIA) :::::::::::::: -->
+  <section id="catalog" class="catalog-section">
+    <div class="container">
       
-      <div class="container hero-content">
-        <span class="hero-pill">AUTUMN / WINTER '26 EDITORIAL</span>
-        <h1 class="hero-title">The Art of Modern <em>Silhouette.</em></h1>
-        <p class="hero-subtitle">
-          Prendas esenciales de corte depurado y texturas nobles, diseñadas para elevar tu fondo de armario contemporáneo.
-        </p>
-        <div class="hero-cta-group">
-          <a href="#catalog" class="btn btn-luxury-primary">Explorar Colección</a>
-          <a href="guia-talle.html" class="btn btn-luxury-outline">Fit Guide</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- :::::::::::::: PILAR 4: PRUEBA SOCIAL - MENCIONES DE PRENSA :::::::::::::: -->
-    <section class="press-strip" aria-label="Menciones en prensa de moda">
-      <div class="container">
-        <p class="press-label">Como se ha visto en prensa y editoriales independientes</p>
-        <div class="press-logos">
-          <span class="press-item">VOGUE</span>
-          <span class="press-item">ELLE</span>
-          <span class="press-item">HARPER'S BAZAAR</span>
-          <span class="press-item">MARIE CLAIRE</span>
-          <span class="press-item">L'OFFICIEL</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- :::::::::::::: PILAR 3: JERARQUÍA DEL CATÁLOGO & PRODUCT GRID :::::::::::::: -->
-    <section id="catalog" class="catalog-section container">
-      
+      <!-- ENCABEZADO DEL CATÁLOGO IDÉNTICO A LA FOTO DE REFERENCIA -->
       <div class="catalog-header">
-        <p class="catalog-eyebrow">Curated Essentials</p>
-        <h2 class="catalog-title">Catálogo Contemporáneo</h2>
-        
-        <!-- Filtros minimalistas de categoría -->
-        <nav class="category-filter-bar" aria-label="Filtrar por categoría">
+        <!-- Indicador rojo marca en la parte superior izquierda -->
+        <div class="catalog-indicator" aria-hidden="true"></div>
+
+        <!-- Título idéntico a la imagen de referencia -->
+        <h2 class="collection-title">~Colección SS27~</h2>
+
+        <!-- Controles con flechas < y > a la derecha -->
+        <div class="slider-controls">
+          <button id="slider-prev" class="slider-arrow" aria-label="Producto anterior" title="Anterior">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button id="slider-next" class="slider-arrow" aria-label="Producto siguiente" title="Siguiente">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Barra de Filtros de Categorías y Switcher de Vista -->
+      <div id="categories" class="catalog-nav-bar">
+        <div class="category-list">
           <button class="category-btn active" data-cat="all">Todos</button>
+          <button class="category-btn" data-cat="buzos">Buzos</button>
+          <button class="category-btn" data-cat="camperas">Camperas</button>
           <button class="category-btn" data-cat="remeras">Remeras</button>
           <button class="category-btn" data-cat="pantalones">Pantalones</button>
-          <button class="category-btn" data-cat="buzos">Buzos</button>
+          <button class="category-btn" data-cat="shorts">Shorts</button>
           <button class="category-btn" data-cat="vestidos">Vestidos</button>
-          <button class="category-btn" data-cat="camperas">Camperas</button>
           <button class="category-btn" data-cat="conjuntos">Conjuntos</button>
           <button class="category-btn" data-cat="accesorios">Accesorios</button>
-        </nav>
-      </div>
-
-      <!-- Cuadrícula de productos con hover de segunda foto y selector rápido -->
-      <div id="product-grid" class="product-grid" aria-live="polite"></div>
-
-      <!-- Mensaje cuando no hay resultados de búsqueda -->
-      <div id="no-results" class="no-results" hidden>
-        <p>No encontramos prendas que coincidan con tu búsqueda.</p>
-        <button id="reset-filters" class="btn btn-dark">Ver toda la colección</button>
-      </div>
-
-    </section>
-
-    <!-- :::::::::::::: PILAR 4: CITAS DE CLIENTAS & TESTIMONIOS :::::::::::::: -->
-    <section class="testimonials-section" aria-label="Reseñas de clientas verificadas">
-      <div class="container">
-        <div class="testimonials-header">
-          <p class="catalog-eyebrow">The Community</p>
-          <h2 class="catalog-title">La Experiencia Aromoda</h2>
         </div>
 
-        <div class="testimonials-grid">
-          <article class="testimonial-card">
-            <div class="testimonial-stars">
-              <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-              <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-              <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-              <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-              <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            </div>
-            <p class="testimonial-quote">"El calce de los pantalones supera con creces lo que esperaba. El tejido tiene una caída impecable que no pierde estructura con los lavados."</p>
-            <div class="testimonial-author">
-              <span class="author-name">Camila Rostand</span>
-              <span class="author-badge">✓ Compra verificada</span>
-            </div>
-          </article>
-
-          <article class="testimonial-card">
-            <div class="testimonial-stars">
-              <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-              <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-              <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-              <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-              <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            </div>
-            <p class="testimonial-quote">"Comprar por WhatsApp fue súper ágil y personalizado. El packaging llegó con un aroma sutil exquisito. Es una marca con alma y estilo propio."</p>
-            <div class="testimonial-author">
-              <span class="author-name">Sofía Mendonça</span>
-              <span class="author-badge">✓ Compra verificada</span>
-            </div>
-          </article>
-
-          <article class="testimonial-card">
-            <div class="testimonial-stars">
-              <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-              <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-              <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-              <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-              <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            </div>
-            <p class="testimonial-quote">"Es exactamente la estética que buscaba: prendas limpias, sofisticadas sin estridencias y que combinan con todo mi guardarropa."</p>
-            <div class="testimonial-author">
-              <span class="author-name">Lucía Gómez</span>
-              <span class="author-badge">✓ Compra verificada</span>
-            </div>
-          </article>
+        <div class="view-switcher">
+          <button id="view-carousel" class="view-toggle-btn active" title="Modo Carrusel">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="6" height="12" rx="1"/><rect x="9" y="6" width="6" height="12" rx="1"/><rect x="16" y="6" width="6" height="12" rx="1"/></svg>
+            <span>Carrusel</span>
+          </button>
+          <button id="view-grid" class="view-toggle-btn" title="Modo Cuadrícula">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            <span>Grilla</span>
+          </button>
         </div>
       </div>
-    </section>
 
-    <!-- :::::::::::::: PILAR 4: PILARES DE CONFIANZA D2C :::::::::::::: -->
-    <section class="value-props-section container" aria-label="Beneficios de compra">
-      <div class="value-props-grid">
-        <div class="value-prop-item">
-          <div class="value-prop-icon">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M5 18H3c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v11"/><path d="M14 9h4l4 4v4c0 .6-.4 1-1 1h-2"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
-          </div>
-          <div class="value-prop-content">
-            <h4>Envíos a todo el país</h4>
-            <p>Sin costo en pedidos desde $80.000 con seguimiento en tiempo real.</p>
-          </div>
+      <!-- CONTENEDOR PRINCIPAL DEL SLIDER DE PRODUCTOS (SOPORTA SLIDER Y GRID) -->
+      <div class="slider-wrapper">
+        <div id="product-slider" class="product-slider" aria-live="polite">
+          <!-- Renderizado dinámico vía JS -->
         </div>
 
-        <div class="value-prop-item">
-          <div class="value-prop-icon">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-          </div>
-          <div class="value-prop-content">
-            <h4>Financiación en cuotas</h4>
-            <p>3 y 6 cuotas sin interés con todas las tarjetas bancarias.</p>
-          </div>
-        </div>
+        <!-- Fallback compatible para elementos que busquen product-grid -->
+        <div id="product-grid" class="product-grid" style="display: none;" aria-hidden="true"></div>
 
-        <div class="value-prop-item">
-          <div class="value-prop-icon">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-          </div>
-          <div class="value-prop-content">
-            <h4>Garantía de Calce</h4>
-            <p>30 días de cambio flexible para que tu prenda quede perfecta.</p>
-          </div>
-        </div>
-
-        <div class="value-prop-item">
-          <div class="value-prop-icon">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          </div>
-          <div class="value-prop-content">
-            <h4>Compra 100% Segura</h4>
-            <p>Atención directa por WhatsApp con asesoras de estilo dedicadas.</p>
+        <div id="no-results" class="no-results" hidden>
+          <div class="no-results-content">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+            <p>No encontramos prendas que coincidan con tu búsqueda.</p>
+            <button id="reset-filters" class="btn btn-outline">Ver todo el catálogo</button>
           </div>
         </div>
       </div>
-    </section>
-  </main>
+
+    </div>
+  </section>
 
   <!-- :::::::::::::: MODAL DETALLE DE PRODUCTO :::::::::::::: -->
   <div id="product-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-backdrop"></div>
     <div class="modal-content">
-      <button id="modal-close" aria-label="Cerrar modal de producto">✕</button>
+      <button id="modal-close" class="modal-close-icon" aria-label="Cerrar modal">
+        <svg width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
 
+      <!-- Galería de Imágenes -->
       <div class="modal-images">
-        <button id="prev-image" aria-label="Foto anterior">‹</button>
-        <img id="modal-image" src="" alt="Prenda Aromoda detalle" />
-        <button id="next-image" aria-label="Siguiente foto">›</button>
-      </div>
-
-      <div class="modal-info">
-        <h3 id="modal-title">Nombre de Prenda</h3>
+        <div class="modal-image-stage">
+          <button id="prev-image" class="gallery-arrow prev" aria-label="Imagen anterior">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <img id="modal-image" src="" alt="Prenda de vestir" />
+          <button id="next-image" class="gallery-arrow next" aria-label="Imagen siguiente">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
 
         <div class="modal-price-container">
-          <span id="modal-price" class="modal-price">$0</span>
-          <span id="modal-installments" class="modal-installments">3 cuotas sin interés</span>
-        </div>
-
-        <p id="modal-description" class="modal-description">Descripción de la prenda...</p>
-
-        <div class="modal-selectors">
-          <label>
-            Talle
-            <select id="modal-size-select" aria-label="Seleccionar talle"></select>
-          </label>
-          <label>
-            Color
-            <select id="modal-color-select" aria-label="Seleccionar color"></select>
-          </label>
-          <label>
-            Cantidad
-            <input type="number" id="modal-quantity" min="1" max="10" value="1" />
-          </label>
-        </div>
-
-        <div class="shipping-calculator">
-          <label for="modal-cp">Calcular costo de envío:</label>
-          <div class="shipping-calculator-row">
-            <input type="text" id="modal-cp" maxlength="8" placeholder="Código Postal (ej: 1425)"/>
-            <button id="modal-calc-shipping" type="button">Calcular</button>
-          </div>
-          <p id="modal-shipping-result"></p>
-        </div>
-
-        <div class="modal-actions">
-          <button id="add-to-cart-btn" class="btn btn-dark" type="button">Agregar a la Bolsa</button>
-          <button id="buy-now-btn" class="btn btn-luxury-outline" style="color:var(--text-main); border-color:var(--text-main);" type="button">Comprar Ahora</button>
+          <div id="modal-price" class="modal-price"></div>
+          <div id="modal-tax-subtext" class="modal-tax-subtext"></div>
+          <div id="modal-installments" class="modal-installments"></div>
         </div>
       </div>
 
+      <!-- Info y Acciones del Producto -->
+      <div class="modal-info">
+        <span id="modal-category" class="modal-category-tag">AROMODA</span>
+        <h3 id="modal-title"></h3>
+        
+        <p id="modal-description" class="modal-description"></p>
+
+        <!-- Selector de Talle con Pills Interactivas -->
+        <div class="selector-group">
+          <label class="selector-label">
+            <span>Talle:</span>
+            <a href="guia-talle.html" target="_blank" class="size-guide-link">Ver guía de talles</a>
+          </label>
+          <div id="modal-sizes-container" class="pill-group">
+            <!-- Botones de talle inyectados por JS -->
+          </div>
+          <!-- Input oculto para mantener compatibilidad -->
+          <select id="modal-size-select" hidden aria-label="Selector de talle"></select>
+        </div>
+
+        <!-- Selector de Color con Pills Interactivas -->
+        <div class="selector-group">
+          <label class="selector-label">Color:</label>
+          <div id="modal-colors-container" class="pill-group">
+            <!-- Botones de color inyectados por JS -->
+          </div>
+          <select id="modal-color-select" hidden aria-label="Selector de color"></select>
+        </div>
+
+        <!-- Selector de Cantidad -->
+        <div class="selector-group">
+          <label class="selector-label" for="modal-quantity">Cantidad:</label>
+          <div class="quantity-stepper">
+            <button type="button" id="qty-minus" aria-label="Disminuir cantidad">-</button>
+            <input type="number" id="modal-quantity" min="1" max="10" value="1" readonly />
+            <button type="button" id="qty-plus" aria-label="Aumentar cantidad">+</button>
+          </div>
+        </div>
+
+        <!-- Calculador de Envíos -->
+        <div class="shipping-calculator">
+          <label for="modal-cp">Calcular costo de envío:</label>
+          <div class="cp-input-group">
+            <input type="text" id="modal-cp" maxlength="8" placeholder="Tu código postal (ej: 1425)" />
+            <button type="button" id="modal-calc-shipping">Calcular</button>
+          </div>
+          <p id="modal-shipping-result" class="shipping-result"></p>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="modal-actions">
+          <button id="add-to-cart-btn" class="btn btn-primary">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-13z"></path><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle></svg>
+            Agregar al carrito
+          </button>
+          <button id="buy-now-btn" class="btn btn-outline">
+            Comprar ahora
+          </button>
+        </div>
+      </div>
+
+      <!-- Productos Similares -->
       <div id="modal-similar-products" class="similar-products">
-        <h4>Prendas que complementan este look</h4>
+        <h4>También te puede gustar</h4>
         <div class="similar-grid"></div>
       </div>
     </div>
@@ -341,108 +296,131 @@
 
   <!-- :::::::::::::: POPUP NEWSLETTER :::::::::::::: -->
   <div id="newsletter-popup" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="newsletter-title">
+    <div class="modal-backdrop"></div>
     <div class="modal-content newsletter-content">
-      <button id="newsletter-close" aria-label="Cerrar ventana">✕</button>
-      <h2 id="newsletter-title">Acceso Exclusivo & 10% OFF</h2>
-      <p>Suscribite a nuestro boletín para recibir cápsulas de temporada, preventas privadas y un beneficio directo en tu primera orden.</p>
+      <button id="newsletter-close" class="modal-close-icon" aria-label="Cerrar">
+        <svg width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="newsletter-icon-badge">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c5a36a" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+      </div>
+      <h2 id="newsletter-title">Suscribite y recibí 10% OFF</h2>
+      <p>Sumate al club AROMODA y recibí antes que nadie nuestras novedades, promociones exclusivas y lanzamientos.</p>
       <form id="newsletter-form">
-        <input type="email" id="newsletter-email" required placeholder="tuemail@ejemplo.com" aria-label="Correo electrónico" />
-        <button type="submit" class="btn btn-dark">Suscribirme</button>
+        <input type="email" id="newsletter-email" required placeholder="Ingresá tu correo electrónico" aria-label="Correo electrónico" />
+        <button type="submit" class="btn btn-primary">Quiero mi 10% OFF</button>
       </form>
       <p id="newsletter-msg" class="msg"></p>
     </div>
   </div>
 
+  <!-- :::::::::::::: TRUST BADGES :::::::::::::: -->
+  <section class="trust-badges container">
+    <div class="trust-item">
+      <!-- Camión SVG -->
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c5a36a" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+      <div>
+        <strong>Envíos a todo el país</strong>
+        <p>A tu domicilio o sucursal</p>
+      </div>
+    </div>
+    <div class="trust-item">
+      <!-- Tarjeta crédito SVG -->
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c5a36a" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+      <div>
+        <strong>3 y 6 Cuotas Sin Interés</strong>
+        <p>Todos los medios de pago</p>
+      </div>
+    </div>
+    <div class="trust-item">
+      <!-- Flechas circulares SVG -->
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c5a36a" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+      <div>
+        <strong>30 días para cambios</strong>
+        <p>Fácil y sin complicaciones</p>
+      </div>
+    </div>
+    <div class="trust-item">
+      <!-- Candado SVG -->
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c5a36a" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      <div>
+        <strong>Compra 100% Segura</strong>
+        <p>Datos protegidos con SSL</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- :::::::::::::: FOOTER :::::::::::::: -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <a href="#inicio" class="logo-footer" aria-label="Logo Aromoda footer">
+          <img src="https://i.postimg.cc/85DJDDCq/Whats-App-Image-2026-09-23-at-11-07-00.jpg" alt="Aromoda logo" />
+        </a>
+        <p class="footer-desc">Moda femenina urbana diseñada para empoderar tu estilo cotidiano con comodidad y elegancia.</p>
+        <p class="footer-social-title">Seguinos en redes:</p>
+        <nav class="social-links">
+          <a href="https://www.instagram.com/aromoda65" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/aromodaaromoda" target="_blank" rel="noopener">Facebook</a>
+        </nav>
+      </div>
+
+      <div>
+        <h4>Tienda</h4>
+        <ul>
+          <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+          <li><a href="nuestra-historia.html">Nuestra Historia</a></li>
+          <li><a href="consejos-cuidado.html">Consejos de Cuidado</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Ayuda & Políticas</h4>
+        <ul>
+          <li><a href="guia-talle.html" class="btn-link">Guía de Talles</a></li>
+          <li><a href="politicas-devolucion.html" class="btn-link">Políticas de Devolución</a></li>
+          <li><a href="https://wa.me/5492325590916" target="_blank" rel="noopener">Atención por WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom container">
+      <small>© 2026 AROMODA · Todos los derechos reservados · San Andrés de Giles, Buenos Aires, Argentina</small>
+    </div>
+  </footer>
+
   <!-- :::::::::::::: MODALES INSTITUCIONALES :::::::::::::: -->
   <div id="nosotros-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="nosotros-title">
-    <div class="modal-content" style="max-width: 600px; padding: 40px; display: block;">
-      <button class="modal-close" aria-label="Cerrar">✕</button>
-      <h2 id="nosotros-title" style="font-family: var(--font-serif); margin-bottom: 16px;">Acerca de Aromoda</h2>
-      <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px;">
-        Aromoda nace con la misión de redefinir el guardarropa femenino contemporáneo. Diseñamos prendas versátiles que conjugan calidad textil superior, líneas limpias y un calce cómodo pensado para la mujer actual.
-      </p>
-      <p style="color: var(--text-secondary); line-height: 1.6;">
-        Trabajamos con talleres locales bajo estándares éticos y de trazabilidad, priorizando la durabilidad y la estética atemporal sobre las modas pasajeras.
-      </p>
+    <div class="modal-backdrop"></div>
+    <div class="modal-content info-modal-content">
+      <button class="modal-close modal-close-icon" aria-label="Cerrar Modal">
+        <svg width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <h2 id="nosotros-title">Nosotros</h2>
+      <p>Aromoda nace con la misión de brindar moda femenina urbana con personalidad, calidad y cortes confortables que realzan tu esencia.</p>
+      <p><strong>Misión:</strong> Ofrecer ropa de tendencia accesible y versátil para todas las mujeres.</p>
+      <p><strong>Valores:</strong> Sostenibilidad, dedicación y una atención cálida y personalizada.</p>
     </div>
   </div>
 
   <div id="politicas-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="politicas-title">
-    <div class="modal-content" style="max-width: 600px; padding: 40px; display: block;">
-      <button class="modal-close" aria-label="Cerrar">✕</button>
-      <h2 id="politicas-title" style="font-family: var(--font-serif); margin-bottom: 16px;">Políticas de Cambio y Devolución</h2>
-      <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px;">
-        Dispones de 30 días corridos a partir de la recepción de tu pedido para solicitar un cambio. Las prendas deben encontrarse sin uso, con etiquetas originales adheridas y su empaque original intacto.
-      </p>
-      <a href="https://wa.me/5492325590916" target="_blank" rel="noopener" class="btn btn-dark" style="margin-top: 14px;">Gestionar Cambio en WhatsApp</a>
+    <div class="modal-backdrop"></div>
+    <div class="modal-content info-modal-content">
+      <button class="modal-close modal-close-icon" aria-label="Cerrar Modal">
+        <svg width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <h2 id="politicas-title">Políticas de Devolución</h2>
+      <p>Para cambios o devoluciones, contactanos directamente por WhatsApp al <strong>2325-590916</strong> dentro de los 30 días corridos tras recibir tu pedido.</p>
+      <p><strong>Condiciones:</strong> Las prendas deben estar sin uso, en perfectas condiciones higiénicas y con sus etiquetas y empaques originales.</p>
+      <a href="https://wa.me/5492325590916" target="_blank" class="btn btn-primary" style="margin-top:15px; display:inline-block;">Contactar por WhatsApp</a>
     </div>
   </div>
 
-  <!-- :::::::::::::: FOOTER MINIMALISTA D2C :::::::::::::: -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        
-        <!-- Columna 1: Marca -->
-        <div class="footer-brand">
-          <h3>AROMODA</h3>
-          <p>Esenciales femeninos con espíritu contemporáneo. Líneas puras, atención al detalle y calce excepcional.</p>
-          <nav class="social-links" aria-label="Redes sociales">
-            <a href="https://www.instagram.com/aromoda65" target="_blank" rel="noopener">Instagram</a>
-            <a href="https://www.facebook.com/aromodaaromoda" target="_blank" rel="noopener">Facebook</a>
-            <a href="https://wa.me/5492325590916" target="_blank" rel="noopener">WhatsApp</a>
-          </nav>
-        </div>
-
-        <!-- Columna 2: Tienda -->
-        <div class="footer-col">
-          <h4>Colección</h4>
-          <ul>
-            <li><a href="#catalog">Nueva Temporada</a></li>
-            <li><a href="#catalog">Pantalones & Denim</a></li>
-            <li><a href="#catalog">Remeras & Tops</a></li>
-            <li><a href="#catalog">Buzos & Abrigos</a></li>
-            <li><a href="guia-talle.html">Guía de Talles</a></li>
-          </ul>
-        </div>
-
-        <!-- Columna 3: Información -->
-        <div class="footer-col">
-          <h4>Estudio</h4>
-          <ul>
-            <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
-            <li><a href="nuestra-historia.html">Nuestra Historia</a></li>
-            <li><a href="consejos-cuidado.html">Consejos de Cuidado</a></li>
-            <li><a href="politicas-devolucion.html">Políticas de Devolución</a></li>
-            <li><a href="https://wa.me/5492325590916" target="_blank" rel="noopener">Contacto Directo</a></li>
-          </ul>
-        </div>
-
-        <!-- Columna 4: Newsletter -->
-        <div class="footer-col footer-newsletter">
-          <h4>Privilegios</h4>
-          <p>Suscribite a nuestro newsletter para recibir lanzamientos privados y promociones exclusivas.</p>
-          <form class="footer-newsletter-form" onsubmit="event.preventDefault(); alert('¡Gracias por suscribirte!');">
-            <input type="email" placeholder="Ingresá tu email" required aria-label="Email para newsletter" />
-            <button type="submit">Unirse</button>
-          </form>
-        </div>
-
-      </div>
-
-      <div class="footer-bottom">
-        <span>© 2026 AROMODA STUDIO · San Andrés de Giles, Buenos Aires · Argentina</span>
-        <span>All Rights Reserved · Powered by Django</span>
-      </div>
-    </div>
-  </footer>
-
-  <!-- :::::::::::::: BOTÓN FLOTANTE WHATSAPP (MINIMAL DISCREET) :::::::::::::: -->
-  <a href="https://wa.me/5492325590916" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Contactar por WhatsApp">
-    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M20.52 3.48A11.936 11.936 0 0012 0C5.371 0 0 5.37 0 12c0 2.113.55 4.084 1.512 5.823L0 24l6.492-1.555A11.946 11.946 0 0012 24c6.628 0 12-5.372 12-12 0-3.214-1.296-6.223-3.48-8.52zM12 21.6c-1.906 0-3.69-.54-5.225-1.467l-.374-.223-3.83.92.975-3.737-.243-.38A8.4 8.4 0 013.6 12c0-4.623 3.753-8.376 8.4-8.376 2.243 0 4.364.88 5.943 2.465a8.303 8.303 0 012.451 5.91c0 4.623-3.753 8.4-8.394 8.4zM17.237 14.007c-.272-.136-1.615-.797-1.865-.887-.25-.09-.43-.136-.61.137-.182.273-.71.887-.873 1.07-.16.182-.32.204-.592.068-.273-.136-1.154-.423-2.2-1.354-.813-.724-1.36-1.62-1.52-1.893-.163-.273-.017-.42.12-.555.123-.124.273-.32.41-.48.137-.164.182-.273.273-.455.09-.182.045-.34-.023-.48-.068-.136-.61-1.47-.83-2.01-.217-.527-.437-.45-.61-.458l-.52-.009c-.182 0-.48.068-.73.34-.25.273-.955.934-.955 2.28 0 1.347.978 2.648 1.114 2.832.136.182 1.92 2.933 4.653 4.11.65.28 1.156.447 1.55.573.65.21 1.243.18 1.71.11.52-.08 1.615-.66 1.845-1.297.227-.637.227-1.18.16-1.296-.068-.114-.25-.182-.522-.318z"/></svg>
+  <!-- :::::::::::::: BOTÓN FLOTANTE WHATSAPP :::::::::::::: -->
+  <a href="https://wa.me/5492325590916" target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+    <svg fill="white" viewBox="0 0 24 24" width="28" height="28"><path d="M20.52 3.48A11.936 11.936 0 0012 0C5.371 0 0 5.37 0 12c0 2.113.55 4.084 1.512 5.823L0 24l6.492-1.555A11.946 11.946 0 0012 24c6.628 0 12-5.372 12-12 0-3.214-1.296-6.223-3.48-8.52zM12 21.6c-1.906 0-3.69-.54-5.225-1.467l-.374-.223-3.83.92.975-3.737-.243-.38A8.4 8.4 0 013.6 12c0-4.623 3.753-8.376 8.4-8.376 2.243 0 4.364.88 5.943 2.465a8.303 8.303 0 012.451 5.91c0 4.623-3.753 8.4-8.394 8.4zM17.237 14.007c-.272-.136-1.615-.797-1.865-.887-.25-.09-.43-.136-.61.137-.182.273-.71.887-.873 1.07-.16.182-.32.204-.592.068-.273-.136-1.154-.423-2.2-1.354-.813-.724-1.36-1.62-1.52-1.893-.163-.273-.017-.42.12-.555.123-.124.273-.32.41-.48.137-.164.182-.273.273-.455.09-.182.045-.34-.023-.48-.068-.136-.61-1.47-.83-2.01-.217-.527-.437-.45-.61-.458l-.52-.009c-.182 0-.48.068-.73.34-.25.273-.955.934-.955 2.28 0 1.347.978 2.648 1.114 2.832.136.182 1.92 2.933 4.653 4.11.65.28 1.156.447 1.55.573.65.21 1.243.18 1.71.11.52-.08 1.615-.66 1.845-1.297.227-.637.227-1.18.16-1.296-.068-.114-.25-.182-.522-.318z"/></svg>
   </a>
 
-  <!-- Script interactivo -->
-  <script src="{% static 'script.js' %}"></script>
+  <script src="/static/script.js"></script>
 </body>
 </html>
