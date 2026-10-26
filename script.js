@@ -214,6 +214,7 @@ async function fetchProducts() {
 }
 
 function processProducts(apiData) {
+  if (!Array.isArray(apiData)) apiData = Array.isArray(apiData && apiData.productos) ? apiData.productos : [];
   const mappedApi = (apiData || []).map(p => {
     const price = Number(p.precio) || 0;
     const oldPrice = p.precio_ant ? Number(p.precio_ant) : null;
@@ -716,9 +717,7 @@ if (checkoutWhatsApp) {
       return;
     }
 
-    let message = '?? ?Hola AROMODA! Quiero realizar el siguiente pedido:
-
-';
+    let message = '?? ?Hola AROMODA! Quiero realizar el siguiente pedido:\n\n';
     cart.forEach(item => {
       message += `? ${item.name} | Talle: ${item.size} | Color: ${item.color} | Cantidad: ${item.qty} | $${formatNumber(item.price * item.qty)}
 `;
@@ -834,6 +833,8 @@ changeHeroImage();
 setInterval(changeHeroImage, 4000);
 
 // INICIALIZACION
+// Render inmediato del catalogo SS27 (no depende de la API); luego se completa con la API
+processProducts([]);
 fetchProducts();
 updateCartCount();
 renderCart();
